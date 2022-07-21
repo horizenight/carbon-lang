@@ -1,0 +1,359 @@
+<h1 id="expressions">Expressions</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#precedence">Precedence</a></li>
+<li><a href="#names">Names</a>
+<ul>
+<li><a href="#unqualified-names">Unqualified names</a></li>
+<li><a href="#qualified-names-and-member-access">Qualified names and member access</a></li>
+</ul></li>
+<li><a href="#operators">Operators</a></li>
+<li><a href="#conversions-and-casts">Conversions and casts</a></li>
+<li><a href="#if-expressions"><code>if</code> expressions</a></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p>Expressions are the portions of Carbon syntax that produce values. Because types in Carbon are values, this includes anywhere that a type is specified.</p>
+<pre><code>fn Foo(a: i32*) -&gt; i32 {
+  return *a;
+}</code></pre>
+<p>Here, the parameter type <code>i32*</code>, the return type <code>i32</code>, and the operand <code>*a</code> of the <code>return</code> statement are all expressions.</p>
+<h2 id="precedence">Precedence</h2>
+<p>Expressions are interpreted based on a partial <a href="https://en.wikipedia.org/wiki/Order_of_operations">precedence ordering</a>. Expression components which lack a relative ordering must be disambiguated by the developer, for example by adding parentheses; otherwise, the expression will be invalid due to ambiguity. Precedence orderings will only be added when it's reasonable to expect most developers to understand the precedence without parentheses.</p>
+<p>The precedence diagram is defined thusly:</p>
+<pre class="mermaid"><code>%%{init: {&#39;themeVariables&#39;: {&#39;fontFamily&#39;: &#39;monospace&#39;}}}%%
+graph BT
+    parens[&quot;(...)&quot;]
+
+    braces[&quot;{...}&quot;]
+    click braces &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/classes.md#literals&quot;
+
+    unqualifiedName[&quot;x&quot;]
+    click unqualifiedName &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/README.md#unqualified-names&quot;
+
+    memberAccess&gt;&quot;x.y&lt;br&gt;
+                    x.(...)&quot;]
+    click memberAccess &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/member_access.md&quot;
+
+    negation[&quot;-x&quot;]
+    click negation &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/arithmetic.md&quot;
+
+    complement[&quot;^x&quot;]
+    click complement &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/bitwise.md&quot;
+
+    unary((&quot; &quot;))
+
+    as[&quot;x as T&quot;]
+    click as &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/implicit_conversions.md&quot;
+
+    multiplication&gt;&quot;x * y&lt;br&gt;
+                    x / y&quot;]
+    click multiplication &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/arithmetic.md&quot;
+
+    addition&gt;&quot;x + y&lt;br&gt;
+              x - y&quot;]
+    click addition &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/arithmetic.md&quot;
+
+    modulo[&quot;x % y&quot;]
+    click modulo &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/arithmetic.md&quot;
+
+    bitwise_and&gt;&quot;x &amp; y&quot;]
+    bitwise_or&gt;&quot;x | y&quot;]
+    bitwise_xor&gt;&quot;x ^ y&quot;]
+    click bitwise_and &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/bitwise.md&quot;
+    click bitwise_or &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/bitwise.md&quot;
+    click bitwise_xor &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/bitwise.md&quot;
+
+    shift[&quot;x &lt;&lt; y&lt;br&gt;
+           x &gt;&gt; y&quot;]
+    click shift &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/bitwise.md&quot;
+
+    comparison[&quot;x == y&lt;br&gt;
+                x != y&lt;br&gt;
+                x &lt; y&lt;br&gt;
+                x &lt;= y&lt;br&gt;
+                x &gt; y&lt;br&gt;
+                x &gt;= y&quot;]
+    click comparison &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/comparison_operators.md&quot;
+
+    not[&quot;not x&quot;]
+    click not &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/logical_operators.md&quot;
+
+    logicalOperand((&quot; &quot;))
+
+    and&gt;&quot;x and y&quot;]
+    click and &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/logical_operators.md&quot;
+
+    or&gt;&quot;x or y&quot;]
+    click or &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/logical_operators.md&quot;
+
+    logicalExpression((&quot; &quot;))
+
+    if&gt;&quot;if x then y else z&quot;]
+    click if &quot;https://github.com/carbon-language/carbon-lang/blob/trunk/docs/design/expressions/if.md&quot;
+
+    expressionEnd[&quot;x;&quot;]
+
+    memberAccess --&gt; parens &amp; braces &amp; unqualifiedName
+    negation --&gt; memberAccess
+    complement --&gt; memberAccess
+    unary --&gt; negation &amp; complement
+    %% Use a longer arrow here to put `not` next to `and` and `or`.
+    not -----&gt; memberAccess
+    multiplication &amp; modulo &amp; as &amp; bitwise_and &amp; bitwise_or &amp; bitwise_xor &amp; shift --&gt; unary
+    addition --&gt; multiplication
+    comparison --&gt; modulo &amp; addition &amp; as &amp; bitwise_and &amp; bitwise_or &amp; bitwise_xor &amp; shift
+    logicalOperand --&gt; comparison &amp; not
+    and &amp; or --&gt; logicalOperand
+    logicalExpression --&gt; and &amp; or
+    if &amp; expressionEnd --&gt; logicalExpression</code></pre>
+<p>The diagram's attributes are:</p>
+<ul>
+<li><p>Each non-empty node represents a precedence group. Empty circles are used to simplify the graph, and do not represent a precedence group.</p></li>
+<li><p>When an expression is composed from different precedence groups, the interpretation is determined by the precedence edges:</p>
+<ul>
+<li><p>A precedence edge A --&gt; B means that A is lower precedence than B, so A can contain B without parentheses. For example, <code>or --&gt; not</code> means that <code>not x or y</code> is treated as <code>(not x) or y</code>.</p></li>
+<li><p>Precedence edges are transitive. For example, <code>or --&gt; == --&gt; as</code> means that <code>or</code> is lower precedence than <code>as</code>.</p></li>
+</ul></li>
+<li><p>When an expression is composed from a single precedence group, the interpretation is determined by the <a href="https://en.wikipedia.org/wiki/Operator_associativity">associativity</a> of the precedence group:</p>
+<pre class="mermaid"><code>graph TD
+    non[&quot;Non-associative&quot;]
+    left&gt;&quot;Left associative&quot;]</code></pre>
+<ul>
+<li>For example, <code>+</code> and <code>-</code> are left-associative and in the same precedence group, so <code>a + b + c - d</code> is treated as <code>((a + b) + c) - d</code>.</li>
+</ul></li>
+</ul>
+<h2 id="names">Names</h2>
+<h3 id="unqualified-names">Unqualified names</h3>
+<p>An <em>unqualified name</em> is a <a href="../lexical_conventions/words.html">word</a> that is not a keyword and is not preceded by a period (<code>.</code>).</p>
+<p><strong>TODO:</strong> Name lookup rules for unqualified names.</p>
+<h3 id="qualified-names-and-member-access">Qualified names and member access</h3>
+<p>A <em>qualified name</em> is a word that appears immediately after a period. Qualified names appear in the following contexts:</p>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/design/classes.md#literals">Designators</a>: <code>.</code> <em>word</em></li>
+<li><a href="member_access.html">Simple member access expressions</a>: <em>expression</em> <code>.</code> <em>word</em></li>
+</ul>
+<pre><code>var x: auto = {.hello = 1, .world = 2};
+                ^^^^^       ^^^^^ qualified name
+               ^^^^^^      ^^^^^^ designator
+
+x.hello = x.world;
+  ^^^^^     ^^^^^ qualified name
+^^^^^^^   ^^^^^^^ member access expression</code></pre>
+<p>Qualified names refer to members of an entity determined by the context in which the expression appears. For a member access, the entity is named by the expression preceding the period. In a struct literal, the entity is the struct type. For example:</p>
+<pre><code>package Foo api;
+namespace N;
+fn N.F() {}
+
+fn G() {
+  // Same as `(Foo.N).F()`.
+  // `Foo.N` names namespace `N` in package `Foo`.
+  // `(Foo.N).F` names function `F` in namespace `N`.
+  Foo.N.F();
+}
+
+// `.n` refers to the member `n` of `{.n: i32}`.
+fn H(a: {.n: i32}) -&gt; i32 {
+  // `a.n` is resolved to the member `{.n: i32}.n`,
+  // and names the corresponding subobject of `a`.
+  return a.n;
+}
+
+fn J() {
+  // `.n` refers to the member `n of `{.n: i32}`.
+  H({.n = 5 as i32});
+}</code></pre>
+<p>Member access expressions associate left-to-right. If the member name is more complex than a single <em>word</em>, a compound member access expression can be used, with parentheses around the member name:</p>
+<ul>
+<li><em>expression</em> <code>.</code> <code>(</code> <em>expression</em> <code>)</code></li>
+</ul>
+<pre><code>interface I { fn F[me: Self](); }
+class X {}
+external impl X as I { fn F[me: Self]() {} }
+
+// `x.I.F()` would mean `(x.I).F()`.
+fn Q(x: X) { x.(I.F)(); }</code></pre>
+<h2 id="operators">Operators</h2>
+<p>Most expressions are modeled as operators:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Operator</th>
+<th>Syntax</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Arithmetic</td>
+<td><a href="arithmetic.html"><code>-</code></a> (unary)</td>
+<td><code>-x</code></td>
+<td>The negation of <code>x</code>.</td>
+</tr>
+<tr class="even">
+<td>Bitwise</td>
+<td><a href="bitwise.html"><code>^</code></a> (unary)</td>
+<td><code>^x</code></td>
+<td>The bitwise complement of <code>x</code>.</td>
+</tr>
+<tr class="odd">
+<td>Arithmetic</td>
+<td><a href="arithmetic.html"><code>+</code></a></td>
+<td><code>x + y</code></td>
+<td>The sum of <code>x</code> and <code>y</code>.</td>
+</tr>
+<tr class="even">
+<td>Arithmetic</td>
+<td><a href="arithmetic.html"><code>-</code></a> (binary)</td>
+<td><code>x - y</code></td>
+<td>The difference of <code>x</code> and <code>y</code>.</td>
+</tr>
+<tr class="odd">
+<td>Arithmetic</td>
+<td><a href="arithmetic.html"><code>*</code></a></td>
+<td><code>x * y</code></td>
+<td>The product of <code>x</code> and <code>y</code>.</td>
+</tr>
+<tr class="even">
+<td>Arithmetic</td>
+<td><a href="arithmetic.html"><code>/</code></a></td>
+<td><code>x / y</code></td>
+<td><code>x</code> divided by <code>y</code>, or the quotient thereof.</td>
+</tr>
+<tr class="odd">
+<td>Arithmetic</td>
+<td><a href="arithmetic.html"><code>%</code></a></td>
+<td><code>x % y</code></td>
+<td><code>x</code> modulo <code>y</code>.</td>
+</tr>
+<tr class="even">
+<td>Bitwise</td>
+<td><a href="bitwise.html"><code>&amp;</code></a></td>
+<td><code>x &amp; y</code></td>
+<td>The bitwise AND of <code>x</code> and <code>y</code>.</td>
+</tr>
+<tr class="odd">
+<td>Bitwise</td>
+<td><a href="bitwise.html"><code>|</code></a></td>
+<td><code>x | y</code></td>
+<td>The bitwise OR of <code>x</code> and <code>y</code>.</td>
+</tr>
+<tr class="even">
+<td>Bitwise</td>
+<td><a href="bitwise.html"><code>^</code></a> (binary)</td>
+<td><code>x ^ y</code></td>
+<td>The bitwise XOR of <code>x</code> and <code>y</code>.</td>
+</tr>
+<tr class="odd">
+<td>Bitwise</td>
+<td><a href="bitwise.html"><code>&lt;&lt;</code></a></td>
+<td><code>x &lt;&lt; y</code></td>
+<td><code>x</code> bit-shifted left <code>y</code> places.</td>
+</tr>
+<tr class="even">
+<td>Bitwise</td>
+<td><a href="bitwise.html"><code>&gt;&gt;</code></a></td>
+<td><code>x &gt;&gt; y</code></td>
+<td><code>x</code> bit-shifted right <code>y</code> places.</td>
+</tr>
+<tr class="odd">
+<td>Conversion</td>
+<td><a href="as_expressions.html"><code>as</code></a></td>
+<td><code>x as T</code></td>
+<td>Converts the value <code>x</code> to the type <code>T</code>.</td>
+</tr>
+<tr class="even">
+<td>Comparison</td>
+<td><a href="comparison_operators.html"><code>==</code></a></td>
+<td><code>x == y</code></td>
+<td>Equality: <code>true</code> if <code>x</code> is equal to <code>y</code>.</td>
+</tr>
+<tr class="odd">
+<td>Comparison</td>
+<td><a href="comparison_operators.html"><code>!=</code></a></td>
+<td><code>x != y</code></td>
+<td>Inequality: <code>true</code> if <code>x</code> is not equal to <code>y</code>.</td>
+</tr>
+<tr class="even">
+<td>Comparison</td>
+<td><a href="comparison_operators.html"><code>&lt;</code></a></td>
+<td><code>x &lt; y</code></td>
+<td>Less than: <code>true</code> if <code>x</code> is less than <code>y</code>.</td>
+</tr>
+<tr class="odd">
+<td>Comparison</td>
+<td><a href="comparison_operators.html"><code>&lt;=</code></a></td>
+<td><code>x &lt;= y</code></td>
+<td>Less than or equal: <code>true</code> if <code>x</code> is less than or equal to <code>y</code>.</td>
+</tr>
+<tr class="even">
+<td>Comparison</td>
+<td><a href="comparison_operators.html"><code>&gt;</code></a></td>
+<td><code>x &gt; y</code></td>
+<td>Greater than: <code>true</code> if <code>x</code> is greater than to <code>y</code>.</td>
+</tr>
+<tr class="odd">
+<td>Comparison</td>
+<td><a href="comparison_operators.html"><code>&gt;=</code></a></td>
+<td><code>x &gt;= y</code></td>
+<td>Greater than or equal: <code>true</code> if <code>x</code> is greater than or equal to <code>y</code>.</td>
+</tr>
+<tr class="even">
+<td>Logical</td>
+<td><a href="logical_operators.html"><code>and</code></a></td>
+<td><code>x and y</code></td>
+<td>A short-circuiting logical AND: <code>true</code> if both operands are <code>true</code>.</td>
+</tr>
+<tr class="odd">
+<td>Logical</td>
+<td><a href="logical_operators.html"><code>or</code></a></td>
+<td><code>x or y</code></td>
+<td>A short-circuiting logical OR: <code>true</code> if either operand is <code>true</code>.</td>
+</tr>
+<tr class="even">
+<td>Logical</td>
+<td><a href="logical_operators.html"><code>not</code></a></td>
+<td><code>not x</code></td>
+<td>Logical NOT: <code>true</code> if the operand is <code>false</code>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="conversions-and-casts">Conversions and casts</h2>
+<p>When an expression appears in a context in which an expression of a specific type is expected, <a href="implicit_conversions.html">implicit conversions</a> are applied to convert the expression to the target type.</p>
+<p>Expressions can also be converted to a specific type using an <a href="as_expressions.html"><code>as</code> expression</a>.</p>
+<pre><code>fn Bar(n: i32);
+fn Baz(n: i64) {
+  // OK, same as Bar(n as i32)
+  Bar(n);
+}</code></pre>
+<h2 id="if-expressions"><code>if</code> expressions</h2>
+<p>An <a href="if.html"><code>if</code> expression</a> chooses between two expressions.</p>
+<pre><code>fn Run(args: Span(StringView)) {
+  var file: StringView = if args.size() &gt; 1 then args[1] else &quot;/dev/stdin&quot;;
+}</code></pre>
+<p><code>if</code> expressions are analogous to <code>?:</code> ternary expressions in C and C++.</p>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<p>Other expression documents will list more alternatives; this lists alternatives not noted elsewhere.</p>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0555.md#total-order">Total order</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0555.md#different-precedence-for-different-operands">Different precedence for different operands</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0555.md#require-less-than-a-partial-order">Require less than a partial order</a></li>
+</ul>
+<h2 id="references">References</h2>
+<p>Other expression documents will list more references; this lists references not noted elsewhere.</p>
+<ul>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/555">#555: Operator precedence</a>.</li>
+</ul>

@@ -1,0 +1,31 @@
+<h1 id="blocks-and-statements">Blocks and statements</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#todo">TODO</a></li>
+<li><a href="#overview">Overview</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="todo">TODO</h2>
+<p>This is a skeletal design, added to support <a href="index.html">the overview</a>. It should not be treated as accepted by the core team; rather, it is a placeholder until we have more time to examine this detail. Please feel welcome to rewrite and update as appropriate.</p>
+<h2 id="overview">Overview</h2>
+<p>The body or definition of a function is provided by a block of code containing statements, much like in C or C++. The body of a function is also a new, nested scope inside the function's scope (meaning that parameter names are available). Statements within a block are terminated by a semicolon. Each statement can, among other things, be an expression. Here is a trivial example of a function definition using a block of statements:</p>
+<pre><code>fn Foo() {
+  Bar();
+  Baz();
+}</code></pre>
+<p>Statements can also themselves be a block of statements, which provide scopes and nesting:</p>
+<pre><code>fn Foo() {
+  Bar();
+  {
+    Baz();
+  }
+}</code></pre>

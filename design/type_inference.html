@@ -1,0 +1,36 @@
+<h1 id="type-inference">Type inference</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#open-questions">Open questions</a>
+<ul>
+<li><a href="#inferring-a-variable-type-from-literals">Inferring a variable type from literals</a></li>
+</ul></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p><a href="https://en.wikipedia.org/wiki/Type_inference">Type inference</a> occurs in Carbon when the <code>auto</code> keyword is used. This may occur in <a href="variables.html">variable declarations</a> or <a href="functions.html">function declarations</a>.</p>
+<p>At present, type inference is very simple: given the expression which generates the value to be used for type inference, the inferred type is the precise type of that expression. For example, the inferred type for <code>auto</code> in <code>fn Foo(x: i64) -&gt; auto { return x; }</code> is <code>i64</code>.</p>
+<p>Type inference is currently supported for <a href="functions.html">function return types</a> and <a href="variables.html">declared variable types</a>.</p>
+<h2 id="open-questions">Open questions</h2>
+<h3 id="inferring-a-variable-type-from-literals">Inferring a variable type from literals</h3>
+<p>Using the type on the right side for <code>var y: auto = 1</code> currently results in a constant <code>IntLiteral(1)</code> value, whereas most languages would suggest a variable integer type, such as <code>i64</code>. Carbon might also make it an error. Although type inference currently only addresses <code>auto</code> for variables and function return types, this is something that will be considered as part of type inference in general, because it also affects generics, templates, lambdas, and return types.</p>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0851.md#use-_-instead-of-auto">Use <code>_</code> instead of <code>auto</code></a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/851">#851: auto keyword for vars</a></li>
+</ul>

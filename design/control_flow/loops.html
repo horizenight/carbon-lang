@@ -1,0 +1,96 @@
+<h1 id="loops">Loops</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#details">Details</a>
+<ul>
+<li><a href="#while"><code>while</code></a></li>
+<li><a href="#for"><code>for</code></a></li>
+<li><a href="#break"><code>break</code></a></li>
+<li><a href="#continue"><code>continue</code></a></li>
+</ul></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p>Carbon provides loops using the <code>while</code> and <code>for</code> statements. Within a loop, the <code>break</code> and <code>continue</code> statements can be used for flow control.</p>
+<h2 id="details">Details</h2>
+<h3 id="while"><code>while</code></h3>
+<p><code>while</code> statements loop for as long as the passed expression returns <code>True</code>. Syntax is:</p>
+<blockquote>
+<p><code>while (</code> <em>boolean expression</em> <code>) {</code> <em>statements</em> <code>}</code></p>
+</blockquote>
+<p>For example, this prints <code>0</code>, <code>1</code>, <code>2</code>, then <code>Done!</code>:</p>
+<pre class="carbon"><code>var x: Int = 0;
+while (x &lt; 3) {
+  Print(x);
+  ++x;
+}
+Print(&quot;Done!&quot;);</code></pre>
+<h3 id="for"><code>for</code></h3>
+<p><code>for</code> statements support range-based looping, typically over containers. Syntax is:</p>
+<blockquote>
+<p><code>for (</code> <em>var declaration</em> <code>in</code> <em>expression</em> <code>) {</code> <em>statements</em> <code>}</code></p>
+</blockquote>
+<p>For example, this prints all names in <code>names</code>:</p>
+<pre class="carbon"><code>for (var name: String in names) {
+  Print(name);
+}</code></pre>
+<p><code>PrintNames()</code> prints each <code>String</code> in the <code>names</code> <code>List</code> in iteration order.</p>
+<h3 id="break"><code>break</code></h3>
+<p>The <code>break</code> statement immediately ends a <code>while</code> or <code>for</code> loop. Execution will resume at the end of the loop's scope. Syntax is:</p>
+<blockquote>
+<p><code>break;</code></p>
+</blockquote>
+<p>For example, this processes steps until a manual step is hit (if no manual step is hit, all steps are processed):</p>
+<pre class="carbon"><code>for (var step: Step in steps) {
+  if (step.IsManual()) {
+    Print(&quot;Reached manual step!&quot;);
+    break;
+  }
+  step.Process();
+}</code></pre>
+<h3 id="continue"><code>continue</code></h3>
+<p>The <code>continue</code> statement immediately goes to the next loop of a <code>while</code> or <code>for</code>. In a <code>while</code>, execution continues with the <code>while</code> expression. Syntax is:</p>
+<blockquote>
+<p><code>continue;</code></p>
+</blockquote>
+<p>For example, this prints all non-empty lines of a file, using <code>continue</code> to skip empty lines:</p>
+<pre class="carbon"><code>var f: File = OpenFile(path);
+while (!f.EOF()) {
+  var line: String = f.ReadLine();
+  if (line.IsEmpty()) {
+    continue;
+  }
+  Print(line);
+}</code></pre>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0340.md#non-c-syntax">Non-C++ syntax</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0340.md#initializing-variables-in-the-while">Initializing variables in the <code>while</code></a></li>
+<li><code>for</code>:
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0353.md#include-semisemi-for-loops">Include semisemi <code>for</code> loops</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0353.md#multi-variable-bindings">Multi-variable bindings</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0618.md#-versus-in"><code>:</code> versus <code>in</code></a></li>
+</ul></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0623.md#optional-braces">Optional braces</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0623.md#optional-parentheses">Optional parentheses</a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/340">#340: <code>while</code></a></li>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/353">#353: <code>for</code></a></li>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/618">#618: <code>var</code> ordering</a></li>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/623">#623: Require braces</a></li>
+</ul>

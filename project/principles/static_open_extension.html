@@ -1,0 +1,30 @@
+<h1 id="principle-one-static-open-extension-mechanism">Principle: One static open extension mechanism</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#background">Background</a></li>
+<li><a href="#principle">Principle</a></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="background">Background</h2>
+<p>In C++, a single function may be overloaded with definitions in multiple files. The <a href="https://en.wikipedia.org/wiki/Argument-dependent_name_lookup">ADL</a> name lookup rule even allows an unqualified call to resolve to functions defined in different namespaces. These rules are used to define extension points with static dispatch for operator overloading and functions like <a href="https://www.cplusplus.com/reference/algorithm/swap/"><code>swap</code></a>.</p>
+<p>Nothing in C++ restricts the signatures of function overloads. This means that if overloading is used as an extension point to define an operation for a variety of types, there is no way to type check generic code that tries to invoke that operation over those types.</p>
+<p>Further, in C++, all non-member functions can be found in this way, if they are declared in the same namespace as a type that could be associated with an argument list in a call. There is no straightforward opt-out mechanism in a function declaration, and while there are opt-out mechanisms at call sites, they are rarely used. As a consequence, many non-member functions with the same name can form part of an overload set, even if they provide unrelated functionality, and there is no indication in the code of which functions in different namespaces are intended to expose the same capability.</p>
+<h2 id="principle">Principle</h2>
+<p>In Carbon, <a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/design/generics/overview.md"><code>interface</code>s</a> are the only static open extension mechanism.</p>
+<p>Each type may define its own implementation of each interface. Generic code can be written that works with any type implementing the interface. That code can be type checked independent of which type the generic code is instantiated with by using the fact that the interface specifies the signatures of the calls.</p>
+<p>To keep the language simple, this is the only static open extension mechanism in Carbon. This means that function overloading is limited in Carbon to only signatures defined together in the same library. It also means that to interoperate with C++, the operators and <code>swap</code> need to have corresponding interfaces on the Carbon side.</p>
+<p>The main advantage of interfaces as an open extension mechanism over open overloading is allowing generics to be type checked separately. In addition, they are less <a href="low_context_sensitivity.html">context sensitive</a>. Generics are <a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/design/generics/terminology.md#coherence">coherent</a>, while open function overloading can resolve names differently depending on what is imported. Closed overloading in Carbon also simplifies what gets exported to C++ from Carbon. Interface implementations express intent by being explicit, in contrast to how adding a function to a cross-file overload set can be accidental.</p>
+<p>Interfaces provide an way to group functions together, and express the constraint that all of the functions in the group are implemented. Consider a random-access iterator, which has a number of methods. If a C++ template function only accesses some of those methods which happens to match the subset defined for a type, the code will work temporarily but fail later when the code is changed to use a different subset.</p>
+<p>This helps achieve the Carbon Goal of <a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/project/goals.md#code-that-is-easy-to-read-understand-and-write">code that is easy to read, understand, and write</a>.</p>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<p>Another approach to operator overloading is to use methods with a specific name. In C++ these start with the <a href="https://en.cppreference.com/w/cpp/language/operators"><code>operator</code> keyword</a>. <a href="https://docs.python.org/3/reference/datamodel.html#special-method-names">Python uses method with names starting and ending with double underscores</a>. Interfaces are more flexible about where implementations may be defined. For example, with special method names, <code>+</code> on a <code>Vector(T)</code> class could only be defined as part of the <code>Vector(T)</code> definition. With interfaces, additionally <code>+</code> for <code>Vector(MyType)</code> could be implemented with <code>MyType</code>. C++ provides this flexibility by also permitting non-method operator overloads, but this brings with it the cost of selecting a best-matching operator from a potentially very large open overload set.</p>

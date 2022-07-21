@@ -1,0 +1,113 @@
+<h1 id="functions">Functions</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#function-definitions">Function definitions</a>
+<ul>
+<li><a href="#return-clause">Return clause</a></li>
+<li><a href="#return-statements"><code>return</code> statements</a></li>
+</ul></li>
+<li><a href="#function-declarations">Function declarations</a></li>
+<li><a href="#function-calls">Function calls</a></li>
+<li><a href="#functions-in-other-features">Functions in other features</a></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p>Functions are the core building block for applications. Carbon's basic function syntax is:</p>
+<ul>
+<li><em>parameter</em>: <em>identifier</em> <code>:</code> <em>expression</em></li>
+<li><em>parameter-list</em>: <em>[ parameter</em> <code>,</code> <em>parameter</em> <code>,</code> <em>... ]</em></li>
+<li><em>return-clause</em>: <em>[</em> <code>-&gt;</code> <em>&lt; expression |</em> <code>auto</code> <em>&gt; ]</em></li>
+<li><em>signature</em>: <code>fn</code> <em>identifier</em> <code>(</code> <em>parameter-list</em> <code>)</code> <em>return-clause</em></li>
+<li><em>function-definition</em>: <em>signature</em> <code>{</code> <em>statements</em> <code>}</code></li>
+<li><em>function-declaration</em>: <em>signature</em> <code>;</code></li>
+<li><em>function-call</em>: <em>identifier</em> <code>(</code> <em>[ expression</em> <code>,</code> <em>expression</em> <code>,</code> <em>... ]</em> <code>)</code></li>
+</ul>
+<p>A function with only a signature and no body is a function declaration, or forward declaration. When the body is a present, it's a function definition. The body introduces nested scopes which may contain local variable declarations.</p>
+<h2 id="function-definitions">Function definitions</h2>
+<p>A basic function definition may look like:</p>
+<pre class="carbon"><code>fn Add(a: i64, b: i64) -&gt; i64 {
+  return a + b;
+}</code></pre>
+<p>This declares a function called <code>Add</code> which accepts two <code>i64</code> parameters, the first called <code>a</code> and the second called <code>b</code>, and returns an <code>i64</code> result. It returns the result of adding the two arguments.</p>
+<p>C++ might declare the same thing:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>int64_t<span class="op"> </span>Add<span class="op">(</span><span class="bu">std::</span>int64_t<span class="op"> </span>a<span class="op">,</span> <span class="bu">std::</span>int64_t<span class="op"> </span>b<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> a <span class="op">+</span> b<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Or with trailing return type syntax:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> Add<span class="op">(</span><span class="bu">std::</span>int64_t<span class="op"> </span>a<span class="op">,</span> <span class="bu">std::</span>int64_t<span class="op"> </span>b<span class="op">)</span> <span class="op">-&gt;</span> <span class="bu">std::</span>int64_t<span class="op"> {</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> a <span class="op">+</span> b<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="return-clause">Return clause</h3>
+<p>The return clause of a function specifies the return type using one of three possible syntaxes:</p>
+<ul>
+<li><code>-&gt;</code> followed by an <em>expression</em>, such as <code>i64</code>, directly states the return type. This expression will be evaluated at compile-time, so must be valid in that context.
+<ul>
+<li>For example, <code>fn ToString(val: i64) -&gt; String;</code> has a return type of <code>String</code>.</li>
+</ul></li>
+<li><code>-&gt;</code> followed by the <code>auto</code> keyword indicates that <a href="type_inference.html">type inference</a> should be used to determine the return type.
+<ul>
+<li>For example, <code>fn Echo(val: i64) -&gt; auto { return val; }</code> will have a return type of <code>i64</code> through type inference.</li>
+<li>Declarations must have a known return type, so <code>auto</code> is not valid.</li>
+<li>The function must have precisely one <code>return</code> statement. That <code>return</code> statement's expression will then be used for type inference.</li>
+</ul></li>
+<li>Omission indicates that the return type is the empty tuple, <code>()</code>.
+<ul>
+<li>For example, <code>fn Sleep(seconds: i64);</code> is similar to <code>fn Sleep(seconds: i64) -&gt; ();</code>.</li>
+<li><code>()</code> is similar to a <code>void</code> return type in C++.</li>
+</ul></li>
+</ul>
+<h3 id="return-statements"><code>return</code> statements</h3>
+<p>The <a href="control_flow/return.html"><code>return</code> statement</a> is essential to function control flow. It ends the flow of the function and returns execution to the caller.</p>
+<p>When the <a href="#return-clause">return clause</a> is omitted, the <code>return</code> statement has no expression argument, and function control flow implicitly ends after the last statement in the function's body as if <code>return;</code> were present.</p>
+<p>When the return clause is provided, including when it is <code>-&gt; ()</code>, the <code>return</code> statement must have an expression that is convertible to the return type, and a <code>return</code> statement must be used to end control flow of the function.</p>
+<h2 id="function-declarations">Function declarations</h2>
+<p>Functions may be declared separate from the definition by providing only a signature, with no body. This provides an API which may be called. For example:</p>
+<pre class="carbon"><code>// Declaration:
+fn Add(a: i64, b: i64) -&gt; i64;
+
+// Definition:
+fn Add(a: i64, b: i64) -&gt; i64 {
+  return a + b;
+}</code></pre>
+<p>The corresponding definition may be provided later in the same file or, when the declaration is in an <a href="code_and_name_organization/#libraries"><code>api</code> file of a library</a>, in the <code>impl</code> file of the same library. The signature of a function declaration must match the corresponding definition. This includes the <a href="#return-clause">return clause</a>; even though an omitted return type has equivalent behavior to <code>-&gt; ()</code>, the presence or omission must match.</p>
+<h2 id="function-calls">Function calls</h2>
+<p>Function calls use a function's identifier to pass multiple expression arguments corresponding to the function signature's parameters. For example:</p>
+<pre class="carbon"><code>fn Add(a: i64, b: i64) -&gt; i64 {
+  return a + b;
+}
+
+fn Run() {
+  Add(1, 2);
+}</code></pre>
+<p>Here, <code>Add(1, 2)</code> is a function call expression. <code>Add</code> refers to the function definition's identifier. The parenthesized arguments <code>1</code> and <code>2</code> are passed to the <code>a</code> and <code>b</code> parameters of <code>Add</code>.</p>
+<h2 id="functions-in-other-features">Functions in other features</h2>
+<p>Other designs build upon basic function syntax to add advanced features:</p>
+<ul>
+<li><a href="generics/overview.html#generic-functions">Generic functions</a> adds support for deduced parameters and generic type parameters.</li>
+<li><a href="classes.html#member-functions">Class member functions</a> adds support for methods and class functions.</li>
+</ul>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0438.md#function-keyword">Function keyword</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0826.md#only-allow-auto-return-types-if-parameters-are-generic">Only allow <code>auto</code> return types if parameters are generic</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0826.md#provide-alternate-function-syntax-for-concise-return-type-inference">Provide alternate function syntax for concise return type inference</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0826.md#allow-separate-declaration-and-definition">Allow separate declaration and definition</a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/438">#438: Add statement syntax for function declarations</a></li>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/826">#826: Function return type inference</a></li>
+</ul>

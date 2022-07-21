@@ -1,0 +1,29 @@
+<h1 id="lexical-conventions">Lexical conventions</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#lexical-elements">Lexical elements</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="lexical-elements">Lexical elements</h2>
+<p>The first stage of processing a <a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/design/code_and_name_organization/source_files.md">source file</a> is the division of the source file into lexical elements.</p>
+<p>A <em>lexical element</em> is one of the following:</p>
+<ul>
+<li>a maximal sequence of <a href="whitespace.html">whitespace</a> characters</li>
+<li>a <a href="words.html">word</a></li>
+<li>a literal:
+<ul>
+<li>a <a href="numeric_literals.html">numeric literal</a></li>
+<li>a <a href="string_literals.html">string literal</a></li>
+</ul></li>
+<li>TODO: operators, comments, ...</li>
+</ul>
+<p>The sequence of lexical elements is formed by repeatedly removing the longest initial sequence of characters that forms a valid lexical element.</p>

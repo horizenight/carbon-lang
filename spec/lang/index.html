@@ -1,0 +1,48 @@
+<h1 id="carbon-language-specification">Carbon language specification</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<h2 id="program-structure">Program structure</h2>
+<ol type="1">
+<li><p>A <em>program</em> is a collection of one or more linkage units that are <a href="#linkage">linked</a> together.</p></li>
+<li><p>A <em>Carbon linkage unit</em> is the result of <a href="#translation">translating</a> a source file. A <em>foreign linkage unit</em> is an artifact produced by a translation process for some other programming language. A linkage unit is either a Carbon linkage unit or a foreign linkage unit.</p></li>
+<li><p>A <em>source file</em> is a sequence of Unicode code points.</p>
+<blockquote>
+<p>Note: Source files are typically stored on disk in files with a <code>.carbon</code> file extension, encoded in UTF-8.</p>
+</blockquote></li>
+</ol>
+<h2 id="conformance">Conformance</h2>
+<ol type="1">
+<li><p>A program is <em>valid</em> if it contains no constructs that violate "shall" constraints in this specification. Otherwise, the program is <em>invalid</em>.</p></li>
+<li><p>An implementation is <em>conforming</em> if it accepts all valid programs, it rejects all invalid programs for which a diagnostic is required, and the <a href="execution.html">execution</a> semantics of all accepted programs is as specified in this specification.</p></li>
+</ol>
+<h2 id="translation">Translation</h2>
+<ol type="1">
+<li><p>Translation of a source file into a Carbon linkage unit proceeds as follows:</p>
+<ul>
+<li><a href="lex.html">Lexical analysis</a> decomposes the sequence of code points into a sequence of lexical elements.</li>
+<li>Whitespace and text comments are discarded, leaving a sequence of <a href="lex.html">tokens</a>.</li>
+<li>The tokens are <a href="parsing.html">parsed</a> into an abstract syntax tree.</li>
+<li><a href="names.html">Unqualified names are bound</a> to declarations in the abstract syntax tree.</li>
+<li>A translated form of each imported <a href="libs.html">library</a> is located and loaded.</li>
+<li><a href="semantics.html">Semantic analysis</a> is performed: types are determined and semantic checks are performed for all non-template-dependent constructs in the abstract syntax tree, constant expressions are evaluated, and templates are instantiated and semantically analyzed.</li>
+</ul></li>
+<li><blockquote>
+<p>Note: After semantic analysis, an implementation may optionally monomorphize generics by a process similar to template instantiation.</p>
+</blockquote></li>
+<li><p>The resulting linkage unit comprises all entities in the translated source file that are either <a href="#linkage">external</a> or are reachable from an external entity.</p>
+<blockquote>
+<p>Note: A linkage unit can include non-monomorphized generics, but never includes templates. Constant evaluation can eliminate references to entities.</p>
+</blockquote></li>
+</ol>
+<h2 id="linkage">Linkage</h2>
+<ol type="1">
+<li><p>Two declarations declare the same entity if both declarations are in the same library and the same <a href="names.html#scopes">scope</a> and declare the same <a href="names.html">name</a>.</p>
+<p>TODO: Linkage rules for foreign entities. TODO: Ability to declare file-local entities.</p></li>
+<li><p>All declarations of an entity shall use the same type.</p></li>
+<li><p>Every entity that is reachable from a linkage unit in a program shall be defined by a linkage unit in the program; no diagnostic is required unless an entity that can be referenced during the <a href="execution.html">execution</a> of the program is not defined.</p></li>
+<li><p>There shall not be more than one definition of an entity in a program.</p></li>
+</ol>

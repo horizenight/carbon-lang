@@ -1,0 +1,116 @@
+<h1 id="numeric-literals">Numeric literals</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#details">Details</a>
+<ul>
+<li><a href="#integer-literals">Integer literals</a></li>
+<li><a href="#real-number-literals">Real-number literals</a></li>
+<li><a href="#digit-separators">Digit separators</a></li>
+</ul></li>
+<li><a href="#divergence-from-other-languages">Divergence from other languages</a></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p>The following syntaxes are supported:</p>
+<ul>
+<li>Integer literals
+<ul>
+<li><code>12345</code> (decimal)</li>
+<li><code>0x1FE</code> (hexadecimal)</li>
+<li><code>0b1010</code> (binary)</li>
+</ul></li>
+<li>Real-number literals
+<ul>
+<li><code>123.456</code> (digits on both sides of the <code>.</code>)</li>
+<li><code>123.456e789</code> (optional <code>+</code> or <code>-</code> after the <code>e</code>)</li>
+<li><code>0x1.2p123</code> (optional <code>+</code> or <code>-</code> after the <code>p</code>)</li>
+</ul></li>
+<li>Digit separators (<code>_</code>) may be used, with <a href="#digit-separators">some restrictions</a></li>
+</ul>
+<p>Note that real-number literals always contain a <code>.</code> with digits on both sides, and integer literals never contain a <code>.</code>.</p>
+<p>Literals are case-sensitive. Unlike in C++, literals do not have a suffix to indicate their type.</p>
+<h2 id="details">Details</h2>
+<h3 id="integer-literals">Integer literals</h3>
+<p>Decimal integers are written as a non-zero decimal digit followed by zero or more additional decimal digits, or as a single <code>0</code>.</p>
+<p>Integers in other bases are written as a <code>0</code> followed by a base specifier character, followed by a sequence of digits in the corresponding base. The available base specifiers and corresponding bases are:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Base specifier</th>
+<th>Base</th>
+<th>Digits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>b</code></td>
+<td>2</td>
+<td><code>0</code> and <code>1</code></td>
+</tr>
+<tr class="even">
+<td><code>x</code></td>
+<td>16</td>
+<td><code>0</code> ... <code>9</code>, <code>A</code> ... <code>F</code></td>
+</tr>
+</tbody>
+</table>
+<p>The above table is case-sensitive. For example, <code>0b1</code> and <code>0x1A</code> are valid, and <code>0B1</code>, <code>0X1A</code>, and <code>0x1a</code> are invalid.</p>
+<p>A zero at the start of a literal can never be followed by another digit: either the literal is <code>0</code>, the <code>0</code> begins a base specifier, or the next character is a decimal point (see below). No support is provided for octal literals, and any C or C++ octal literal (other than <code>0</code>) is invalid in Carbon.</p>
+<h3 id="real-number-literals">Real-number literals</h3>
+<p>Real numbers are written as a decimal or hexadecimal integer followed by a period (<code>.</code>) followed by a sequence of one or more decimal or hexadecimal digits, respectively. A digit is required on each side of the period. <code>0.</code> and <code>.3</code> are both invalid.</p>
+<p>A real number can be followed by an exponent character, an optional <code>+</code> or <code>-</code> (defaulting to <code>+</code> if absent), and a character sequence matching the grammar of a decimal integer with some value <em>N</em>. For a decimal real number, the exponent character is <code>e</code>, and the effect is to multiply the given value by 10<sup>±<em>N</em></sup>. For a hexadecimal real number, the exponent character is <code>p</code>, and the effect is to multiply the given value by 2<sup>±<em>N</em></sup>. The exponent suffix is optional for both decimal and hexadecimal real numbers.</p>
+<p>Note that a decimal integer followed by <code>e</code> is not a real-number literal. For example, <code>3e10</code> is not a valid literal.</p>
+<p>When a real-number literal is interpreted as a value of a real-number type, its value is the representable real number closest to the value of the literal. In the case of a tie, the nearest value whose mantissa is even is selected.</p>
+<p>The decimal real number syntax allows for any decimal fraction to be expressed -- that is, any number of the form <em>a</em> x 10<sup>-<em>b</em></sup>, where <em>a</em> is an integer and <em>b</em> is a non-negative integer. Because the decimal fractions are dense in the reals and the set of values of the real-number type is assumed to be discrete, every value of the real-number type can be expressed as a real number literal. However, for certain applications, directly expressing the intended real-number representation may be more convenient than producing a decimal equivalent that is known to convert to the intended value. Hexadecimal real-number literals are provided in order to permit values of binary floating or fixed point real-number types to be expressed directly.</p>
+<h3 id="digit-separators">Digit separators</h3>
+<p>If digit separators (<code>_</code>) are included in literals, they must meet the respective condition:</p>
+<ul>
+<li>For decimal integers, the digit separators shall occur every three digits starting from the right. For example, <code>2_147_483_648</code>.</li>
+<li>For hexadecimal integers, the digit separators shall occur every four digits starting from the right. For example, <code>0x7FFF_FFFF</code>.</li>
+<li>For real-number literals, digit separators can appear in the decimal and hexadecimal integer portions (prior to the period and after the optional <code>e</code> or mandatory <code>p</code>) as described in the previous bullets. For example, <code>2_147.483648e12_345</code> or <code>0x1_00CA.FEF00Dp+24</code></li>
+<li>For binary literals, digit separators can appear between any two digits. For example, <code>0b1_000_101_11</code>.</li>
+</ul>
+<h2 id="divergence-from-other-languages">Divergence from other languages</h2>
+<p>The design provides a syntax that is deliberately close to that used both by C++ and many other languages, so it should feel familiar to developers. However, it selects a reasonably minimal subset of the syntaxes. This minimal approach provides benefits directly in line with the goal that Carbon code should be <a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/project/goals.md#code-that-is-easy-to-read-understand-and-write">easy to read, understand, and write</a>:</p>
+<ul>
+<li>Reduces unnecessary choices for programmers.</li>
+<li>Simplifies the syntax rules of the language.</li>
+<li>Improves consistency of written Carbon code.</li>
+</ul>
+<p>That said, it still provides sufficient variations to address important use cases for the goal of not leaving room for a lower level language:</p>
+<ul>
+<li>Hexadecimal and binary integer literals.</li>
+<li>Scientific notation floating point literals.</li>
+<li>Hexadecimal (scientific) floating point literals.</li>
+</ul>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0143.md#integer-bases">Integer bases</a>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0143.md#octal-literals">Octal literals</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0143.md#decimal-literals">Decimal literals</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0143.md#case-sensitivity">Case sensitivity</a></li>
+</ul></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0143.md#real-number-syntax">Real number syntax</a>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0866.md">Disallow ties</a></li>
+</ul></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0143.md#digit-separator-syntax">Digit separator syntax</a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/143">#143: Numeric literals</a></li>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/866">#866: Allow ties in floating literals</a></li>
+</ul>

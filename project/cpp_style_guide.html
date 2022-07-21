@@ -1,0 +1,116 @@
+<h1 id="c-style-guide">C++ style guide</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#background">Background</a></li>
+<li><a href="#baseline">Baseline</a></li>
+<li><a href="#carbon-local-guidance">Carbon-local guidance</a>
+<ul>
+<li><a href="#general-naming-rules">General naming rules</a></li>
+<li><a href="#file-names">File names</a></li>
+<li><a href="#syntax-and-formatting">Syntax and formatting</a></li>
+<li><a href="#copyable-and-movable-types">Copyable and movable types</a></li>
+<li><a href="#static-and-global-variables">Static and global variables</a></li>
+<li><a href="#foundational-libraries-and-data-types">Foundational libraries and data types</a></li>
+</ul></li>
+<li><a href="#suggested-clang-format-contents">Suggested <code>.clang-format</code> contents</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="background">Background</h2>
+<p>C++ code in the Carbon project should use a consistent and well documented style guide. Where possible, this should be enacted and enforced with tooling to avoid toil both for authors of C++ code in the Carbon project and for code reviewers.</p>
+<p>However, we are not in the business of innovating significantly in the space of writing clean and maintainable C++ code, and so we work primarily to reuse existing best practices and guidelines.</p>
+<h2 id="baseline">Baseline</h2>
+<p>The baseline style guidance is the <a href="https://google.github.io/styleguide/cppguide.html">Google C++ style guide</a>.</p>
+<h2 id="carbon-local-guidance">Carbon-local guidance</h2>
+<p>We provide some local guidance beyond the baseline. This are typically motived either by specific value provided to the project, or to give simpler and more strict guidance for Carbon's narrow use of C++.</p>
+<h3 id="general-naming-rules">General naming rules</h3>
+<p>Carbon's C++ code tries to match the proposed Carbon naming convention as closely as is reasonable in C++ in order to better understand and familiarize ourselves with the practice of using this convention. It happens that this is fairly similar to the naming convention in the Google style guide and largely serves to simplify it.</p>
+<ul>
+<li>Known, compile-time constants use <code>UpperCamelCase</code>, referencing Proper Nouns.
+<ul>
+<li>This includes namespaces, type names, functions, member functions (except as noted below), template parameters, <code>constexpr</code> variables, enumerators, etc.</li>
+<li>Note that virtual member functions should be named with <code>UpperCamelCase</code>. The distinction between a virtual function and a non-virtual function should be invisible, especially at the call site, as that is an internal implementation detail. We want to be able to freely change that without updating the name.</li>
+</ul></li>
+<li>Member functions may use <code>snake_case</code> names if they do nothing besides return a reference to a data member (or assign a value to a data member, in the case of <code>set_</code> methods), <strong>or</strong> if their behavior (including performance) would be unsurprising to a caller who assumes they are implemented that way.</li>
+<li>All other names use <code>snake_case</code>, including function parameters, and non-constant local and member variables.
+<ul>
+<li>Private member variables should have a trailing <code>_</code>.</li>
+</ul></li>
+</ul>
+<h3 id="file-names">File names</h3>
+<ul>
+<li>Always use <code>snake_case</code> for files, directories, and build system rules. Avoid <code>-</code>s in these as well.</li>
+<li>Use <code>.cpp</code> for source files, which is the most common open source extension and matches other places where "C++" is written without punctuation.</li>
+</ul>
+<h3 id="syntax-and-formatting">Syntax and formatting</h3>
+<p>These are minor issues where any of the options would be fine and we simply need to pick a consistent option. Where possible, <a href="#suggested-clang-format-contents"><code>clang-format</code></a> should be used to enforce these.</p>
+<ul>
+<li><p>Always use trailing return type syntax for functions and methods.</p></li>
+<li><p>Place the pointer <code>*</code> adjacent to the type: <code>TypeName* variable_name</code>.</p></li>
+<li><p>Only declare one variable at a time (declaring multiple variables requires confusing repetition of part of the type).</p></li>
+<li><p>Write <code>const</code> before the type when at the outer level: <code>const int N = 42;</code>.</p></li>
+<li><p>Only use line comments (with <code>//</code>, not <code>/* ... */</code>), on a line by themselves, except for <a href="https://clang.llvm.org/extra/clang-tidy/checks/bugprone-argument-comment.html#bugprone-argument-comment">argument name comments</a>, <a href="https://google.github.io/styleguide/cppguide.html#Namespaces">closing namespace comments</a>, and similar structural comments. In particular, don't append comments about a line of code to the end of its line:</p>
+<pre><code>int bad = 42;  // Don&#39;t comment here.
+
+// Instead comment here.
+int good = 42;
+
+// Closing namespace comments are structural, and both okay and expected.
+}  // namespace MyNamespace</code></pre>
+<p>This dogfoods our planned commenting syntax for Carbon. It also provides a single, consistent placement rule. It also provides more resilience against automated refactorings. Those changes often make code longer, which forces ever more difficult formatting decisions, and can easily spread one line across multiple lines, leaving it impossible to know where to place the comment. Comments on their own line preceding such code, while still imprecise, are at least less confusing over the course of such refactorings.</p></li>
+<li><p>Use the <code>using</code>-based type alias syntax instead of <code>typedef</code>.</p></li>
+<li><p>Don't use <code>using</code> to support unqualified lookup on <code>std</code> types; for example, <code>using std::vector;</code>. This also applies to other short namespaces, particularly <code>llvm</code> and <code>clang</code>.</p>
+<ul>
+<li>Writing <code>std::</code> gives clearer diagnostics and avoids any possible ambiguity, particularly for ADL.</li>
+<li>An exception is made for functions like <code>std::swap</code> that are intentionally called using ADL. This pattern should be written as <code>{ using std::swap; swap(thing1, thing2); }</code>.</li>
+</ul></li>
+<li><p>Follow the rules for initialization outlined in <a href="https://abseil.io/tips/88#best-practices-for-initialization">Abseil's tip #88</a>. To summarize, omitting some details from the article:</p>
+<ul>
+<li>Use assignment syntax (<code>=</code>) when initializing directly with the intended value (or with a braced initializer directly specifying that value).</li>
+<li>Use the traditional constructor syntax (with parentheses) when the initialization is performing some active logic, rather than simply composing values together.</li>
+<li>Use <code>{}</code> initialization without the <code>=</code> only if the above options don't compile.</li>
+<li>Never mix <code>{}</code> initialization and <code>auto</code>.</li>
+</ul></li>
+<li><p>Always use braces for conditional, <code>switch</code>, and loop statements, even when the body is a single statement.</p>
+<ul>
+<li>Within a <code>switch</code> statement, use braces after a <code>case</code> label when necessary to create a scope for a variable.</li>
+<li>Always break the line immediately after an open brace except for empty loop bodies.</li>
+</ul></li>
+<li><p>For <a href="https://google.github.io/styleguide/cppguide.html#Internal_Linkage">internal linkage</a> of definitions of functions and variables, prefer <code>static</code> over anonymous namespaces. <code>static</code> minimizes the context necessary to notice the internal linkage of a definition.</p>
+<ul>
+<li>Anonymous namespaces are still necessary for classes and enums.</li>
+<li>Tests are an exception and should typically be wrapped with <code>namespace Carbon::Testing { namespace { ... } }</code> to keep everything internal.</li>
+</ul></li>
+</ul>
+<h3 id="copyable-and-movable-types">Copyable and movable types</h3>
+<ul>
+<li>Types should have value semantics and support both move and copy where possible.</li>
+<li>Types that cannot be copied should still be movable where possible.</li>
+<li>If supported, moving should be as efficient as possible.</li>
+</ul>
+<h3 id="static-and-global-variables">Static and global variables</h3>
+<ul>
+<li>Global and static variables, whether at file, class, or function scope, should be declared <code>constexpr</code>.</li>
+</ul>
+<h3 id="foundational-libraries-and-data-types">Foundational libraries and data types</h3>
+<ul>
+<li>Generally prefer LLVM libraries and data structures to standard C++ ones.
+<ul>
+<li>These are optimized significantly for performance, especially when used without exception handling or safety requirements, and when used in patterns that tend to occur while building compilers.</li>
+<li>They also minimize the vocabulary type friction when using actual LLVM and Clang APIs.</li>
+</ul></li>
+<li>Do not add third-party library dependencies to any code that might conceivably be used as part of the compiler or runtime.
+<ul>
+<li>Compilers and runtime libraries have unique constraints on their licensing. For simplicity, we want all transitive dependencies of these layers to be under the LLVM license that the Carbon project as a whole uses (as well as LLVM itself).</li>
+</ul></li>
+</ul>
+<h2 id="suggested-clang-format-contents">Suggested <code>.clang-format</code> contents</h2>
+<p>See this repository's <a href="https://github.com/carbon-language/carbon-lang/tree/trunk/.clang-format"><code>.clang-format</code> file</a>.</p>

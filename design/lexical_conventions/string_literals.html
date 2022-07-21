@@ -1,0 +1,283 @@
+<h1 id="string-literals">String literals</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#details">Details</a>
+<ul>
+<li><a href="#simple-and-block-string-literals">Simple and block string literals</a>
+<ul>
+<li><a href="#escape-sequences">Escape sequences</a></li>
+</ul></li>
+<li><a href="#raw-string-literals">Raw string literals</a></li>
+<li><a href="#encoding">Encoding</a></li>
+</ul></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p>Carbon supports both simple literals that are single-line using one double quotation mark (<code>"</code>) and block literals that are multi-line using three double quotation marks (<code>"""</code>). A block string literal may have a file type indicator after the first <code>"""</code>; this does not affect the string itself, but may assist other tooling. For example:</p>
+<pre class="carbon"><code>// Simple string literal:
+var simple: String = &quot;example&quot;;
+
+// Block string literal:
+var block: String = &quot;&quot;&quot;
+    The winds grow high; so do your stomachs, lords.
+    How irksome is this music to my heart!
+    When such strings jar, what hope of harmony?
+    I pray, my lords, let me compound this strife.
+        -- History of Henry VI, Part II, Act II, Scene 1, W. Shakespeare
+    &quot;&quot;&quot;;
+
+// Block string literal with file type indicator:
+var code_block: String = &quot;&quot;&quot;cpp
+    #include &lt;iostream&gt;
+    int main() {
+        std::cout &lt;&lt; &quot;Hello world!&quot;;
+        return 0;
+    }
+    &quot;&quot;&quot;</code></pre>
+<p>The indentation of a block string literal's terminating line is removed from all preceding lines. As a consequence, in the above <code>code_block</code> example, only <code>std::cout</code> and <code>return</code> are indented in the resulting string, and by 4 spaces each.</p>
+<p>Escape sequences introduced by a backslash (<code>\</code>) and are used to express special character or code unit sequences, such as <code>\n</code> for a newline character. Raw string literals are additionally delimited with one or more <code>#</code>; these require an equal number of hash symbols (<code>#</code>) after the <code>\</code> to indicate an escape sequence. Raw string literals are used to more easily write literal <code>\</code>s in strings. Both simple and block string literals have raw forms. For example:</p>
+<pre class="carbon"><code>// Raw simple string literal with newline escape sequence:
+var newline: String = &quot;line one\nline two&quot;;
+
+// Raw simple string literal with literal `\n`, not a newline:
+var raw: String = #&quot;line one\nstill line one&quot;#;
+
+// Raw simple string literal with newline escape sequence:
+var raw_newline: String = #&quot;line one\#nline two&quot;#;</code></pre>
+<h2 id="details">Details</h2>
+<h3 id="simple-and-block-string-literals">Simple and block string literals</h3>
+<p>A <em>simple string literal</em> is formed of a sequence of:</p>
+<ul>
+<li>Characters other than <code>\</code> and <code>"</code>.
+<ul>
+<li>Only space characters (U+0020) are valid whitespace in a string literal.</li>
+<li>Other <a href="whitespace.html">horizontal whitespace</a>, including tabs, are disallowed but parse as part of the string for error recovery purposes.</li>
+<li>Vertical whitespace will not parse as part of a simple string literal.</li>
+</ul></li>
+<li><a href="#escape-sequences">Escape sequences</a>.
+<ul>
+<li>Each escape sequence is replaced with the corresponding character sequence or code unit sequence.</li>
+<li>Similarly to invalid whitespace, invalid escape sequences such as <code>\z</code> parse as part of the string.</li>
+</ul></li>
+</ul>
+<p>This sequence is enclosed in <code>"</code>s. For example, this is a simple string literal:</p>
+<pre class="carbon"><code>var String: lucius = &quot;The strings, my lord, are false.&quot;;</code></pre>
+<p>A <em>block string literal</em> starts with <code>"""</code>, followed by an optional file type indicator, followed by a newline, and ends at the next instance of three double quotation marks whose first <code>"</code> is not part of a <code>\"</code> escape sequence. The closing <code>"""</code> shall be the first non-whitespace characters on that line. The lines between the opening line and the closing line (exclusive) are <em>content lines</em>. The content lines shall not contain <code>\</code> characters that do not form part of an escape sequence.</p>
+<p>The <em>indentation</em> of a block string literal is the sequence of horizontal whitespace preceding the closing <code>"""</code>. Each non-empty content line shall begin with the indentation of the string literal. The content of the literal is formed as follows:</p>
+<ul>
+<li>The indentation of the closing line is removed from each non-empty content line.</li>
+<li>All trailing whitespace on each line, including the line terminator, is replaced with a single line feed (U+000A) character.</li>
+<li>The resulting lines are concatenated.</li>
+<li>Each <a href="#escape-sequences">escape sequence</a> is replaced with the corresponding character sequence or code unit sequence.</li>
+</ul>
+<p>A content line is considered empty if it contains only whitespace characters.</p>
+<pre class="carbon"><code>var String: w = &quot;&quot;&quot;
+  This is a string literal. Its first character is &#39;T&#39; and its last character is
+  a newline character. It contains another newline between &#39;is&#39; and &#39;a&#39;.
+  &quot;&quot;&quot;;
+
+// This string literal is invalid because the &quot;&quot;&quot; after &#39;closing&#39; terminates
+// the literal, but is not at the start of the line.
+var String: invalid = &quot;&quot;&quot;
+  error: closing &quot;&quot;&quot; is not on its own line.
+  &quot;&quot;&quot;;</code></pre>
+<p>A <em>file type indicator</em> is any sequence of non-whitespace characters other than <code>"</code> or <code>#</code>. The file type indicator has no semantic meaning to the Carbon compiler, but some file type indicators are understood by the language tooling (for example, syntax highlighter, code formatter) as indicating the structure of the string literal's content.</p>
+<pre class="carbon"><code>// This is a block string literal. Its first two characters are spaces, and its
+// last character is a line feed. It has a file type of &#39;c++&#39;.
+var String: starts_with_whitespace = &quot;&quot;&quot;c++
+    int x = 1; // This line starts with two spaces.
+    int y = 2; // This line starts with two spaces.
+  &quot;&quot;&quot;;</code></pre>
+<p>The file type indicator might contain semantic information beyond the file type itself, such as instructions to the code formatter to disable formatting for the code block.</p>
+<p><strong>Open question:</strong> There is no concrete set of recognized file type indicators. It would be useful to informally specify a set of well-known indicators, so that tools have a common understanding of what those indicators mean, perhaps in a best practices guide.</p>
+<h4 id="escape-sequences">Escape sequences</h4>
+<p>Within a string literal, the following escape sequences are recognized:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Escape</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>\t</code></td>
+<td>U+0009 CHARACTER TABULATION</td>
+</tr>
+<tr class="even">
+<td><code>\n</code></td>
+<td>U+000A LINE FEED</td>
+</tr>
+<tr class="odd">
+<td><code>\r</code></td>
+<td>U+000D CARRIAGE RETURN</td>
+</tr>
+<tr class="even">
+<td><code>\"</code></td>
+<td>U+0022 QUOTATION MARK (<code>"</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>\'</code></td>
+<td>U+0027 APOSTROPHE (<code>'</code>)</td>
+</tr>
+<tr class="even">
+<td><code>\\</code></td>
+<td>U+005C REVERSE SOLIDUS (<code>\</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>\0</code></td>
+<td>Code unit with value 0</td>
+</tr>
+<tr class="even">
+<td><code>\0D</code></td>
+<td>Invalid, reserved for evolution</td>
+</tr>
+<tr class="odd">
+<td><code>\xHH</code></td>
+<td>Code unit with value HH<sub>16</sub></td>
+</tr>
+<tr class="even">
+<td><code>\u{HHHH...}</code></td>
+<td>Unicode code point U+HHHH...</td>
+</tr>
+<tr class="odd">
+<td><code>\&lt;newline&gt;</code></td>
+<td>No string literal content produced (block literals only)</td>
+</tr>
+</tbody>
+</table>
+<p>Hex characters (<code>H</code>) must be uppercase (<code>\xAA</code>, not <code>\xaa</code>).</p>
+<p>This includes all C++ escape sequences except:</p>
+<ul>
+<li><code>\?</code>, which was historically used to escape trigraphs in string literals, and no longer serves any purpose.</li>
+<li><code>\ooo</code> octal escapes, which are removed because Carbon does not support octal literals; <code>\0</code> is retained as a special case, which is expected to be important for C interoperability.</li>
+<li><code>\uABCD</code>, which is replaced by <code>\u{ABCD}</code>.</li>
+<li><code>\U0010FFFF</code>, which is replaced by <code>\u{10FFFF}</code>.</li>
+<li><code>\a</code> (bell), <code>\b</code> (backspace), <code>\v</code> (vertical tab), and <code>\f</code> (form feed). <code>\a</code> and <code>\b</code> are obsolescent, and <code>\f</code> and <code>\v</code> are largely obsolete. These characters can be expressed with <code>\x07</code>, <code>\x08</code>, <code>\x0B</code>, and <code>\x0C</code> respectively if needed.</li>
+</ul>
+<p>Note that this is the same set of escape sequences supported by <a href="https://docs.swift.org/swift-book/LanguageGuide/StringsAndCharacters.html#ID295">Swift</a> and <a href="https://doc.rust-lang.org/reference/tokens.html">Rust</a>, except that, unlike in Swift, support for <code>\xHH</code> is provided.</p>
+<p>While octal escape sequences are expected to remain not permitted (even though <code>\0D</code> is reserved), the decision to not support <code>\1</code>..<code>\7</code> or more generally <code>\DDDD</code> is <em>experimental</em>.</p>
+<p>In the above table, <code>H</code> represents an arbitrary hexadecimal character, <code>0</code>-<code>9</code> or <code>A</code>-<code>F</code> (case-sensitive). Unlike in C++, but like in Python, <code>\x</code> expects exactly two hexadecimal digits. As in JavaScript, Rust, and Swift, Unicode code points can be expressed by number using <code>\u{10FFFF}</code> notation, which accepts any number of hexadecimal characters. Any numeric code point in the ranges 0<sub>16</sub>-D7FF<sub>16</sub> or E000<sub>16</sub>-10FFFF<sub>16</sub> can be expressed this way.</p>
+<p><em>Open question:</em> Some programming languages (notably Python) support a <code>\N{unicode character name}</code> syntax. We could add such an escape sequence. Future proposals considering adding such support should pay attention to work done by C++'s Unicode study group in this area.</p>
+<p>The escape sequence <code>\0</code> shall not be followed by a decimal digit. In cases where a null byte should be followed by a decimal digit, <code>\x00</code> can be used instead: <code>"foo\x00123"</code>. The intent is to preserve the possibility of permitting decimal escape sequences in the future.</p>
+<p>A backslash followed by a line feed character is an escape sequence that produces no string contents. This escape sequence is <em>experimental</em>, and can only appear in block string literals. This escape sequence is processed after trailing whitespace is replaced by a line feed character, so a <code>\</code> followed by horizontal whitespace followed by a line terminator removes the whitespace up to and including the line terminator. Unlike in Rust, but like in Swift, leading whitespace on the line after an escaped newline is not removed, other than whitespace that matches the indentation of the terminating <code>"""</code>.</p>
+<p>A character sequence starting with a backslash that doesn't match any known escape sequence is invalid. Whitespace characters other than space and, for block string literals, new line optionally preceded by carriage return are disallowed. All other characters (including non-printable characters) are preserved verbatim. Because all Carbon source files are required to be valid sequences of Unicode characters, code unit sequences that are not valid UTF-8 can only be produced by <code>\x</code> escape sequences.</p>
+<p>The decision to disallow raw tab characters in string literals is <em>experimental</em>.</p>
+<pre class="carbon"><code>var String: fret = &quot;I would &#39;twere something that would fret the string,\n&quot; +
+                   &quot;The master-cord on&#39;s \u{2764}\u{FE0F}!&quot;;
+
+// This string contains two characters (prior to encoding in UTF-8):
+// U+1F3F9 (BOW AND ARROW) followed by U+0032 (DIGIT TWO)
+var String: password = &quot;\u{1F3F9}2&quot;;
+
+// This string contains no newline characters.
+var String: type_mismatch = &quot;&quot;&quot;
+  Shall I compare thee to a summer&#39;s day? Thou art \
+  more lovely and more temperate.\
+  &quot;&quot;&quot;;
+
+var String: trailing_whitespace = &quot;&quot;&quot;
+  This line ends in a space followed by a newline. \n\
+      This line starts with four spaces.
+  &quot;&quot;&quot;;</code></pre>
+<h3 id="raw-string-literals">Raw string literals</h3>
+<p>In order to allow strings whose contents include <code>\</code>s and <code>"</code>s, the delimiters of string literals can be customized by prefixing the opening delimiter with <em>N</em> <code>#</code> characters. A closing delimiter for such a string is only recognized if it is followed by <em>N</em> <code>#</code> characters, and similarly, escape sequences in such string literals are recognized only if the <code>\</code> is also followed by <em>N</em> <code>#</code> characters. A <code>\</code>, <code>"</code>, or <code>"""</code> not followed by <em>N</em> <code>#</code> characters has no special meaning.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Opening delimiter</th>
+<th>Escape sequence introducer</th>
+<th>Closing delimiter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>"</code> / <code>"""</code></td>
+<td><code>\</code> (for example, <code>\n</code>)</td>
+<td><code>"</code> / <code>"""</code></td>
+</tr>
+<tr class="even">
+<td><code>#"</code> / <code>#"""</code></td>
+<td><code>\#</code> (for example, <code>\#n</code>)</td>
+<td><code>"#</code> / <code>"""#</code></td>
+</tr>
+<tr class="odd">
+<td><code>##"</code> / <code>##"""</code></td>
+<td><code>\##</code> (for example, <code>\##n</code>)</td>
+<td><code>"##</code> / <code>"""##</code></td>
+</tr>
+<tr class="even">
+<td><code>###"</code> / <code>###"""</code></td>
+<td><code>\###</code> (for example, <code>\###n</code>)</td>
+<td><code>"###</code> / <code>"""###</code></td>
+</tr>
+<tr class="odd">
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p>For example:</p>
+<pre class="carbon"><code>var String: x = #&quot;&quot;&quot;
+  This is the content of the string. The &#39;T&#39; is the first character
+  of the string.
+  &quot;&quot;&quot; &lt;-- This is not the end of the string.
+  &quot;&quot;&quot;#;
+  // But the preceding line does end the string.
+// OK, final character is \
+var String: y = #&quot;Hello\&quot;#;
+var String: z = ##&quot;Raw strings #&quot;nesting&quot;#&quot;##;
+var String: w = #&quot;Tab is expressed as \t. Example: &#39;\#t&#39;&quot;#;</code></pre>
+<p>Note that both a raw simple string literal and a raw block string literal can begin with <code>#"""</code>. These cases can be distinguished by the presence or absence of additional <code>"</code>s later in the same line:</p>
+<ul>
+<li>In a raw simple string literal, there must be a <code>"</code> and one or more <code>#</code>s later in the same line terminating the string.</li>
+<li>In a raw block string literal, the rest of the line is a file type indicator, which can contain neither <code>"</code> nor <code>#</code>.</li>
+</ul>
+<pre class="carbon"><code>// This string is a single-line raw string literal.
+// The contents of this string start and end with exactly two &quot;s.
+var String: ambig1 = #&quot;&quot;&quot;This is a raw string literal starting with &quot;&quot;&quot;#;
+
+// This string is a raw block string literal with file-type &#39;This&#39;, whose
+// contents start with &quot;is a &quot;.
+var String: ambig2 = #&quot;&quot;&quot;This
+  is a block string literal with file type &#39;This&#39;, first character &#39;i&#39;,
+  and last character &#39;X&#39;: X\#
+  &quot;&quot;&quot;#;
+
+// This is a single-line raw string literal, equivalent to &quot;\&quot;&quot;.
+var String: ambig3 = #&quot;&quot;&quot;#;</code></pre>
+<h3 id="encoding">Encoding</h3>
+<p>A string literal results in a sequence of 8-bit bytes. Like Carbon source files, string literals are encoded in UTF-8. There is no guarantee that the string is valid UTF-8, however, because arbitrary byte sequences can be inserted by way of <code>\xHH</code> escape sequences.</p>
+<p>This is <em>experimental</em>, and should be revisited if we find sufficient motivation for directly expressing string literals in other encodings. Similarly, as library support for a string type evolves, we should consider including string literal syntax (perhaps as the default) that guarantees the string content is a valid UTF-8 encoding, so that valid UTF-8 can be distinguished from an arbitrary string in the type system. In such string literals, we should consider rejecting <code>\xHH</code> escapes in which HH is greater than 7F<sub>16</sub>, as in Rust.</p>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#block-string-literals">Block string literals</a>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#leading-whitespace-removal">Leading whitespace removal</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#terminating-newline">Terminating newline</a></li>
+</ul></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#escape-sequences-1">Escape sequences</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#raw-string-literals-1">Raw string literals</a>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#trailing-whitespace">Trailing whitespace</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#line-separators">Line separators</a></li>
+</ul></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#internal-whitespace">Internal whitespace</a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/199">#199: String literals</a></li>
+</ul>

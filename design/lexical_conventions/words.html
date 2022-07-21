@@ -1,0 +1,81 @@
+<h1 id="words">Words</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#keywords">Keywords</a></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p>A <em>word</em> is a lexical element formed from a sequence of letters or letter-like characters, such as <code>fn</code> or <code>Foo</code> or <code>Int</code>.</p>
+<p>The exact lexical form of words has not yet been settled. However, Carbon will follow lexical conventions for identifiers based on <a href="https://unicode.org/reports/tr31/">Unicode Annex #31</a>. TODO: Update this once the precise rules are decided; see the <a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0142.md#characters-in-identifiers-and-whitespace">Unicode source files</a> proposal.</p>
+<h2 id="keywords">Keywords</h2>
+<p>The following words are interpreted as keywords:</p>
+<ul>
+<li><code>abstract</code></li>
+<li><code>addr</code></li>
+<li><code>alias</code></li>
+<li><code>and</code></li>
+<li><code>api</code></li>
+<li><code>as</code></li>
+<li><code>auto</code></li>
+<li><code>base</code></li>
+<li><code>break</code></li>
+<li><code>case</code></li>
+<li><code>class</code></li>
+<li><code>constraint</code></li>
+<li><code>continue</code></li>
+<li><code>default</code></li>
+<li><code>else</code></li>
+<li><code>extends</code></li>
+<li><code>external</code></li>
+<li><code>final</code></li>
+<li><code>fn</code></li>
+<li><code>for</code></li>
+<li><code>forall</code></li>
+<li><code>friend</code></li>
+<li><code>if</code></li>
+<li><code>impl</code></li>
+<li><code>import</code></li>
+<li><code>in</code></li>
+<li><code>interface</code></li>
+<li><code>is</code></li>
+<li><code>let</code></li>
+<li><code>library</code></li>
+<li><code>like</code></li>
+<li><code>match</code></li>
+<li><code>namespace</code></li>
+<li><code>not</code></li>
+<li><code>observe</code></li>
+<li><code>or</code></li>
+<li><code>override</code></li>
+<li><code>package</code></li>
+<li><code>partial</code></li>
+<li><code>private</code></li>
+<li><code>protected</code></li>
+<li><code>return</code></li>
+<li><code>returned</code></li>
+<li><code>then</code></li>
+<li><code>var</code></li>
+<li><code>virtual</code></li>
+<li><code>where</code></li>
+<li><code>while</code></li>
+</ul>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0142.md#character-encoding-1">Character encoding: We could restrict words to ASCII.</a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/142">#142: Unicode source files</a></li>
+</ul>

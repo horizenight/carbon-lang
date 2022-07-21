@@ -1,0 +1,73 @@
+<h1 id="control-flow">Control flow</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p><code>if</code> and <code>else</code> provide conditional execution of statements. Syntax is:</p>
+<blockquote>
+<p><code>if (</code><em>boolean expression</em> <code>) {</code> <em>statements</em> <code>}</code></p>
+<p>[ <code>else if (</code> <em>boolean expression</em> <code>) {</code> <em>statements</em> <code>}</code> ] ...</p>
+<p>[ <code>else {</code> <em>statements</em> <code>}</code> ]</p>
+</blockquote>
+<p>Only one group of statements will execute:</p>
+<ul>
+<li>When the first <code>if</code>'s boolean expression evaluates to true, its associated statements will execute.</li>
+<li>When earlier boolean expressions evaluate to false and an <code>else if</code>'s boolean expression evaluates to true, its associated statements will execute.
+<ul>
+<li><code>... else if ...</code> is equivalent to <code>... else { if ... }</code>, but without visible nesting of braces.</li>
+</ul></li>
+<li>When all boolean expressions evaluate to false, the <code>else</code>'s associated statements will execute.</li>
+</ul>
+<p>When a boolean expression evaluates to true, no later boolean expressions will evaluate.</p>
+<p>Note that <code>else if</code> may be repeated.</p>
+<p>For example:</p>
+<pre class="carbon"><code>if (fruit.IsYellow()) {
+  Print(&quot;Banana!&quot;);
+} else if (fruit.IsOrange()) {
+  Print(&quot;Orange!&quot;);
+} else if (fruit.IsGreen()) {
+  Print(&quot;Apple!&quot;);
+} else {
+  Print(&quot;Vegetable!&quot;);
+}
+fruit.Eat();</code></pre>
+<p>This code will:</p>
+<ul>
+<li>Evaluate <code>fruit.IsYellow()</code>:
+<ul>
+<li>When <code>True</code>, print <code>Banana!</code> and resume execution at <code>fruit.Eat()</code>.</li>
+<li>When <code>False</code>, evaluate <code>fruit.IsOrange()</code>:
+<ul>
+<li>When <code>True</code>, print <code>Orange!</code> and resume execution at <code>fruit.Eat()</code>.</li>
+<li>When <code>False</code>, evaluate <code>fruit.IsGreen()</code>:
+<ul>
+<li>When <code>True</code>, print <code>Orange!</code> and resume execution at <code>fruit.Eat()</code>.</li>
+<li>When <code>False</code>, print <code>Vegetable!</code> and resume execution at <code>fruit.Eat()</code>.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0623.md#optional-braces">Optional braces</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0623.md#optional-parentheses">Optional parentheses</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0623.md#elif"><code>elif</code></a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/285">#285: <code>if</code> and <code>else</code></a></li>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/623">#623: Require braces</a></li>
+</ul>

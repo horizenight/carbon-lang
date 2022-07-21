@@ -1,0 +1,15 @@
+<h1 id="lexical-analysis">Lexical analysis</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<p>TODO</p>
+<h2 id="lexical-elements">Lexical elements</h2>
+<ol type="1">
+<li><p>The sequence of Unicode code points in a source file is partitioned into contiguous subsequences called <em>lexical elements</em>. Formation of lexical elements begins with the first code point in the source file and proceeds in code point order.</p></li>
+<li><p>At each step, the longest valid lexical element that can be formed from a prefix of the remaining code points is formed, even if this would result in a failure to form a later lexical element. Repeating this process shall convert the entire source file into lexical elements.</p></li>
+<li><p>Valid lexical elements are:</p>
+<p>TODO: Add a list of lexical elements once we've decided on them.</p></li>
+</ol>

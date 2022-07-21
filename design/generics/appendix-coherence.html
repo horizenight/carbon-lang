@@ -1,0 +1,117 @@
+<h1 id="carbon-alternatives-to-coherence">Carbon: alternatives to coherence</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<p>This document explains the rationale for choosing to make <a href="terminology.html#coherence">implementation coherence</a> <a href="goals.html#coherence">a goal for Carbon</a>, and the alternatives considered.</p>
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#approach-taken-coherence">Approach taken: coherence</a></li>
+<li><a href="#the-hashtable-problem">The "Hashtable Problem"</a></li>
+<li><a href="#rejected-alternative-no-orphan-rule">Rejected alternative: no orphan rule</a></li>
+<li><a href="#rejected-alternative-incoherence">Rejected alternative: incoherence</a>
+<ul>
+<li><a href="#incoherence-means-context-sensitivity">Incoherence means context sensitivity</a></li>
+<li><a href="#rejected-variation-dynamic-implementation-binding">Rejected variation: dynamic implementation binding</a></li>
+<li><a href="#rejected-variation-manual-conflict-resolution">Rejected variation: manual conflict resolution</a></li>
+</ul></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="approach-taken-coherence">Approach taken: coherence</h2>
+<p>The main thing to understand is that coherence is a desirable property, but to get that property we need an orphan rule, and that rule has a cost. It in particular limits how much control users of a type have over how that type implements interfaces. There are a few main problematic use cases to consider:</p>
+<ul>
+<li>Selecting between multiple implementations of an interface for a type. For example selecting the implementation of the <code>Comparable</code> interface for a <code>Song</code> type to support "by title", "by artist", and "by album" orderings.</li>
+<li>Implementing an interface for a type when there is no relationship between the libraries defining the interface and the type.</li>
+<li>When the implementation of an interface for a type uses an associated type that can't be referenced from the file or files where the implementation is allowed to be defined.</li>
+</ul>
+<p>These last two cases are highlighted as concerns in Rust in <a href="https://github.com/rust-lang/rfcs/issues/1856">Rust RFC #1856: orphan rules are stricter than we would like</a>.</p>
+<p>Since Carbon is bundling interface implementations into types, for the convenience and expressiveness that provides, we satisfy those use cases by giving the user control over the type of a value. This means having facilities for defining new <a href="terminology.html#compatible-types">compatible types</a> with different interface implementations, and casting between those types as needed.</p>
+<h2 id="the-hashtable-problem">The "Hashtable Problem"</h2>
+<p>The "Hashtable problem" is that the specific hash function used to compute the hash of keys in a hashtable must be the same when adding an entry, when looking it up, and other operations like resizing. So a hashtable type is dependent on both the key type, and the key type's implementation of the <code>Hashable</code> interface. If the key type can have more than one implementation of <code>Hashable</code>, there needs to be some mechanism for choosing a single one to be used consistently by the hashtable type, or the invariants of the type will be violated.</p>
+<p>Without the orphan rule to enforce coherence, we might have a situation like this:</p>
+<ul>
+<li><p>Package <code>Container</code> defines a <code>HashSet</code> type.</p>
+<pre><code>package Container;
+struct HashSet(Key:! Hashable) { ... }</code></pre></li>
+<li><p>A <code>Song</code> type is defined in package <code>SongLib</code>.</p></li>
+<li><p>Package <code>SongHashArtistAndTitle</code> defines an implementation of <code>Hashable</code> for <code>SongLib.Song</code>.</p>
+<pre><code>package SongHashArtistAndTitle;
+import SongLib;
+impl SongLib.Song as Hashable {
+  fn Hash[me: Self]() -&gt; u64 { ... }
+}</code></pre></li>
+<li><p>Package <code>SongUtil</code> uses the <code>Hashable</code> implementation from <code>SongHashArtistAndTitle</code> to define a function <code>IsInHashSet</code>.</p>
+<pre><code>package SongUtil;
+import SongLib;
+import SongHashArtistAndTitle;
+import Containers;
+
+fn IsInHashSet(
+    s: SongLib.Song,
+    h: Containers.HashSet(SongLib.Song)*) -&gt; bool {
+  return h-&gt;Contains(s);
+}</code></pre></li>
+<li><p>Package <code>SongHashAppleMusicURL</code> defines a different implementation of <code>Hashable</code> for <code>SongLib.Song</code> than package <code>SongHashArtistAndTitle</code>.</p>
+<pre><code>package SongHashAppleMusicURL;
+import SongLib;
+impl SongLib.Song as Hashable {
+  fn Hash[me: Self]() -&gt; u64 { ... }
+}</code></pre></li>
+<li><p>Finally, package <code>Trouble</code> imports <code>SongHashAppleMusicURL</code>, creates a hash set, and then calls the <code>IsInHashSet</code> function from package <code>SongUtil</code>.</p>
+<pre><code>package Trouble;
+import SongLib;
+import SongHashAppleMusicURL;
+import Containers;
+import SongUtil;
+
+fn SomethingWeirdHappens() {
+  var unchained_melody: SongLib.Song = ...;
+  var song_set: auto = Containers.HashSet(SongLib.Song).Create();
+  song_set.Add(unchained_melody);
+  // Either this is a compile error or does something unexpected.
+  if (SongUtil.IsInHashSet(unchained_melody, &amp;song_set)) {
+    Print(&quot;This is expected, but doesn&#39;t happen.&quot;);
+  } else {
+    Print(&quot;This is what happens even though it is unexpected.&quot;);
+  }
+}</code></pre></li>
+</ul>
+<p>The issue is that in package <code>Trouble</code>, the <code>song_set</code> is created in a context where <code>SongLib.Song</code> has a <code>Hashable</code> implementation from <code>SongHashAppleMusicURL</code>, and stores <code>unchained_melody</code> under that hash value. When we go to look up the same song in <code>SongUtil.IsInHashSet</code>, it uses the hash function from <code>SongHashArtistAndTitle</code> which returns a different hash value for <code>unchained_melody</code>, and so reports the song is missing.</p>
+<p><strong>Background:</strong> <a href="https://gist.github.com/nikomatsakis/1421744">This post</a> discusses the hashtable problem in the context of Haskell, and <a href="https://mail.mozilla.org/pipermail/rust-dev/2011-December/001036.html">this 2011 Rust followup</a> discusses how to detect problems at compile time.</p>
+<h2 id="rejected-alternative-no-orphan-rule">Rejected alternative: no orphan rule</h2>
+<p>In Swift an implementation of an interface, or a "protocol" as it is called in Swift, can be provided in any module. As long as any module provides an implementation, that implementation is <a href="https://stackoverflow.com/questions/48762971/swift-protocol-conformance-by-extension-between-frameworks">used globally throughout the program</a>.</p>
+<p>In Swift, since some protocol implementations can come from the runtime environment provided by the operating system, multiple implementations for a protocol can arise as a runtime warning. When this happens, Swift picks one implementation arbitrarily.</p>
+<p>In Carbon, we could make this a build time error. However, there would be nothing preventing two independent libraries from providing conflicting implementations. Furthermore, the error would only be diagnosed at link time.</p>
+<h2 id="rejected-alternative-incoherence">Rejected alternative: incoherence</h2>
+<h3 id="incoherence-means-context-sensitivity">Incoherence means context sensitivity</h3>
+<p>The undesirable result of incoherence is that the interpretation of source code changes based on imports. In particular, imagine there is a function call that depends on a type implementing an interface, and two different implementations are defined in two different libraries. A call to that function will be treated differently depending on which of those two libraries are imported:</p>
+<ul>
+<li>If neither is imported, it is an error.</li>
+<li>If both are imported, it is ambiguous.</li>
+<li>If only one is imported, you get totally different code executed depending on which it is.</li>
+</ul>
+<p>Furthermore, this means that the behavior of a file can depend on an import even if nothing from that package is referenced explicitly. In general, Carbon is <a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/project/principles/low_context_sensitivity.md">avoiding this sort of context sensitivity</a>. This context sensitivity would make moving code between files when refactoring more difficult and less safe.</p>
+<h3 id="rejected-variation-dynamic-implementation-binding">Rejected variation: dynamic implementation binding</h3>
+<p>One possible approach would be to bind interface implementations to a value at the point it was created. In <a href="#the-hashtable-problem">the example above</a>, the implementation of the <code>Hashable</code> interface for <code>Song</code> would be fixed for the <code>song_set</code> <code>HashSet</code> object based on which implementation was in scope in the body of the <code>SomethingWeirdHappens</code> function.</p>
+<p>This idea is discussed briefly in section 5.4 on separate compilation of WG21 proposal n1848 for implementing "Indiana" C++0x concepts (<a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.86.9526&amp;rep=rep1&amp;type=pdf">1</a>, and <a href="https://wg21.link/n1848">2</a>).</p>
+<p>This has some downsides:</p>
+<ul>
+<li>It is harder to reason about. The behavior of <code>SongUtil.IsInHashSet</code> depends on the dynamic behavior of the program. At the time of the call, we may have no idea where the <code>HashSet</code> argument was created.</li>
+<li>An object may be created far from a call that has a particular interface requirement, with no guarantee that the object was created with any implementation of the interface at all. This error would only be detected at runtime, not at type checking time.</li>
+<li>It requires more data space at runtime because we need to store a pointer to the witness table representing the implementation with the object, since it varies instead of being known statically.</li>
+<li>It is slower to execute from dynamic dispatch and the inability to inline.</li>
+<li>In some cases it may not be feasible to use dynamic dispatch. For example, if an interface method returns an associated type, we might not know the calling convention of the function without knowing some details about the type.</li>
+</ul>
+<p>As a result, this doesn't make sense as the default behavior for Carbon based on its <a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/project/goals.md">goals</a>. That being said, this could be a feature added later as opt-in behavior to either allow users to reduce code size or support use cases that require dynamic dispatch.</p>
+<h3 id="rejected-variation-manual-conflict-resolution">Rejected variation: manual conflict resolution</h3>
+<p>Carbon could alternatively provide some kind of manual disambiguation syntax to resolve problems where they arise. The problems with this approach have been <a href="https://github.com/Ixrec/rust-orphan-rules#whats-wrong-with-incoherence">considered in the context of Rust</a>.</p>
+<p>A specific example of this approach is called <a href="https://forums.swift.org/t/scoped-conformances/37159">scoped conformance</a>, where the conflict resolution is based on limiting the visibility of implementations to particular scopes. This hasn't been implemented, but it has the drawbacks described above. Depending on the details of the implementation, either:</p>
+<ul>
+<li>there are incompatible values with types that have the same name, or</li>
+<li>it is difficult to reason about the program's behavior because it behaves like <a href="#rejected-variation-dynamic-implementation-binding">dynamic implementation binding</a> (though perhaps with a monomorphization cost instead of a runtime cost).</li>
+</ul>

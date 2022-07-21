@@ -1,0 +1,115 @@
+<h1 id="return"><code>return</code></h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a>
+<ul>
+<li><a href="#returning-empty-tuples">Returning empty tuples</a></li>
+<li><a href="#returned-var"><code>returned var</code></a></li>
+<li><a href="#return-and-initialization"><code>return</code> and initialization</a></li>
+</ul></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p>The <code>return</code> statement ends the flow of execution within a <a href="../functions.html">function</a>, returning execution to the caller. Its syntax is:</p>
+<blockquote>
+<p><code>return</code> <em>[ expression ]</em> <code>;</code></p>
+</blockquote>
+<p>If the function returns a value to the caller, that value is provided by an expression in the return statement. For example:</p>
+<pre class="carbon"><code>fn Sum(a: i32, b: i32) -&gt; i32 {
+  return a + b;
+}</code></pre>
+<p>When a return type is specified, a function must <em>always</em> <code>return</code> before control flow can reach the end of the function body. In other words, <code>fn DoNothing() -&gt; i32 {}</code> would be invalid because execution will reach the end of the function body without returning a value.</p>
+<h3 id="returning-empty-tuples">Returning empty tuples</h3>
+<p>Returning an empty tuple <code>()</code> is special, and similar to C++'s <code>void</code> returns. When a function has no specified return type, its return type is implicitly <code>()</code>. <code>return</code> must not have an expression argument in this case. It also has an implicit <code>return;</code> at the end of the function body. For example:</p>
+<pre class="carbon"><code>// No return type is specified, so this returns `()` implicitly.
+fn MaybeDraw(should_draw: bool) {
+  if (!should_draw) {
+    // No expression is passed to `return`.
+    return;
+  }
+  ActuallyDraw();
+  // There is an implicit `return;` here.
+}</code></pre>
+<p>When <code>-&gt; ()</code> is specified in the function signature, the return expression is required. Omitting <code>-&gt; ()</code> is encouraged, but specifying it is supported for generalized code structures, including <a href="../templates.html">templates</a>. In order to be consistent with other explicitly specified return types, <code>return;</code> is invalid in this case. For example:</p>
+<pre class="carbon"><code>// `-&gt; ()` defines an explicit return value.
+fn MaybeDraw(should_draw: bool) -&gt; () {
+  if (!should_draw) {
+    // As a consequence, a return value must be passed.
+    return ();
+  }
+  ActuallyDraw();
+  // The return value must again be explicit.
+  return ();
+}</code></pre>
+<h3 id="returned-var"><code>returned var</code></h3>
+<p><a href="../variables.html">Variables</a> may be declared with a <code>returned</code> statement. Its syntax is:</p>
+<blockquote>
+<p><code>returned</code> <em>var statement</em></p>
+</blockquote>
+<p>When a variable is marked as <code>returned</code>, it must be the only <code>returned</code> value in-scope.</p>
+<p>If a <code>returned var</code> is returned, the specific syntax <code>return var</code> must be used. Returning expressions is not allowed while a <code>returned var</code> is in scope. For example:</p>
+<pre class="carbon"><code>fn MakeCircle(radius: i32) -&gt; Circle {
+  returned var c: Circle;
+  c.radius = radius;
+  // `return c` would be invalid because `returned` is in use.
+  return var;
+}</code></pre>
+<p>If control flow exits the scope of a <code>returned</code> variable in any way other than <code>return var</code>, the <code>returned var</code>'s lifetime ends as normal. When this occurs, <code>return</code> may again be used with expressions. For example:</p>
+<pre class="carbon"><code>fn MakePointInArea(area: Area, preferred_x: i32, preferred_y: i32) -&gt; Point {
+  if (preferred_x &gt;= 0 &amp;&amp; preferred_y &gt;= 0) {
+    returned var p: Point = { .x = preferred_x, .y = preferred_y };
+    if (area.Contains(p)) {
+      return var;
+    }
+    // p&#39;s lifetime ends here when `return var` is not reached.
+  }
+
+  return area.RandomPoint();
+}</code></pre>
+<h3 id="return-and-initialization"><code>return</code> and initialization</h3>
+<p>Consider the following common initialization code:</p>
+<pre class="carbon"><code>fn CreateMyObject() -&gt; MyType {
+  return &lt;expression&gt;;
+}
+
+var x: MyType = CreateMyObject();</code></pre>
+<p>The <code>&lt;expression&gt;</code> in the return statement of <code>CreateMyObject</code> initializes the variable <code>x</code> here. There is no copy or similar. It is equivalent to:</p>
+<pre class="carbon"><code>var x: MyType = &lt;expression&gt;;</code></pre>
+<p>This applies recursively, similar to C++'s guaranteed copy elision.</p>
+<p>In the case where additional statements should be run between constructing the return value and returning, the use of <code>returned var</code> allows for improved efficiency because the <code>returned var</code> can directly use the address of <code>var</code> declared by the caller. For example, here the <code>returned var vector</code> in <code>CreateVector</code> uses the storage of <code>my_vector</code> for initialization, avoiding a copy:</p>
+<pre class="carbon"><code>fn CreateVector(x: i32, y: i32) -&gt; Vector {
+  returned var vector: Vector;
+  vector.x = x;
+  vector.y = y;
+  return var;
+}
+
+var my_vector: Vector = CreateVector(1, 2);</code></pre>
+<p>As a consequence, <code>returned var</code> is encouraged because it makes it easier to avoid copies.</p>
+<blockquote>
+<p><strong>TODO:</strong> Have some discussion of RVO and NRVO as they are found in C++ here, and the fact that Carbon provides the essential part of these as first-class features and therefore they are never "optimizations" or done implicitly or optionally.</p>
+</blockquote>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0415.md#implicit-or-expression-returns">Implicit or expression returns</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0257.md#named-return-variable-in-place-of-a-return-type">Named return variable in place of a return type</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0538.md#retain-the-c-rule">Retain the C++ rule</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0538.md#fully-divorce-functions-and-procedures">Fully divorce functions and procedures</a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/257">#257: Initialization of memory and variables</a></li>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/415">#415: Syntax: <code>return</code></a></li>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/538">#538: <code>return</code> with no argument</a></li>
+</ul>

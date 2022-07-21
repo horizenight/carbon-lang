@@ -1,0 +1,55 @@
+<h1 id="variables">Variables</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#notes">Notes</a>
+<ul>
+<li><a href="#global-variables">Global variables</a></li>
+</ul></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p>Carbon's local variable syntax is:</p>
+<ul>
+<li><code>var</code> <em>identifier</em><code>:</code> <em>&lt; expression |</em> <code>auto</code> <em>&gt; [</em> <code>=</code> <em>value ]</em><code>;</code></li>
+</ul>
+<p>Blocks introduce nested scopes and can contain local variable declarations that work similarly to function parameters.</p>
+<p>For example:</p>
+<pre><code>fn Foo() {
+  var x: i32 = 42;
+}</code></pre>
+<p>This introduces a local variable named <code>x</code> into the block's scope. It has the type <code>Int</code> and is initialized with the value <code>42</code>. These variable declarations (and function declarations) have a lot more power than what we're covering just yet, but this gives you the basic idea.</p>
+<p>If <code>auto</code> is used in place of the type, <a href="type_inference.html">type inference</a> is used to automatically determine the variable's type.</p>
+<p>While there can be global constants, there are no global variables.</p>
+<h2 id="notes">Notes</h2>
+<blockquote>
+<p>TODO: Constant syntax is an ongoing discussion.</p>
+</blockquote>
+<h3 id="global-variables">Global variables</h3>
+<p>We are exploring several different ideas for how to design less bug-prone patterns to replace the important use cases programmers still have for global variables. We may be unable to fully address them, at least for migrated code, and be forced to add some limited form of global variables back. We may also discover that their convenience outweighs any improvements afforded.</p>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0339.md#no-var-introducer-keyword">No <code>var</code> introducer keyword</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0339.md#name-of-the-var-statement-introducer">Name of the <code>var</code> statement introducer</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0339.md#colon-between-type-and-identifier">Colon between type and identifier</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0339.md#type-elision">Type elision</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0618.md#type-ordering">Type ordering</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0851.md#elide-the-type-instead-of-using-auto">Elide the type instead of using <code>auto</code></a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/339">#339: <code>var</code> statement</a></li>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/618">#618: <code>var</code> ordering</a></li>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/851">#851: auto keyword for vars</a></li>
+</ul>

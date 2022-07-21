@@ -1,0 +1,125 @@
+<h1 id="as-expressions"><code>as</code> expressions</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#precedence-and-associativity">Precedence and associativity</a></li>
+<li><a href="#built-in-types">Built-in types</a>
+<ul>
+<li><a href="#data-types">Data types</a></li>
+<li><a href="#compatible-types">Compatible types</a></li>
+</ul></li>
+<li><a href="#extensibility">Extensibility</a></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p>An expression of one type can be explicitly cast to another type by using an <code>as</code> expression:</p>
+<pre><code>var n: i32 = Get();
+var f: f32 = n as f32;</code></pre>
+<p>An <code>as</code> expression can be used to perform any implicit conversion, either when the context does not imply a destination type or when it is valuable to a reader of the code to make the conversion explicit. In addition, <code>as</code> expressions can perform safe conversions that nonetheless should not be performed implicitly, such as lossy conversions or conversions that lose capabilities or change the way a type would be interpreted.</p>
+<p>As guidelines, an <code>as</code> conversion should be permitted when:</p>
+<ul>
+<li>The conversion is <em>complete</em>: it produces a well-defined output value for each input value.</li>
+<li>The conversion is <em>unsurprising</em>: the resulting value is the expected value in the destination type.</li>
+</ul>
+<p>For example:</p>
+<ul>
+<li>A conversion from <code>fM</code> to <code>iN</code> is not complete, because it is not defined for input values that are out of the range of the destination type, such as infinities or, if <code>N</code> is too small, large finite values.</li>
+<li>A conversion from <code>iM</code> to <code>iN</code>, where <code>N</code> &lt; <code>M</code>, is either not complete or not unsurprising, because there is more than one possible expected behavior for an input value that is not within the destination type, and those behaviors are not substantially the same -- we could perform two's complement wrapping, saturate, or produce undefined behavior analogous to arithmetic overflow.</li>
+<li>A conversion from <code>iM</code> to <code>fN</code> can be unsurprising, because even though there may be a choice of which way to round, the possible values are substantially the same.</li>
+</ul>
+<p>It is possible for user-defined types to <a href="#extensibility">extend</a> the set of valid explicit casts that can be performed by <code>as</code>. Such extensions are expected to follow these guidelines.</p>
+<h2 id="precedence-and-associativity">Precedence and associativity</h2>
+<p><code>as</code> expressions are non-associative.</p>
+<pre><code>var b: bool = true;
+// OK
+var n: i32 = (b as i1) as i32;
+var m: auto = b as (bool as Hashable);
+// Error, ambiguous
+var m: auto = b as T as U;</code></pre>
+<p><strong>Note:</strong> <code>b as (bool as Hashable)</code> is valid but not useful, because <a href="#extensibility">the second operand of <code>as</code> is implicitly converted to type <code>Type</code></a>. This expression therefore has the same interpretation as <code>b as bool</code>.</p>
+<p><strong>TODO:</strong> We should consider making <code>as</code> expressions left-associative now that facet types have been removed from the language.</p>
+<p>The <code>as</code> operator has lower precedence than operators that visually bind tightly:</p>
+<ul>
+<li>prefix symbolic operators
+<ul>
+<li>dereference (<code>*a</code>)</li>
+<li>negation (<code>-a</code>)</li>
+<li>complement (<code>~a</code>)</li>
+</ul></li>
+<li>postfix symbolic operators
+<ul>
+<li>pointer type formation (<code>T*</code>),</li>
+<li>function call (<code>a(...)</code>),</li>
+<li>array indexing (<code>a[...]</code>), and</li>
+<li>member access (<code>a.m</code>).</li>
+</ul></li>
+</ul>
+<p>The <code>as</code> operator has higher precedence than assignment and comparison. It is unordered with respect to binary arithmetic, bitwise operators, and unary <code>not</code>.</p>
+<pre><code>// OK
+var x: i32* as Eq;
+// OK, `x as (U*)` not `(x as U)*`.
+var y: auto = x as U*;
+
+var a: i32;
+var b: i32;
+// OK, `(a as i64) &lt; ((*x) as i64)`.
+if (a as i64 &lt; *x as i64) {}
+// Ambiguous: `(a + b) as i64` or `a + (b as i64)`?
+var c: i32 = a + b as i64;
+// Ambiguous: `(a as i64) + b` or `a as (i64 + b)`?
+var d: i32 = a as i64 + b;
+
+// OK, `(-a) as f64`, not `-(a as f64)`.
+// Unfortunately, the former is undefined if `a` is `i32.MinValue()`;
+// the latter is not.
+var u: f64 = -a as f64;
+
+// OK, `i32 as (GetType())`, not `(i32 as GetType)()`.
+var e: i32 as GetType();</code></pre>
+<h2 id="built-in-types">Built-in types</h2>
+<h3 id="data-types">Data types</h3>
+<p>In addition to the <a href="implicit_conversions.html#data-types">implicit conversions</a>, the following numeric conversions are supported by <code>as</code>:</p>
+<ul>
+<li><p><code>iN</code>, <code>uN</code>, or <code>fN</code> -&gt; <code>fM</code>, for any <code>N</code> and <code>M</code>. Values that cannot be exactly represented are suitably rounded to one of the two nearest representable values. Very large finite values may be rounded to an infinity. NaN values are converted to NaN values.</p></li>
+<li><p><code>bool</code> -&gt; <code>iN</code> or <code>uN</code>. <code>false</code> converts to <code>0</code> and <code>true</code> converts to <code>1</code> (or to <code>-1</code> for <code>i1</code>).</p></li>
+</ul>
+<p>Conversions from numeric types to <code>bool</code> are not supported with <code>as</code>; instead of using <code>as bool</code>, such conversions can be performed with <code>!= 0</code>.</p>
+<p>Lossy conversions between <code>iN</code> or <code>uN</code> and <code>iM</code> or <code>uM</code> are not supported with <code>as</code>, and similarly conversions from <code>fN</code> to <code>iM</code> are not supported.</p>
+<p><strong>Future work:</strong> Add mechanisms to perform these conversions.</p>
+<h3 id="compatible-types">Compatible types</h3>
+<p>The following conversion is supported by <code>as</code>:</p>
+<ul>
+<li><code>T</code> -&gt; <code>U</code> if <code>T</code> is <a href="../generics/terminology.html#compatible-types">compatible</a> with <code>U</code>.</li>
+</ul>
+<p><strong>Future work:</strong> We may need a mechanism to restrict which conversions between adapters are permitted and which code can perform them. Some of the conversions permitted by this rule may only be allowed in certain contexts.</p>
+<h2 id="extensibility">Extensibility</h2>
+<p>Explicit casts can be defined for user-defined types such as <a href="../classes.html">classes</a> by implementing the <code>As</code> interface:</p>
+<pre><code>interface As(Dest:! Type) {
+  fn Convert[me: Self]() -&gt; Dest;
+}</code></pre>
+<p>The expression <code>x as U</code> is rewritten to <code>x.(As(U).Convert)()</code>.</p>
+<p><strong>Note:</strong> This rewrite causes the expression <code>U</code> to be implicitly converted to type <code>Type</code>. The program is invalid if this conversion is not possible.</p>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0845.md#allow-as-to-perform-some-unsafe-conversions">Allow <code>as</code> to perform some unsafe conversions</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0845.md#allow-as-to-perform-twos-complement-truncation">Allow <code>as</code> to perform two's complement truncation</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0845.md#as-only-performs-implicit-conversions"><code>as</code> only performs implicit conversions</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0845.md#integer-to-bool-conversions">Integer to bool conversions</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0845.md#bool-to-integer-conversions">Bool to integer conversions</a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/language/implicit_conversion">Implicit conversions in C++</a></li>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/845">#845: <code>as</code> expressions</a>.</li>
+</ul>

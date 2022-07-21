@@ -1,0 +1,210 @@
+<h1 id="contribution-tools">Contribution tools</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<p>The Carbon language project has a number of tools used to assist in preparing contributions.</p>
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#tool-setup-flow">Tool setup flow</a></li>
+<li><a href="#package-managers">Package managers</a>
+<ul>
+<li><a href="#linux-and-macos">Linux and MacOS</a>
+<ul>
+<li><a href="#homebrew">Homebrew</a></li>
+<li><a href="#python3-and-pip3"><code>python3</code> and <code>pip3</code></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#main-tools">Main tools</a>
+<ul>
+<li><a href="#bazel-and-bazelisk">Bazel and Bazelisk</a></li>
+<li><a href="#clang-and-llvm">Clang and LLVM</a>
+<ul>
+<li><a href="#manual-installations-not-recommended">Manual installations (not recommended)</a></li>
+</ul></li>
+<li><a href="#pre-commit">pre-commit</a></li>
+</ul></li>
+<li><a href="#optional-tools">Optional tools</a>
+<ul>
+<li><a href="#carbon-maintained">Carbon-maintained</a>
+<ul>
+<li><a href="#new_proposalpy">new_proposal.py</a></li>
+<li><a href="#pr_commentspy">pr_comments.py</a></li>
+</ul></li>
+<li><a href="#github">GitHub</a>
+<ul>
+<li><a href="#gh-cli">gh CLI</a></li>
+<li><a href="#github-desktop">GitHub Desktop</a></li>
+</ul></li>
+<li><a href="#rs-git-fsmonitor-and-watchman"><code>rs-git-fsmonitor</code> and Watchman</a></li>
+<li><a href="#vim">Vim</a>
+<ul>
+<li><a href="#vim-prettier">vim-prettier</a></li>
+</ul></li>
+<li><a href="#visual-studio-code">Visual Studio Code</a></li>
+<li><a href="#pre-commit-enabled-tools">pre-commit enabled tools</a>
+<ul>
+<li><a href="#black">black</a></li>
+<li><a href="#codespell">codespell</a></li>
+<li><a href="#prettier">Prettier</a></li>
+</ul></li>
+</ul></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="tool-setup-flow">Tool setup flow</h2>
+<p>In order to set up a machine and git repository for developing on Carbon, a typical tool setup flow is:</p>
+<!-- google-doc-style-ignore -->
+
+<!-- Need to retain "repo" in "gh repo clone". -->
+
+<ol type="1">
+<li>Install <a href="#package-managers">package managers</a>.</li>
+<li>Install <a href="#main-tools">main tools</a> and any desired <a href="#optional-tools">optional tools</a>.</li>
+<li>Set up the <a href="https://git-scm.com/">git</a> repository:
+<ul>
+<li>In GitHub, create a fork for development at <a href="https://github.com/carbon-language/carbon-lang">https://github.com/carbon-language/carbon-lang</a>.</li>
+<li><code>gh repo clone USER/carbon-lang</code>, or otherwise clone the fork.</li>
+<li><code>cd carbon-lang</code> to go into the cloned fork's directory.</li>
+<li><code>pre-commit install</code> to set up <a href="#pre-commit">pre-commit</a> in the clone.</li>
+</ul></li>
+<li>Validate your installation by invoking `bazel test //...:all' from the project root. All tests should pass.</li>
+</ol>
+<!-- google-doc-style-resume -->
+
+<h2 id="package-managers">Package managers</h2>
+<p>Instructions for installing tools can be helpful for installing tooling. These instructions will try to rely on a minimum of managers.</p>
+<h3 id="linux-and-macos">Linux and MacOS</h3>
+<h4 id="homebrew">Homebrew</h4>
+<p><a href="https://brew.sh/">Homebrew</a> is a package manager, and can help install several tools that we recommend.</p>
+<p>Our recommended way of installing is to run <a href="https://brew.sh/">the canonical install command</a>.</p>
+<p>To get the latest version of <code>brew</code> packages, it will be necessary to periodically run <code>brew upgrade</code>.</p>
+<h4 id="python3-and-pip3"><code>python3</code> and <code>pip3</code></h4>
+<p>Carbon requires Python 3.9 or newer. The included <code>pip3</code> should typically be used for Python package installation rather than other package managers.</p>
+<p><strong>NOTE</strong>: Carbon will focus support on Homebrew installs of Python 3.9, but it may not be necessary if you have Python 3.9 installed another way. If you're trying to use a non-Homebrew Python but have issues involving Carbon and Python, please try Homebrew's Python.</p>
+<p>Our recommended way of installing is:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install python@3.9</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip3</span> install <span class="at">-U</span> pip</span></code></pre></div>
+<p><strong>NOTE</strong>: <code>pip3</code> runs may print deprecation warnings referencing <a href="https://github.com/Homebrew/homebrew-core/issues/76621">https://github.com/Homebrew/homebrew-core/issues/76621</a>. These will need to be addressed in the future, but as of August 2021 can be ignored.</p>
+<p>To get the latest version of <code>pip3</code> packages, it will be necessary to periodically run <code>pip3 list --outdated</code>, then <code>pip3 install -U &lt;package&gt;</code> to upgrade desired packages. Keep in mind when upgrading that version dependencies may mean packages <em>should</em> be outdated, and not be upgraded.</p>
+<h2 id="main-tools">Main tools</h2>
+<p>These tools are key for contributions, primarily focused on validating contributions.</p>
+<h3 id="bazel-and-bazelisk">Bazel and Bazelisk</h3>
+<p><a href="https://www.bazel.build/">Bazel</a> is Carbon's standard build system. <a href="https://docs.bazel.build/versions/master/install-bazelisk.html">Bazelisk</a> is recommended for installing Bazel.</p>
+<p>Our recommended way of installing is:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install bazelisk</span></code></pre></div>
+<h3 id="clang-and-llvm">Clang and LLVM</h3>
+<p><a href="https://clang.llvm.org/">Clang</a> and <a href="https://llvm.org/">LLVM</a> are used to compile and link Carbon as part of its build. Bazel will also download and build against a specific upstream LLVM commit. While the Bazel uses upstream LLVM sources, the project expects the LLVM 12 release (or newer) to be installed with Clang and other tools in your <code>PATH</code> for use in building Carbon itself.</p>
+<p>Our recommended way of installing is:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install llvm</span></code></pre></div>
+<p>On <strong>MacOS only</strong> (not Linux), <code>llvm</code> is keg-only; bear in mind this requires updating <code>PATH</code> for it because it's not part of the standard Homebrew path. Read the output of <code>brew install</code> for the necessary path changes, or add something to your <code>PATH</code> like:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">brew</span> <span class="at">--prefix</span> llvm<span class="va">)</span><span class="st">/bin:</span><span class="va">${PATH}</span><span class="st">&quot;</span></span></code></pre></div>
+<p>Carbon expects the <code>PATH</code> to include the installed tooling. If set, <code>CC</code> should also point at <code>clang</code>. Our build environment will detect the <code>clang</code> binary using <code>CC</code> then <code>PATH</code>, and will expect the rest of the LLVM toolchain to be available in the same directory as <code>clang</code>. However, various scripts and tools assume that the LLVM toolchain will be in <code>PATH</code>, particularly for tools like <code>clang-format</code> and <code>clang-tidy</code>.</p>
+<blockquote>
+<p>TODO: We'd like to use <code>apt</code>, but standard LLVM Debian packages are not configured correctly for our needs. We are currently aware of two libc++ issues, <a href="https://bugs.llvm.org/show_bug.cgi?id=43604">43604</a> and <a href="https://bugs.llvm.org/show_bug.cgi?id=46321">46321</a>.</p>
+</blockquote>
+<h4 id="manual-installations-not-recommended">Manual installations (not recommended)</h4>
+<p>You can also build and install <code>LLVM</code> yourself if you prefer. The essential CMake options to pass in order for this to work reliably include:</p>
+<pre><code>-DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra;lld
+-DLLVM_ENABLE_RUNTIMES=compiler-rt;libcxx;libcxxabi;libunwind
+-DRUNTIMES_CMAKE_ARGS=-DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=OFF;-DCMAKE_POSITION_INDEPENDENT_CODE=ON;-DLIBCXX_ENABLE_STATIC_ABI_LIBRARY=ON;-DLIBCXX_STATICALLY_LINK_ABI_IN_SHARED_LIBRARY=OFF;-DLIBCXX_STATICALLY_LINK_ABI_IN_STATIC_LIBRARY=ON;-DLIBCXX_USE_COMPILER_RT=ON;-DLIBCXXABI_USE_COMPILER_RT=ON;-DLIBCXXABI_USE_LLVM_UNWINDER=ON</code></pre>
+<p>However, we primarily test against the Homebrew installation, so if building LLVM and Clang yourself you may hit some issues.</p>
+<h3 id="pre-commit">pre-commit</h3>
+<p>We use <a href="https://pre-commit.com">pre-commit</a> to run <a href="https://github.com/carbon-language/carbon-lang/tree/trunk/.pre-commit-config.yaml">various checks</a>. This will automatically run important checks, including formatting.</p>
+<p>Our recommended way of installing is:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip3</span> install pre-commit</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From within each carbon-language git repository:</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">pre-commit</span> install</span></code></pre></div>
+<blockquote>
+<p>NOTE: There are other ways of installing listed at <a href="https://pre-commit.com/#installation">pre-commit.com</a>, but <code>pip</code> is recommended for reliability.</p>
+</blockquote>
+<p>When you have changes to commit to git, a standard pre-commit workflow can look like:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let pre-commit fix style issues.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pre-commit</span> run</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Add modifications made by pre-commit.</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Commit the changes</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit</span></code></pre></div>
+<p>When modifying or adding pre-commit hooks, please run <code>pre-commit run --all-files</code> to see what changes.</p>
+<h2 id="optional-tools">Optional tools</h2>
+<h3 id="carbon-maintained">Carbon-maintained</h3>
+<p>Carbon-maintained tools are provided by the <code>carbon-lang</code> repository, rather than a separate install. They are noted here mainly to help findability.</p>
+<h4 id="new_proposalpy">new_proposal.py</h4>
+<p><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/scripts/new_proposal.py">new_proposal.py</a> is a helper for generating the PR and proposal file for a new proposal. It's documented in <a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/scripts/template.md">the proposal template</a>.</p>
+<p><strong>NOTE</strong>: This requires installing <a href="#gh-cli">the gh CLI</a>.</p>
+<h4 id="pr_commentspy">pr_comments.py</h4>
+<p><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/github_tools/pr_comments.py">pr_comments.py</a> is a helper for scanning comments in GitHub. It's particularly intended to help find threads which need to be resolved.</p>
+<p>Options can be seen with <code>-h</code>. A couple key options to be aware of are:</p>
+<ul>
+<li><code>--long</code>: Prints long output, with the full comment.</li>
+<li><code>--comments-after LOGIN</code>: Only print threads where the final comment is not from the given user. For example, use when looking for threads that you still need to respond to.</li>
+<li><code>--comments-from LOGIN</code>: Only print threads with comments from the given user. For example, use when looking for threads that you've commented on.</li>
+</ul>
+<p>This script may be run directly if <code>gql</code> is installed:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install gql</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./github_tools/pr_comments.py</span> <span class="op">&lt;</span>PR#<span class="op">&gt;</span></span></code></pre></div>
+<p>It may also be run using <code>bazel</code>, without installing <code>gql</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bazel</span> run //github_tools:pr_comments <span class="at">--</span> <span class="op">&lt;</span>PR#<span class="op">&gt;</span></span></code></pre></div>
+<h3 id="github">GitHub</h3>
+<h4 id="gh-cli">gh CLI</h4>
+<p><a href="https://github.com/cli/cli">The gh CLI</a> supports some GitHub queries, and is used by some scripts.</p>
+<p>Our recommended way of installing is:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install github/gh/gh</span></code></pre></div>
+<h4 id="github-desktop">GitHub Desktop</h4>
+<p><a href="https://desktop.github.com/">GitHub Desktop</a> provides a UI for managing git repositories. See the page for installation instructions.</p>
+<h3 id="rs-git-fsmonitor-and-watchman"><code>rs-git-fsmonitor</code> and Watchman</h3>
+<blockquote>
+<p><strong>WARNING</strong>: Bugs in <code>rs-git-fsmonitor</code> and/or Watchman can result in <code>pre-commit</code> deleting files. If you see files being deleted, disable <code>rs-git-fsmonitor</code> with <code>git config --unset core.fsmonitor</code>.</p>
+</blockquote>
+<p><a href="https://github.com/jgavris/rs-git-fsmonitor">rs-git-fsmonitor</a> is a file system monitor that uses <a href="https://github.com/facebook/watchman">Watchman</a> to speed up git on large repositories, such as <code>carbon-lang</code>.</p>
+<p>Our recommended way of installing is:</p>
+<ul>
+<li><p>Linux:</p>
+<blockquote>
+<p>If you don't have Rust's <a href="https://doc.rust-lang.org/cargo/">Cargo</a> package manager, install it first with <a href="https://rustup.rs/">the official install command</a>.</p>
+</blockquote>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install watchman</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> install <span class="at">--git</span> https://github.com/jgavris/rs-git-fsmonitor.git</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Configure the git repository to use fsmonitor.</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config core.fsmonitor rs-git-fsmonitor</span></code></pre></div></li>
+<li><p>MacOS:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> tap jgavris/rs-git-fsmonitor <span class="dt">\</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  https://github.com/jgavris/rs-git-fsmonitor.git</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install rs-git-fsmonitor</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Configure the git repository to use fsmonitor.</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config core.fsmonitor rs-git-fsmonitor</span></code></pre></div></li>
+</ul>
+<h3 id="vim">Vim</h3>
+<h4 id="vim-prettier">vim-prettier</h4>
+<p><a href="https://github.com/prettier/vim-prettier">vim-prettier</a> is a vim integration for <a href="#prettier">Prettier</a>.</p>
+<p>If you use vim-prettier, the <code>.prettierrc.yaml</code> should still apply as long as <code>config_precedence</code> is set to the default <code>file-override</code>. However, we may need to add additional settings where the <code>vim-prettier</code> default diverges from <code>prettier</code>, as we notice them.</p>
+<p>Our recommended way of installing is to use <a href="https://github.com/prettier/vim-prettier#install">the canonical instructions</a>.</p>
+<h3 id="visual-studio-code">Visual Studio Code</h3>
+<p><a href="https://code.visualstudio.com/">Visual Studio Code</a> is an IDE used by several of us. We provide <a href="https://github.com/carbon-language/carbon-lang/tree/trunk/.vscode/extensions.json">recommended extensions</a> to assist Carbon development. Some settings changes must be made separately:</p>
+<ul>
+<li>Python › Formatting: Provider: <code>black</code></li>
+</ul>
+<p>Our recommended way of installing is to use <a href="https://code.visualstudio.com/Download">the canonical download</a>.</p>
+<blockquote>
+<p><strong>WARNING:</strong> Visual Studio Code modifies the <code>PATH</code> environment variable, particularly in the terminals it creates. The <code>PATH</code> difference can cause <code>bazel</code> to detect different startup options, discarding its build cache. As a consequence, it's recommended to use <strong>either</strong> normal terminals <strong>or</strong> Visual Studio Code to run <code>bazel</code>, not both in combination. Visual Studio Code can still be used for other purposes, such as editing files, without interfering with <code>bazel</code>.</p>
+</blockquote>
+<h3 id="pre-commit-enabled-tools">pre-commit enabled tools</h3>
+<p>If you're using pre-commit, it will run these tools. Installing and running them manually is <em>entirely optional</em>, as they can be run without being installed through <code>pre-commit run</code>, but install instructions are still noted here for direct execution.</p>
+<h4 id="black">black</h4>
+<p>We use <a href="https://github.com/psf/black">Black</a> to format Python code. Although <a href="#prettier">Prettier</a> is used for most languages, it doesn't support Python.</p>
+<p>Our recommended way of installing is:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install black</span></code></pre></div>
+<h4 id="codespell">codespell</h4>
+<p>We use <a href="https://github.com/codespell-project/codespell">codespell</a> to spellcheck common errors. This won't catch every error; we're trying to balance true and false positives.</p>
+<p>Our recommended way of installing is:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install codespell</span></code></pre></div>
+<h4 id="prettier">Prettier</h4>
+<p>We use <a href="https://prettier.io/">Prettier</a> for formatting. There is an <a href="https://github.com/carbon-language/carbon-lang/tree/trunk/.prettierrc.yaml">rc file</a> for configuration.</p>
+<p>Our recommended way of installing is to use <a href="https://prettier.io/docs/en/install.html">the canonical instructions</a>.</p>

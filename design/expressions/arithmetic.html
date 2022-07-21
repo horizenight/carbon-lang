@@ -1,0 +1,186 @@
+<h1 id="arithmetic">Arithmetic</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#precedence-and-associativity">Precedence and associativity</a></li>
+<li><a href="#built-in-types">Built-in types</a>
+<ul>
+<li><a href="#integer-types">Integer types</a>
+<ul>
+<li><a href="#overflow-and-other-error-conditions">Overflow and other error conditions</a></li>
+</ul></li>
+<li><a href="#floating-point-types">Floating-point types</a></li>
+<li><a href="#strings">Strings</a></li>
+</ul></li>
+<li><a href="#extensibility">Extensibility</a></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p>Carbon provides a conventional set of arithmetic operators:</p>
+<pre><code>var a: i32 = 5;
+var b: i32 = 3;
+
+// -5
+var negation: i32 = -a;
+// 8
+var sum: i32 = a + b;
+// 2
+var difference: i32 = a - b;
+// 15
+var product: i32 = a * b;
+// 1
+var quotient: i32 = a / b;
+// 2
+var remainder: i32 = a % b;</code></pre>
+<p>These operators have predefined meanings for some of Carbon's <a href="#built-in-types">built-in types</a>.</p>
+<p>User-defined types can define the meaning of these operations by <a href="#extensibility">implementing an interface</a> provided as part of the Carbon standard library.</p>
+<h2 id="precedence-and-associativity">Precedence and associativity</h2>
+<pre class="mermaid"><code>%%{init: {&#39;themeVariables&#39;: {&#39;fontFamily&#39;: &#39;monospace&#39;}}}%%
+graph BT
+    negation[&quot;-x&quot;]
+    multiplication&gt;&quot;x * y&lt;br&gt;
+                    x / y&quot;]
+    addition&gt;&quot;x + y&lt;br&gt;
+              x - y&quot;]
+    modulo[&quot;x % y&quot;]
+
+    multiplication &amp; modulo --&gt; negation
+    addition --&gt; multiplication</code></pre>
+<p><small><a href="index.html#precedence">Instructions for reading this diagram.</a></small></p>
+<p>Binary <code>+</code> and <code>-</code> can be freely mixed, and are left-associative.</p>
+<pre><code>// -2, same as `((1 - 2) + 3) - 4`.
+var n: i32 = 1 - 2 + 3 - 4;</code></pre>
+<p>Binary <code>*</code> and <code>/</code> can be freely mixed, and are left-associative.</p>
+<pre><code>// 0.375, same as `((1.0 / 2.0) * 3.0) / 4.0`.
+var m: f32 = 1.0 / 2.0 * 3.0 / 4.0;</code></pre>
+<p>Unary <code>-</code> has higher precedence than binary <code>*</code>, <code>/</code>, and <code>%</code>. Binary <code>*</code> and <code>/</code> have higher precedence than binary <code>+</code> and <code>-</code>.</p>
+<pre><code>// 5, same as `(-1) + ((-2) * (-3))`.
+var x: i32 = -1 + -2 * -3;
+// Error, parentheses required: no precedence order between `+` and `%`.
+var y: i32 = 2 + 3 % 5;</code></pre>
+<h2 id="built-in-types">Built-in types</h2>
+<p>For binary operators, if the operands have different built-in types, they are converted as follows:</p>
+<ul>
+<li>If the types are <code>uN</code> and <code>uM</code>, or they are <code>iN</code> and <code>iM</code>, the operands are converted to the larger type.</li>
+<li>If one type is <code>iN</code> and the other type is <code>uM</code>, and <code>M</code> &lt; <code>N</code>, the <code>uM</code> operand is converted to <code>iN</code>.</li>
+<li>If one type is <code>fN</code> and the other type is <code>iM</code> or <code>uM</code>, and there is an <a href="implicit_conversions.html#data-types">implicit conversion</a> from the integer type to <code>fN</code>, then the integer operand is converted to <code>fN</code>.</li>
+</ul>
+<p>More broadly, if one operand is of built-in type and the other operand can be implicitly converted to that type, then it is, unless that behavior is <a href="#extensibility">overridden</a>.</p>
+<p>A built-in arithmetic operation is performed if, after the above conversion step, the operands have the same built-in type. The result type is that type. The result type is never wider than the operands, and the conversions applied to the operands are always lossless, so arithmetic between a wider unsigned integer type and a narrower signed integer is not defined.</p>
+<p>Although the conversions are always lossless, the arithmetic may still <a href="#overflow-and-other-error-conditions">overflow</a>.</p>
+<h3 id="integer-types">Integer types</h3>
+<p>Signed and unsigned integer types support all the arithmetic operators.</p>
+<p>Signed integer arithmetic produces the usual mathematical result. Unsigned integer arithmetic in <code>uN</code> wraps around modulo 2<sup><code>N</code></sup>.</p>
+<p>Division truncates towards zero. The result of the <code>%</code> operator is defined by the equation <code>a % b == a - a / b * b</code>.</p>
+<h4 id="overflow-and-other-error-conditions">Overflow and other error conditions</h4>
+<p>Integer arithmetic is subject to two classes of problems for which an operation has no representable result:</p>
+<ul>
+<li>Overflow, where the resulting value is too large to be represented in the type, or, for <code>%</code>, when the implied multiplication overflows.</li>
+<li>Division by zero.</li>
+</ul>
+<p>Unsigned integer arithmetic cannot overflow, but division by zero can still occur.</p>
+<p><strong>Note:</strong> All arithmetic operators can overflow for signed integer types. For example, given a value <code>v: iN</code> that is the least possible value for its type, <code>-v</code>, <code>v + v</code>, <code>v - 1</code>, <code>v * 2</code>, <code>v / -1</code>, and <code>v % -1</code> all result in overflow.</p>
+<p>Signed integer overflow and signed or unsigned integer division by zero are programming errors:</p>
+<ul>
+<li>In a development build, they will be caught immediately when they happen at runtime.</li>
+<li>In a performance build, the optimizer can assume that such conditions don't occur. As a consequence, if they do, the behavior of the program is not defined.</li>
+<li>In a hardened build, overflow and division by zero do not result in undefined behavior. On overflow and division by zero, either the program will be aborted, or the arithmetic will evaluate to a mathematically incorrect result, such as a two's complement result or zero. The program might not in all cases be aborted immediately -- for example, multiple overflow checks might be combined into one -- but no control flow or memory access that depends on the value will be performed.</li>
+</ul>
+<p><strong>TODO:</strong> Unify the description of these programming errors with those of bit-shift domain errors, document the behavior in a common place and link to it from here.</p>
+<p><strong>TODO:</strong> In a hardened build, should we prefer to trap on overflow, give a two's complement result, or produce zero? Using zero may defeat some classes of exploit, but comes at a code size and performance cost.</p>
+<h3 id="floating-point-types">Floating-point types</h3>
+<p>Floating-point types support all the arithmetic operators other than <code>%</code>. Floating-point types in Carbon have IEEE 754 semantics, use the round-to-nearest rounding mode, and do not set any floating-point exception state.</p>
+<p>Because floating-point arithmetic follows IEEE 754 rules: overflow results in ±∞, and division by zero results in either ±∞ or, for 0.0 / 0.0, a quiet NaN.</p>
+<h3 id="strings">Strings</h3>
+<p><strong>TODO:</strong> Decide whether strings are built-in types, and whether they support <code>+</code> for concatenation. See <a href="https://github.com/carbon-language/carbon-lang/issues/457">#457</a>.</p>
+<h2 id="extensibility">Extensibility</h2>
+<p>Arithmetic operators can be provided for user-defined types by implementing the following family of interfaces:</p>
+<pre><code>// Unary `-`.
+interface Negate {
+  let Result:! Type = Self;
+  fn Op[me: Self]() -&gt; Result;
+}</code></pre>
+<pre><code>// Binary `+`.
+interface AddWith(U:! Type) {
+  let Result:! Type = Self;
+  fn Op[me: Self](other: U) -&gt; Result;
+}
+constraint Add {
+  extends AddWith(Self) where .Result = Self;
+}</code></pre>
+<pre><code>// Binary `-`.
+interface SubWith(U:! Type) {
+  let Result:! Type = Self;
+  fn Op[me: Self](other: U) -&gt; Result;
+}
+constraint Sub {
+  extends SubWith(Self) where .Result = Self;
+}</code></pre>
+<pre><code>// Binary `*`.
+interface MulWith(U:! Type) {
+  let Result:! Type = Self;
+  fn Op[me: Self](other: U) -&gt; Result;
+}
+constraint Mul {
+  extends MulWith(Self) where .Result = Self;
+}</code></pre>
+<pre><code>// Binary `/`.
+interface DivWith(U:! Type) {
+  let Result:! Type = Self;
+  fn Op[me: Self](other: U) -&gt; Result;
+}
+constraint Div {
+  extends DivWith(Self) where .Result = Self;
+}</code></pre>
+<pre><code>// Binary `%`.
+interface ModWith(U:! Type) {
+  let Result:! Type = Self;
+  fn Op[me: Self](other: U) -&gt; Result;
+}
+constraint Mod {
+  extends ModWith(Self) where .Result = Self;
+}</code></pre>
+<p>Given <code>x: T</code> and <code>y: U</code>:</p>
+<ul>
+<li>The expression <code>-x</code> is rewritten to <code>x.(Negate.Op)()</code>.</li>
+<li>The expression <code>x + y</code> is rewritten to <code>x.(AddWith(U).Op)(y)</code>.</li>
+<li>The expression <code>x - y</code> is rewritten to <code>x.(SubWith(U).Op)(y)</code>.</li>
+<li>The expression <code>x * y</code> is rewritten to <code>x.(MulWith(U).Op)(y)</code>.</li>
+<li>The expression <code>x / y</code> is rewritten to <code>x.(DivWith(U).Op)(y)</code>.</li>
+<li>The expression <code>x % y</code> is rewritten to <code>x.(ModWith(U).Op)(y)</code>.</li>
+</ul>
+<p>Implementations of these interfaces are provided for built-in types as necessary to give the semantics described above.</p>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#use-a-sufficiently-wide-result-type-to-avoid-overflow">Use a sufficiently wide result type to avoid overflow</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#guarantee-that-the-program-never-proceeds-with-an-incorrect-value-after-overflow">Guarantee that the program never proceeds with an incorrect value after overflow</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#guarantee-that-all-integer-arithmetic-is-twos-complement">Guarantee that all integer arithmetic is two's complement</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#treat-overflow-as-an-error-but-dont-optimize-on-it">Treat overflow as an error but don't optimize on it</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#dont-let-unsigned-arithmetic-wrap">Don't let <code>Unsigned</code> arithmetic wrap</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#provide-separate-wrapping-types">Provide separate wrapping types</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#do-not-provide-an-ordering-or-division-for-un">Do not provide an ordering or division for <code>uN</code></a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#give-unary---lower-precedence">Give unary <code>-</code> lower precedence</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#include-a-unary-plus-operator">Include a unary plus operator</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#floating-point-modulo-operator">Floating-point modulo operator</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#provide-different-division-operators">Provide different division operators</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#use-different-division-and-modulo-semantics">Use different division and modulo semantics</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#use-different-precedence-groups-for-division-and-multiplication">Use different precedence groups for division and multiplication</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#use-the-same-precedence-group-for-modulo-and-multiplication">Use the same precedence group for modulo and multiplication</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1083.md#use-a-different-spelling-for-modulo">Use a different spelling for modulo</a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/1083">#1083: Arithmetic</a></li>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/1178">#1178: Rework operator interfaces</a></li>
+</ul>

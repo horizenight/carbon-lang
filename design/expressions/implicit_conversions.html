@@ -1,0 +1,129 @@
+<h1 id="implicit-conversions">Implicit conversions</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#properties-of-implicit-conversions">Properties of implicit conversions</a>
+<ul>
+<li><a href="#lossless">Lossless</a></li>
+<li><a href="#semantics-preserving">Semantics-preserving</a></li>
+<li><a href="#examples">Examples</a></li>
+</ul></li>
+<li><a href="#built-in-types">Built-in types</a>
+<ul>
+<li><a href="#data-types">Data types</a></li>
+<li><a href="#same-type">Same type</a></li>
+<li><a href="#pointer-conversions">Pointer conversions</a></li>
+<li><a href="#type-of-types">Type-of-types</a></li>
+</ul></li>
+<li><a href="#consistency-with-as">Consistency with <code>as</code></a></li>
+<li><a href="#extensibility">Extensibility</a></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p>When an expression appears in a context in which an expression of a specific type is expected, the expression is implicitly converted to that type if possible.</p>
+<p>For <a href="#built-in-types">built-in types</a>, implicit conversions are permitted when:</p>
+<ul>
+<li>The conversion is <a href="#lossless"><em>lossless</em></a>: every possible value for the source expression converts to a distinct value in the target type.</li>
+<li>The conversion is <a href="#semantics-preserving"><em>semantics-preserving</em></a>: corresponding values in the source and destination type have the same abstract meaning.</li>
+</ul>
+<p>These rules aim to ensure that implicit conversions are unsurprising: the value that is provided as the operand of an operation should match how that operation interprets the value, because the identity and abstract meaning of the value are preserved by any implicit conversions that are applied.</p>
+<p>It is possible for user-defined types to <a href="#extensibility">extend</a> the set of valid implicit conversions. Such extensions are expected to also follow these rules.</p>
+<h2 id="properties-of-implicit-conversions">Properties of implicit conversions</h2>
+<h3 id="lossless">Lossless</h3>
+<p>We expect implicit conversion to never lose information: if two values are distinguishable before the conversion, they should generally be distinguishable after the conversion. It should be possible to define a conversion in the opposite direction that restores the original value, but such a conversion is not expected to be provided in general, and might be computationally expensive.</p>
+<p>Because an implicit conversion is converting from a narrower type to a wider type, implicit conversions do not necessarily preserve static information about the source value.</p>
+<h3 id="semantics-preserving">Semantics-preserving</h3>
+<p>We expect implicit conversions to preserve the meaning of converted values. The assessment of this criterion will necessarily be subjective, because the meanings of values generally live in the mind of the programmer rather than in the program text. However, the semantic interpretation is expected to be consistent from one conversion to another, so we can provide a test: if multiple paths of implicit conversions from a type <code>A</code> to a type <code>B</code> exist, and the same value of type <code>A</code> would convert to different values of type <code>B</code> along different paths, then at least one of those conversions must not be semantics-preserving.</p>
+<p>A semantics-preserving conversion does not necessarily preserve the meaning of particular syntax when applied to the value. The same syntax may map to different operations in the new type. For example, division may mean different things in integer and floating-point types, and member access may find different members in a derived class pointer versus in a base class pointer.</p>
+<h3 id="examples">Examples</h3>
+<p>Conversion from <code>i32</code> to <code>Vector(int)</code> by forming a vector of N zeroes is lossless but not semantics-preserving.</p>
+<p>Conversion from <code>i32</code> to <code>f32</code> by rounding to the nearest representable value is semantics-preserving but not lossless.</p>
+<p>Conversion from <code>String</code> to <code>StringView</code> is lossless, because we can compute the <code>String</code> value from the <code>StringView</code> value, and semantics-preserving because the string value denoted is the same. Conversion in the other direction may or may not be semantics-preserving depending on whether we consider the address to be a salient part of a <code>StringView</code>'s value.</p>
+<h2 id="built-in-types">Built-in types</h2>
+<h3 id="data-types">Data types</h3>
+<p>The following implicit numeric conversions are available:</p>
+<ul>
+<li><code>iN</code> or <code>uN</code> -&gt; <code>iM</code> if <code>M</code> &gt; <code>N</code></li>
+<li><code>uN</code> -&gt; <code>uM</code> if <code>M</code> &gt; <code>N</code></li>
+<li><code>fN</code> -&gt; <code>fM</code> if <code>M</code> &gt; <code>N</code></li>
+<li><code>iN</code> or <code>uN</code> -&gt; <code>fM</code> if every value of type <code>iN</code> or <code>uN</code> can be represented in <code>fM</code>:
+<ul>
+<li><code>i12</code> or <code>u11</code> (or smaller) -&gt; <code>f16</code></li>
+<li><code>i25</code> or <code>u24</code> (or smaller) -&gt; <code>f32</code></li>
+<li><code>i54</code> or <code>u53</code> (or smaller) -&gt; <code>f64</code></li>
+<li><code>i65</code> or <code>u64</code> (or smaller) -&gt; <code>f80</code> (x86 only)</li>
+<li><code>i114</code> or <code>u113</code> (or smaller) -&gt; <code>f128</code> (if available)</li>
+<li><code>i238</code> or <code>u237</code> (or smaller) -&gt; <code>f256</code> (if available)</li>
+</ul></li>
+</ul>
+<p>In each case, the numerical value is the same before and after the conversion. An integer zero is translated into a floating-point positive zero.</p>
+<p>An integer constant can be implicitly converted to any type <code>iM</code>, <code>uM</code>, or <code>fM</code> in which that value can be exactly represented. A floating-point constant can be implicitly converted to any type <code>fM</code> in which that value is between the least representable finite value and the greatest representable finite value (inclusive), and converts to the nearest representable finite value, with ties broken by picking the value for which the mantissa is even.</p>
+<p>The above conversions are also precisely those that C++ considers non-narrowing, except:</p>
+<ul>
+<li><p>Carbon also permits integer to floating-point conversions in more cases. The most important of these is that Carbon permits <code>i32</code> to be implicitly converted to <code>f64</code>. Lossy conversions, such as from <code>i32</code> to <code>f32</code>, are not permitted.</p></li>
+<li><p>What Carbon considers to be an integer constant or floating-point constant may differ from what C++ considers to be a constant expression.</p>
+<p><strong>Note:</strong> We have not yet decided what will qualify as a constant in this context, but it will include at least integer and floating-point literals, with optional enclosing parentheses. It is possible that such constants will have singleton types; see issue <a href="https://github.com/carbon-language/carbon-lang/issues/508">#508</a>.</p></li>
+</ul>
+<p>In addition to the above rules, a negative integer constant <code>k</code> can be implicitly converted to the type <code>uN</code> if the value <code>k</code> + 2<sup>N</sup> can be exactly represented, and converts to that value. Note that this conversion violates the "semantics-preserving" test. For example, <code>(-1 as u8) as i32</code> produces the value <code>255</code> whereas <code>-1 as i32</code> produces the value <code>-1</code>. However, this conversion is important in order to allow bitwise operations with masks, so we allow it:</p>
+<pre><code>// We allow ^0 == -1 to convert to `u32` to represent an all-ones value.
+var a: u32 = ^0;
+// ^4 == -5 is negative, but we want to allow it to convert to u32 here.
+var b: u32 = a &amp; ^4;</code></pre>
+<h3 id="same-type">Same type</h3>
+<p>The following conversion is available for every type <code>T</code>:</p>
+<ul>
+<li><code>T</code> -&gt; <code>T</code></li>
+</ul>
+<h3 id="pointer-conversions">Pointer conversions</h3>
+<p>The following pointer conversion is available:</p>
+<ul>
+<li><code>T*</code> -&gt; <code>U*</code> if <code>T</code> is a class derived from the class <code>U</code>.</li>
+</ul>
+<p>Even though we can convert <code>Derived*</code> to <code>Base*</code>, we cannot convert <code>Derived**</code> to <code>Base**</code> because that would allow storing a <code>Derived2*</code> into a <code>Derived*</code>:</p>
+<pre><code>abstract class Base {}
+class Derived extends Base {}
+class Derived2 extends Base {}
+var d2: Derived2 = {};
+var p: Derived*;
+var q: Derived2* = &amp;d2;
+var r: Base** = &amp;p;
+// Bad: would store q to p.
+*r = q;</code></pre>
+<h3 id="type-of-types">Type-of-types</h3>
+<p>A type <code>T</code> with <a href="../generics/terminology.html#type-of-type">type-of-type</a> <code>TT1</code> can be implicitly converted to the type-of-type <code>TT2</code> if <code>T</code> <a href="../generics/details.html#subtyping-between-type-of-types">satisfies the requirements</a> of <code>TT2</code>.</p>
+<h2 id="consistency-with-as">Consistency with <code>as</code></h2>
+<p>An implicit conversion of an expression <code>E</code> of type <code>T</code> to type <code>U</code>, when permitted, always has the same meaning as the <a href="as_expressions.html">explicit cast expression <code>E as U</code></a>. Moreover, because such an implicit conversion is expected to exactly preserve the value, <code>(E as U) as T</code>, if valid, should be expected to result in the same value as produced by <code>E</code> even if the <code>as T</code> cast cannot be performed as an implicit conversion.</p>
+<h2 id="extensibility">Extensibility</h2>
+<p>Implicit conversions can be defined for user-defined types such as <a href="../classes.html">classes</a> by implementing the <code>ImplicitAs</code> interface, which extends <a href="as_expressions.html#extensibility">the <code>As</code> interface used to implement <code>as</code> expressions</a>:</p>
+<pre><code>interface ImplicitAs(Dest:! Type) {
+  extends As(Dest);
+  // Inherited from As(Dest):
+  // fn Convert[me: Self]() -&gt; Dest;
+}</code></pre>
+<p>When attempting to implicitly convert an expression <code>x</code> to type <code>U</code>, the expression is rewritten to <code>x.(ImplicitAs(U).Convert)()</code>.</p>
+<p>Note that implicit conversions are not transitive. Even if an <code>impl A as ImplicitAs(B)</code> and an <code>impl B as ImplicitAs(C)</code> are both provided, an expression of type <code>A</code> cannot be implicitly converted to type <code>C</code>. Allowing transitivity would introduce the risk of ambiguity issues as code evolves and would in general require a search of a potentially unbounded set of intermediate types.</p>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0820.md#c-conversions">Provide lossy and non-semantics-preserving implicit conversions from C++</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0820.md#no-conversions">Provide no implicit conversions</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0820.md#no-extensibility">Provide no extensibility</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0820.md#transitivity">Apply implicit conversions transitively</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1191.md#converting-complements-to-unsigned-types">Do not allow negative constants to convert to unsigned types</a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/language/implicit_conversion">Implicit conversions in C++</a></li>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/820">#820: Implicit conversions</a>.</li>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/866">#866: Allow ties in floating literals</a>.</li>
+</ul>

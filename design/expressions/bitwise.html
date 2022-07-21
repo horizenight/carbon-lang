@@ -1,0 +1,168 @@
+<h1 id="bitwise-and-shift-operators">Bitwise and shift operators</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#precedence-and-associativity">Precedence and associativity</a></li>
+<li><a href="#integer-types">Integer types</a></li>
+<li><a href="#integer-constants">Integer constants</a></li>
+<li><a href="#extensibility">Extensibility</a></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p>Carbon provides a conventional set of operators for operating on bits:</p>
+<pre><code>var a: u8 = 5;
+var b: u8 = 3;
+var c: i8 = -5;
+
+// 250
+var complement: u8 = ^a;
+// 1
+var bitwise_and: u8 = a &amp; b;
+// 7
+var bitwise_or: u8 = a | b;
+// 6
+var bitwise_xor: u8 = a ^ b;
+// 40
+var left_shift: u8 = a &lt;&lt; b;
+// 2
+var logical_right_shift: u8 = a &gt;&gt; 1;
+// -3
+var arithmetic_right_shift: i8 = c &gt;&gt; 1;</code></pre>
+<p>These operators have <a href="#integer-types">predefined meanings</a> for Carbon's integer types. User-defined types can define the meaning of these operations by <a href="#extensibility">implementing an interface</a> provided as part of the Carbon standard library.</p>
+<h2 id="precedence-and-associativity">Precedence and associativity</h2>
+<pre class="mermaid"><code>%%{init: {&#39;themeVariables&#39;: {&#39;fontFamily&#39;: &#39;monospace&#39;}}}%%
+graph BT
+    complement[&quot;^x&quot;]
+    bitwise_and&gt;&quot;x &amp; y&quot;]
+    bitwise_or&gt;&quot;x | y&quot;]
+    bitwise_xor&gt;&quot;x ^ y&quot;]
+    shift[&quot;x &lt;&lt; y&lt;br&gt;
+           x &gt;&gt; y&quot;]
+    bitwise_and &amp; bitwise_or &amp; bitwise_xor &amp; shift --&gt; complement</code></pre>
+<p><small><a href="index.html#precedence">Instructions for reading this diagram.</a></small></p>
+<p>Parentheses are required when mixing different bitwise and bit-shift operators. Binary <code>&amp;</code>, <code>|</code>, and <code>^</code> are left-associative. The bit-shift operators <code>&lt;&lt;</code> and <code>&gt;&gt;</code> are non-associative.</p>
+<pre><code>// ✅ Same as (1 | 2) | 4, evaluates to 7.
+var a: i32 = 1 | 2 | 4;
+
+// ❌ Error, parentheses are required to distinguish between
+//    (3 | 5) &amp; 6, which evaluates to 6, and
+//    3 | (5 &amp; 6), which evaluates to 7.
+var b: i32 = 3 | 5 &amp; 6;
+
+// ❌ Error, parentheses are required to distinguish between
+//    (1 &lt;&lt; 2) &lt;&lt; 3, which evaluates to 4 &lt;&lt; 3 == 32, and
+//    1 &lt;&lt; (2 &lt;&lt; 3), which evaluates to 1 &lt;&lt; 16 == 65536.
+var c: i32 = 1 &lt;&lt; 2 &lt;&lt; 3;
+
+// ❌ Error, can&#39;t repeat the `^` operator. Use `^(^4)` or simply `4`.
+var d: i32 = ^^4;</code></pre>
+<h2 id="integer-types">Integer types</h2>
+<p>Bitwise and bit-shift operators are supported for Carbon's built-in integer types, and, unless that behavior is <a href="#extensibility">overridden</a>, for types that can be implicitly converted to integer types, as follows:</p>
+<p>For binary bitwise operators, if one operand has an integer type and the other operand can be implicitly converted to that type, then it is. If both operands are of integer type, this results in the following conversions:</p>
+<ul>
+<li>If the types are <code>uN</code> and <code>uM</code>, or they are <code>iN</code> and <code>iM</code>, the operands are converted to the larger type.</li>
+<li>If one type is <code>iN</code> and the other type is <code>uM</code>, and <code>M</code> &lt; <code>N</code>, the <code>uM</code> operand is converted to <code>iN</code>.</li>
+</ul>
+<p>A built-in binary bitwise <code>&amp;</code>, <code>|</code>, or <code>^</code> operation is performed if, after the above conversion step, the operands have the same integer type. The result type is that type, and the result value is produced by applying the relevant operation -- AND, OR, or XOR -- to each pair of corresponding bits in the input, including the sign bit for a signed integer type.</p>
+<p>A built-in complement operation is performed if the operand can be implicitly converted to an integer type. The result type is that type, and the result value is produced by flipping all bits in the input, including the sign bit for a signed integer type. <code>^a</code> is equivalent to <code>a ^ x</code>, where <code>x</code> is the all-one-bits value of the same type as <code>a</code>.</p>
+<p>A built-in bit-shift operation is performed if both operands are, or can be implicitly converted to, integer types. The result type is the converted type of the first operand. The result value is produced by shifting the first operand left for <code>&lt;&lt;</code> or right for <code>&gt;&gt;</code> a number of positions equal to the second operand. Vacant positions are filled with <code>0</code> bits, except for a right shift where the first operand is of a signed type and has a negative value, in which case they are filled with <code>1</code> bits.</p>
+<p>For the purposes of bit-shifts, bits are ordered by significance, with the most significant bit being the leftmost bit and the least significant bit being the rightmost bit. As a consequence, in the absence of overflow a left shift is equivalent to a multiplication by a power of 2 and a right shift is equivalent to a division by a power of two, rounding downwards.</p>
+<p>The second operand of a bit-shift is required to be between zero (inclusive) and the bit-width of the first operand (exclusive); it is a programming error if the second operand is not within that range.</p>
+<ul>
+<li>In a development build, they will be caught immediately when they happen at runtime.</li>
+<li>In a performance build, the optimizer may assume that this programming error does not occur.</li>
+<li>In a hardened build, the result will have well the defined behavior of either aborting the program or performing a shift of an unspecified number of bits, which if wider than the first operand will result in <code>0</code> or <code>-1</code>. In the case where the program is aborted, the program might not in all cases be aborted immediately -- for example, multiple checks might be combined into one -- but no control flow or memory access that depends on the value will be performed.</li>
+</ul>
+<p><strong>TODO:</strong> Unify the description of these programming errors with those of arithmetic overflow, document the behavior in a common place and link to it from here.</p>
+<h2 id="integer-constants">Integer constants</h2>
+<p>These operations can also be applied to a pair of integer constants, or to an integer constant and a value of integer type, as follows:</p>
+<ul>
+<li>If any binary bitwise or bit-shift operator is applied to two integer constants, or the unary <code>^</code> operator is applied to an integer constant, the result is an integer constant. Integer constants are treated as having infinitely many high-order bits, where all but finitely many of those bits are sign bits. For example, <code>-1</code> comprises infinitely many <code>1</code> bits. Note that there is no difference between an arithmetic and a logical right shift on an integer constant, because every bit always has a higher-order bit to shift from.
+<ul>
+<li>It is easy to produce extremely large numbers by left-shifting an integer constant. For example, the binary representation of <code>1 &lt;&lt; (1 &lt;&lt; 1000)</code> is thought to be substantially larger than the total entropy in the observable universe. In practice, Carbon implementations will set a much lower limit on the largest integer constant that they support.</li>
+</ul></li>
+<li>If a binary bitwise <code>&amp;</code>, <code>|</code>, or <code>^</code> operation is applied to an integer constant and a value of an integer type to which the constant can be implicitly converted, the operand that is an integer constant is implicitly converted to the integer type and the computation is performed as described <a href="#integer-types">above</a>.</li>
+<li>If the second operand of a bit-shift operator is an integer constant and the first operand is not, and the second operand is between 0 (inclusive) and the bit-width of the first operand (exclusive), the integer constant is converted to an integer type that can hold its value and the computation is performed as described above.</li>
+</ul>
+<p>Other operations involving integer constants are invalid. For example, a bitwise <code>&amp;</code> between a <code>u8</code> and an integer constant <code>500</code> is invalid because <code>500</code> doesn't fit into <code>u8</code>, and <code>1 &lt;&lt; n</code> is invalid if <code>n</code> is an integer variable because we don't know what type to use to compute the result.</p>
+<p>Note that the unary <code>^</code> operator applied to a non-negative integer constant results in a negative integer constant, and the binary <code>^</code> operator gives a negative result if exactly one of the input operands was negative. For example, <code>^0 == -1</code> evaluates to <code>true</code>.</p>
+<h2 id="extensibility">Extensibility</h2>
+<p>Bitwise and shift operators can be provided for user-defined types by implementing the following family of interfaces:</p>
+<pre><code>// Unary `^`.
+interface BitComplement {
+  let Result:! Type = Self;
+  fn Op[me: Self]() -&gt; Result;
+}</code></pre>
+<pre><code>// Binary `&amp;`.
+interface BitAndWith(U:! Type) {
+  let Result:! Type = Self;
+  fn Op[me: Self](other: U) -&gt; Result;
+}
+constraint BitAnd {
+  extends BitAndWith(Self) where .Result = Self;
+}</code></pre>
+<pre><code>// Binary `|`.
+interface BitOrWith(U:! Type) {
+  let Result:! Type = Self;
+  fn Op[me: Self](other: U) -&gt; Result;
+}
+constraint BitOr {
+  extends BitOrWith(Self) where .Result = Self;
+}</code></pre>
+<pre><code>// Binary `^`.
+interface BitXorWith(U:! Type) {
+  let Result:! Type = Self;
+  fn Op[me: Self](other: U) -&gt; Result;
+}
+constraint BitXor {
+  extends BitXorWith(Self) where .Result = Self;
+}</code></pre>
+<pre><code>// Binary `&lt;&lt;`.
+interface LeftShiftWith(U:! Type) {
+  let Result:! Type = Self;
+  fn Op[me: Self](other: U) -&gt; Result;
+}
+constraint LeftShift {
+  extends LeftShiftWith(Self) where .Result = Self;
+}</code></pre>
+<pre><code>// Binary `&gt;&gt;`.
+interface RightShiftWith(U:! Type) {
+  let Result:! Type = Self;
+  fn Op[me: Self](other: U) -&gt; Result;
+}
+constraint RightShift {
+  extends RightShiftWith(Self) where .Result = Self;
+}</code></pre>
+<p>Given <code>x: T</code> and <code>y: U</code>:</p>
+<ul>
+<li>The expression <code>^x</code> is rewritten to <code>x.(BitComplement.Op)()</code>.</li>
+<li>The expression <code>x &amp; y</code> is rewritten to <code>x.(BitAndWith(U).Op)(y)</code>.</li>
+<li>The expression <code>x | y</code> is rewritten to <code>x.(BitOrWith(U).Op)(y)</code>.</li>
+<li>The expression <code>x ^ y</code> is rewritten to <code>x.(BitXorWith(U).Op)(y)</code>.</li>
+<li>The expression <code>x &lt;&lt; y</code> is rewritten to <code>x.(LeftShiftWith(U).Op)(y)</code>.</li>
+<li>The expression <code>x &gt;&gt; y</code> is rewritten to <code>x.(RightShiftWith(U).Op)(y)</code>.</li>
+</ul>
+<p>Implementations of these interfaces are provided for built-in types as necessary to give the semantics described above.</p>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1191.md#use-different-symbols-for-bitwise-operators">Use different symbols for bitwise operators</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1191.md#provide-different-operators-for-arithmetic-and-logical-shifts">Provide different operators for arithmetic and logical shifts</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1191.md#provide-rotate-operators">Provide rotate operators</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1191.md#guarantee-behavior-of-large-shifts">Guarantee the behavior of large shifts</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1191.md#support-shifting-a-constant-by-a-variable">Support shifting a constant by a variable</a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/1191">#1191: bitwise and shift operators</a>.</li>
+</ul>
