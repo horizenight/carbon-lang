@@ -1,0 +1,2406 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>String literals - Carbon Language</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#string-literals" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Carbon Language" class="md-header__button md-logo" aria-label="Carbon Language" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Carbon Language
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              String literals
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Carbon Language" class="md-nav__button md-logo" aria-label="Carbon Language" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Carbon Language
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Docs
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Design
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Design" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Design
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        Language design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aliases/" class="md-nav__link">
+        Aliases
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blocks_and_statements/" class="md-nav__link">
+        Blocks and statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classes/" class="md-nav__link">
+        Classes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../functions/" class="md-nav__link">
+        Functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metaprogramming/" class="md-nav__link">
+        Metaprogramming
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../name_lookup/" class="md-nav__link">
+        Name lookup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../naming_conventions/" class="md-nav__link">
+        Naming conventions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pattern_matching/" class="md-nav__link">
+        Pattern matching
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../primitive_types/" class="md-nav__link">
+        Primitive types
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../templates/" class="md-nav__link">
+        Templates
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tuples/" class="md-nav__link">
+        Tuples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../type_inference/" class="md-nav__link">
+        Type inference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../variables/" class="md-nav__link">
+        Variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_15" type="checkbox" id="__nav_2_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_15">
+          Code and name organization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Code and name organization" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_15">
+          <span class="md-nav__icon md-icon"></span>
+          Code and name organization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../code_and_name_organization/" class="md-nav__link">
+        Code and name organization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../code_and_name_organization/source_files/" class="md-nav__link">
+        Source files
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_16" type="checkbox" id="__nav_2_16" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_16">
+          Control flow
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Control flow" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_16">
+          <span class="md-nav__icon md-icon"></span>
+          Control flow
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/" class="md-nav__link">
+        Control flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/conditionals/" class="md-nav__link">
+        Control flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/loops/" class="md-nav__link">
+        Loops
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/return/" class="md-nav__link">
+        `return`
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_17" type="checkbox" id="__nav_2_17" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_17">
+          Expressions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Expressions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_17">
+          <span class="md-nav__icon md-icon"></span>
+          Expressions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/" class="md-nav__link">
+        Expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/arithmetic/" class="md-nav__link">
+        Arithmetic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/as_expressions/" class="md-nav__link">
+        `as` expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/bitwise/" class="md-nav__link">
+        Bitwise and shift operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/comparison_operators/" class="md-nav__link">
+        Comparison operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/if/" class="md-nav__link">
+        `if` expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/implicit_conversions/" class="md-nav__link">
+        Implicit conversions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/logical_operators/" class="md-nav__link">
+        Logical operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/member_access/" class="md-nav__link">
+        Qualified names and member access
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_18" type="checkbox" id="__nav_2_18" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_18">
+          Generics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Generics" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_18">
+          <span class="md-nav__icon md-icon"></span>
+          Generics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/" class="md-nav__link">
+        Generics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/appendix-coherence/" class="md-nav__link">
+        Carbon: alternatives to coherence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/details/" class="md-nav__link">
+        Generics: Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/goals/" class="md-nav__link">
+        Generics: Goals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/overview/" class="md-nav__link">
+        Generics: Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/terminology/" class="md-nav__link">
+        Generics: Terminology
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_19" type="checkbox" id="__nav_2_19" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_19">
+          Interoperability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Interoperability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_19">
+          <span class="md-nav__icon md-icon"></span>
+          Interoperability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interoperability/" class="md-nav__link">
+        Bidirectional interoperability with C/C++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interoperability/philosophy_and_goals/" class="md-nav__link">
+        Interoperability philosophy and goals
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_20" type="checkbox" id="__nav_2_20" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_20">
+          Lexical conventions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lexical conventions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_20">
+          <span class="md-nav__icon md-icon"></span>
+          Lexical conventions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Lexical conventions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../numeric_literals/" class="md-nav__link">
+        Numeric literals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          String literals
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        String literals
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#details" class="md-nav__link">
+    Details
+  </a>
+  
+    <nav class="md-nav" aria-label="Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-and-block-string-literals" class="md-nav__link">
+    Simple and block string literals
+  </a>
+  
+    <nav class="md-nav" aria-label="Simple and block string literals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#escape-sequences" class="md-nav__link">
+    Escape sequences
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raw-string-literals" class="md-nav__link">
+    Raw string literals
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encoding" class="md-nav__link">
+    Encoding
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternatives-considered" class="md-nav__link">
+    Alternatives considered
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../whitespace/" class="md-nav__link">
+        Whitespace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../words/" class="md-nav__link">
+        Words
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/" class="md-nav__link">
+        Guides
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Images
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Images" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Images
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../images/snippets/" class="md-nav__link">
+        Front page snippets for Carbon
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Project
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Project" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Project
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/" class="md-nav__link">
+        Project
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/code_review/" class="md-nav__link">
+        Code review
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/contribution_tools/" class="md-nav__link">
+        Contribution tools
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/cpp_style_guide/" class="md-nav__link">
+        C++ style guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/design_style_guide/" class="md-nav__link">
+        Language design style guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/difficulties_improving_cpp/" class="md-nav__link">
+        Difficulties improving C++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/evolution/" class="md-nav__link">
+        Evolution and governance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/faq/" class="md-nav__link">
+        Project FAQ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/goals/" class="md-nav__link">
+        Goals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/groups/" class="md-nav__link">
+        Groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/pull_request_workflow/" class="md-nav__link">
+        Trunk-based pull-request GitHub workflow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/roadmap/" class="md-nav__link">
+        Roadmap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/roadmap_process/" class="md-nav__link">
+        Roadmap process
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_14" type="checkbox" id="__nav_5_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_14">
+          Principles
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Principles" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_14">
+          <span class="md-nav__icon md-icon"></span>
+          Principles
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/" class="md-nav__link">
+        Principles
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/error_handling/" class="md-nav__link">
+        Principle: Errors are values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/information_accumulation/" class="md-nav__link">
+        Principle: Information accumulation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/library_apis_only/" class="md-nav__link">
+        Principle: All APIs are library APIs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/low_context_sensitivity/" class="md-nav__link">
+        Principle: Low context-sensitivity
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/one_way/" class="md-nav__link">
+        Principle: Prefer providing only one way to do a given thing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/safety_strategy/" class="md-nav__link">
+        Safety strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/static_open_extension/" class="md-nav__link">
+        Principle: One static open extension mechanism
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/success_criteria/" class="md-nav__link">
+        Principle: Success criteria
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Spec
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Spec" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Spec
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/" class="md-nav__link">
+        Spec
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_2" type="checkbox" id="__nav_6_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_2">
+          Lang
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lang" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Lang
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/" class="md-nav__link">
+        Carbon language specification
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/execution/" class="md-nav__link">
+        Execution
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/lex/" class="md-nav__link">
+        Lexical analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/libs/" class="md-nav__link">
+        Libraries and packages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/names/" class="md-nav__link">
+        Names
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/parsing/" class="md-nav__link">
+        Parsing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/semantics/" class="md-nav__link">
+        Semantic analysis
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_3" type="checkbox" id="__nav_6_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_3">
+          Lib
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lib" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          Lib
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lib/" class="md-nav__link">
+        Carbon standard library specification
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#details" class="md-nav__link">
+    Details
+  </a>
+  
+    <nav class="md-nav" aria-label="Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-and-block-string-literals" class="md-nav__link">
+    Simple and block string literals
+  </a>
+  
+    <nav class="md-nav" aria-label="Simple and block string literals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#escape-sequences" class="md-nav__link">
+    Escape sequences
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raw-string-literals" class="md-nav__link">
+    Raw string literals
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encoding" class="md-nav__link">
+    Encoding
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternatives-considered" class="md-nav__link">
+    Alternatives considered
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="string-literals">String literals</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#details">Details</a><ul>
+<li><a href="#simple-and-block-string-literals">Simple and block string literals</a><ul>
+<li><a href="#escape-sequences">Escape sequences</a></li>
+</ul>
+</li>
+<li><a href="#raw-string-literals">Raw string literals</a></li>
+<li><a href="#encoding">Encoding</a></li>
+</ul>
+</li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p>Carbon supports both simple literals that are single-line using one double
+quotation mark (<code>"</code>) and block literals that are multi-line using three double
+quotation marks (<code>"""</code>). A block string literal may have a file type indicator
+after the first <code>"""</code>; this does not affect the string itself, but may assist
+other tooling. For example:</p>
+<pre><code class="language-carbon">// Simple string literal:
+var simple: String = &quot;example&quot;;
+
+// Block string literal:
+var block: String = &quot;&quot;&quot;
+    The winds grow high; so do your stomachs, lords.
+    How irksome is this music to my heart!
+    When such strings jar, what hope of harmony?
+    I pray, my lords, let me compound this strife.
+        -- History of Henry VI, Part II, Act II, Scene 1, W. Shakespeare
+    &quot;&quot;&quot;;
+
+// Block string literal with file type indicator:
+var code_block: String = &quot;&quot;&quot;cpp
+    #include &lt;iostream&gt;
+    int main() {
+        std::cout &lt;&lt; &quot;Hello world!&quot;;
+        return 0;
+    }
+    &quot;&quot;&quot;
+</code></pre>
+<p>The indentation of a block string literal's terminating line is removed from all
+preceding lines. As a consequence, in the above <code>code_block</code> example, only
+<code>std::cout</code> and <code>return</code> are indented in the resulting string, and by 4 spaces
+each.</p>
+<p>Escape sequences introduced by a backslash (<code>\</code>) and are used to express special
+character or code unit sequences, such as <code>\n</code> for a newline character. Raw
+string literals are additionally delimited with one or more <code>#</code>; these require
+an equal number of hash symbols (<code>#</code>) after the <code>\</code> to indicate an escape
+sequence. Raw string literals are used to more easily write literal <code>\</code>s in
+strings. Both simple and block string literals have raw forms. For example:</p>
+<pre><code class="language-carbon">// Raw simple string literal with newline escape sequence:
+var newline: String = &quot;line one\nline two&quot;;
+
+// Raw simple string literal with literal `\n`, not a newline:
+var raw: String = #&quot;line one\nstill line one&quot;#;
+
+// Raw simple string literal with newline escape sequence:
+var raw_newline: String = #&quot;line one\#nline two&quot;#;
+</code></pre>
+<h2 id="details">Details</h2>
+<h3 id="simple-and-block-string-literals">Simple and block string literals</h3>
+<p>A <em>simple string literal</em> is formed of a sequence of:</p>
+<ul>
+<li>Characters other than <code>\</code> and <code>"</code>.<ul>
+<li>Only space characters (U+0020) are valid whitespace in a string literal.</li>
+<li>Other <a href="../whitespace/">horizontal whitespace</a>, including tabs, are
+    disallowed but parse as part of the string for error recovery purposes.</li>
+<li>Vertical whitespace will not parse as part of a simple string literal.</li>
+</ul>
+</li>
+<li><a href="#escape-sequences">Escape sequences</a>.<ul>
+<li>Each escape sequence is replaced with the corresponding character
+    sequence or code unit sequence.</li>
+<li>Similarly to invalid whitespace, invalid escape sequences such as <code>\z</code>
+    parse as part of the string.</li>
+</ul>
+</li>
+</ul>
+<p>This sequence is enclosed in <code>"</code>s. For example, this is a simple string literal:</p>
+<pre><code class="language-carbon">var String: lucius = &quot;The strings, my lord, are false.&quot;;
+</code></pre>
+<p>A <em>block string literal</em> starts with <code>"""</code>, followed by an optional file type
+indicator, followed by a newline, and ends at the next instance of three double
+quotation marks whose first <code>"</code> is not part of a <code>\"</code> escape sequence. The
+closing <code>"""</code> shall be the first non-whitespace characters on that line. The
+lines between the opening line and the closing line (exclusive) are <em>content
+lines</em>. The content lines shall not contain <code>\</code> characters that do not form part
+of an escape sequence.</p>
+<p>The <em>indentation</em> of a block string literal is the sequence of horizontal
+whitespace preceding the closing <code>"""</code>. Each non-empty content line shall begin
+with the indentation of the string literal. The content of the literal is formed
+as follows:</p>
+<ul>
+<li>The indentation of the closing line is removed from each non-empty content
+    line.</li>
+<li>All trailing whitespace on each line, including the line terminator, is
+    replaced with a single line feed (U+000A) character.</li>
+<li>The resulting lines are concatenated.</li>
+<li>Each <a href="#escape-sequences">escape sequence</a> is replaced with the corresponding
+    character sequence or code unit sequence.</li>
+</ul>
+<p>A content line is considered empty if it contains only whitespace characters.</p>
+<pre><code class="language-carbon">var String: w = &quot;&quot;&quot;
+  This is a string literal. Its first character is 'T' and its last character is
+  a newline character. It contains another newline between 'is' and 'a'.
+  &quot;&quot;&quot;;
+
+// This string literal is invalid because the &quot;&quot;&quot; after 'closing' terminates
+// the literal, but is not at the start of the line.
+var String: invalid = &quot;&quot;&quot;
+  error: closing &quot;&quot;&quot; is not on its own line.
+  &quot;&quot;&quot;;
+</code></pre>
+<p>A <em>file type indicator</em> is any sequence of non-whitespace characters other than
+<code>"</code> or <code>#</code>. The file type indicator has no semantic meaning to the Carbon
+compiler, but some file type indicators are understood by the language tooling
+(for example, syntax highlighter, code formatter) as indicating the structure of
+the string literal's content.</p>
+<pre><code class="language-carbon">// This is a block string literal. Its first two characters are spaces, and its
+// last character is a line feed. It has a file type of 'c++'.
+var String: starts_with_whitespace = &quot;&quot;&quot;c++
+    int x = 1; // This line starts with two spaces.
+    int y = 2; // This line starts with two spaces.
+  &quot;&quot;&quot;;
+</code></pre>
+<p>The file type indicator might contain semantic information beyond the file type
+itself, such as instructions to the code formatter to disable formatting for the
+code block.</p>
+<p><strong>Open question:</strong> There is no concrete set of recognized file type indicators.
+It would be useful to informally specify a set of well-known indicators, so that
+tools have a common understanding of what those indicators mean, perhaps in a
+best practices guide.</p>
+<h4 id="escape-sequences">Escape sequences</h4>
+<p>Within a string literal, the following escape sequences are recognized:</p>
+<table>
+<thead>
+<tr>
+<th>Escape</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\t</code></td>
+<td>U+0009 CHARACTER TABULATION</td>
+</tr>
+<tr>
+<td><code>\n</code></td>
+<td>U+000A LINE FEED</td>
+</tr>
+<tr>
+<td><code>\r</code></td>
+<td>U+000D CARRIAGE RETURN</td>
+</tr>
+<tr>
+<td><code>\"</code></td>
+<td>U+0022 QUOTATION MARK (<code>"</code>)</td>
+</tr>
+<tr>
+<td><code>\'</code></td>
+<td>U+0027 APOSTROPHE (<code>'</code>)</td>
+</tr>
+<tr>
+<td><code>\\</code></td>
+<td>U+005C REVERSE SOLIDUS (<code>\</code>)</td>
+</tr>
+<tr>
+<td><code>\0</code></td>
+<td>Code unit with value 0</td>
+</tr>
+<tr>
+<td><code>\0D</code></td>
+<td>Invalid, reserved for evolution</td>
+</tr>
+<tr>
+<td><code>\xHH</code></td>
+<td>Code unit with value HH<sub>16</sub></td>
+</tr>
+<tr>
+<td><code>\u{HHHH...}</code></td>
+<td>Unicode code point U+HHHH...</td>
+</tr>
+<tr>
+<td><code>\&lt;newline&gt;</code></td>
+<td>No string literal content produced (block literals only)</td>
+</tr>
+</tbody>
+</table>
+<p>Hex characters (<code>H</code>) must be uppercase (<code>\xAA</code>, not <code>\xaa</code>).</p>
+<p>This includes all C++ escape sequences except:</p>
+<ul>
+<li><code>\?</code>, which was historically used to escape trigraphs in string literals,
+    and no longer serves any purpose.</li>
+<li><code>\ooo</code> octal escapes, which are removed because Carbon does not support
+    octal literals; <code>\0</code> is retained as a special case, which is expected to be
+    important for C interoperability.</li>
+<li><code>\uABCD</code>, which is replaced by <code>\u{ABCD}</code>.</li>
+<li><code>\U0010FFFF</code>, which is replaced by <code>\u{10FFFF}</code>.</li>
+<li><code>\a</code> (bell), <code>\b</code> (backspace), <code>\v</code> (vertical tab), and <code>\f</code> (form feed).
+    <code>\a</code> and <code>\b</code> are obsolescent, and <code>\f</code> and <code>\v</code> are largely obsolete. These
+    characters can be expressed with <code>\x07</code>, <code>\x08</code>, <code>\x0B</code>, and <code>\x0C</code>
+    respectively if needed.</li>
+</ul>
+<p>Note that this is the same set of escape sequences supported by
+<a href="https://docs.swift.org/swift-book/LanguageGuide/StringsAndCharacters.html#ID295">Swift</a>
+and <a href="https://doc.rust-lang.org/reference/tokens.html">Rust</a>, except that, unlike
+in Swift, support for <code>\xHH</code> is provided.</p>
+<p>While octal escape sequences are expected to remain not permitted (even though
+<code>\0D</code> is reserved), the decision to not support <code>\1</code>..<code>\7</code> or more generally
+<code>\DDDD</code> is <em>experimental</em>.</p>
+<p>In the above table, <code>H</code> represents an arbitrary hexadecimal character, <code>0</code>-<code>9</code>
+or <code>A</code>-<code>F</code> (case-sensitive). Unlike in C++, but like in Python, <code>\x</code> expects
+exactly two hexadecimal digits. As in JavaScript, Rust, and Swift, Unicode code
+points can be expressed by number using <code>\u{10FFFF}</code> notation, which accepts any
+number of hexadecimal characters. Any numeric code point in the ranges
+0<sub>16</sub>-D7FF<sub>16</sub> or E000<sub>16</sub>-10FFFF<sub>16</sub> can be
+expressed this way.</p>
+<p><em>Open question:</em> Some programming languages (notably Python) support a
+<code>\N{unicode character name}</code> syntax. We could add such an escape sequence.
+Future proposals considering adding such support should pay attention to work
+done by C++'s Unicode study group in this area.</p>
+<p>The escape sequence <code>\0</code> shall not be followed by a decimal digit. In cases
+where a null byte should be followed by a decimal digit, <code>\x00</code> can be used
+instead: <code>"foo\x00123"</code>. The intent is to preserve the possibility of permitting
+decimal escape sequences in the future.</p>
+<p>A backslash followed by a line feed character is an escape sequence that
+produces no string contents. This escape sequence is <em>experimental</em>, and can
+only appear in block string literals. This escape sequence is processed after
+trailing whitespace is replaced by a line feed character, so a <code>\</code> followed by
+horizontal whitespace followed by a line terminator removes the whitespace up to
+and including the line terminator. Unlike in Rust, but like in Swift, leading
+whitespace on the line after an escaped newline is not removed, other than
+whitespace that matches the indentation of the terminating <code>"""</code>.</p>
+<p>A character sequence starting with a backslash that doesn't match any known
+escape sequence is invalid. Whitespace characters other than space and, for
+block string literals, new line optionally preceded by carriage return are
+disallowed. All other characters (including non-printable characters) are
+preserved verbatim. Because all Carbon source files are required to be valid
+sequences of Unicode characters, code unit sequences that are not valid UTF-8
+can only be produced by <code>\x</code> escape sequences.</p>
+<p>The decision to disallow raw tab characters in string literals is
+<em>experimental</em>.</p>
+<pre><code class="language-carbon">var String: fret = &quot;I would 'twere something that would fret the string,\n&quot; +
+                   &quot;The master-cord on's \u{2764}\u{FE0F}!&quot;;
+
+// This string contains two characters (prior to encoding in UTF-8):
+// U+1F3F9 (BOW AND ARROW) followed by U+0032 (DIGIT TWO)
+var String: password = &quot;\u{1F3F9}2&quot;;
+
+// This string contains no newline characters.
+var String: type_mismatch = &quot;&quot;&quot;
+  Shall I compare thee to a summer's day? Thou art \
+  more lovely and more temperate.\
+  &quot;&quot;&quot;;
+
+var String: trailing_whitespace = &quot;&quot;&quot;
+  This line ends in a space followed by a newline. \n\
+      This line starts with four spaces.
+  &quot;&quot;&quot;;
+</code></pre>
+<h3 id="raw-string-literals">Raw string literals</h3>
+<p>In order to allow strings whose contents include <code>\</code>s and <code>"</code>s, the delimiters
+of string literals can be customized by prefixing the opening delimiter with <em>N</em>
+<code>#</code> characters. A closing delimiter for such a string is only recognized if it
+is followed by <em>N</em> <code>#</code> characters, and similarly, escape sequences in such
+string literals are recognized only if the <code>\</code> is also followed by <em>N</em> <code>#</code>
+characters. A <code>\</code>, <code>"</code>, or <code>"""</code> not followed by <em>N</em> <code>#</code> characters has no
+special meaning.</p>
+<table>
+<thead>
+<tr>
+<th>Opening delimiter</th>
+<th>Escape sequence introducer</th>
+<th>Closing delimiter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"</code> / <code>"""</code></td>
+<td><code>\</code> (for example, <code>\n</code>)</td>
+<td><code>"</code> / <code>"""</code></td>
+</tr>
+<tr>
+<td><code>#"</code> / <code>#"""</code></td>
+<td><code>\#</code> (for example, <code>\#n</code>)</td>
+<td><code>"#</code> / <code>"""#</code></td>
+</tr>
+<tr>
+<td><code>##"</code> / <code>##"""</code></td>
+<td><code>\##</code> (for example, <code>\##n</code>)</td>
+<td><code>"##</code> / <code>"""##</code></td>
+</tr>
+<tr>
+<td><code>###"</code> / <code>###"""</code></td>
+<td><code>\###</code> (for example, <code>\###n</code>)</td>
+<td><code>"###</code> / <code>"""###</code></td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p>For example:</p>
+<pre><code class="language-carbon">var String: x = #&quot;&quot;&quot;
+  This is the content of the string. The 'T' is the first character
+  of the string.
+  &quot;&quot;&quot; &lt;-- This is not the end of the string.
+  &quot;&quot;&quot;#;
+  // But the preceding line does end the string.
+// OK, final character is \
+var String: y = #&quot;Hello\&quot;#;
+var String: z = ##&quot;Raw strings #&quot;nesting&quot;#&quot;##;
+var String: w = #&quot;Tab is expressed as \t. Example: '\#t'&quot;#;
+</code></pre>
+<p>Note that both a raw simple string literal and a raw block string literal can
+begin with <code>#"""</code>. These cases can be distinguished by the presence or absence
+of additional <code>"</code>s later in the same line:</p>
+<ul>
+<li>In a raw simple string literal, there must be a <code>"</code> and one or more <code>#</code>s
+    later in the same line terminating the string.</li>
+<li>In a raw block string literal, the rest of the line is a file type
+    indicator, which can contain neither <code>"</code> nor <code>#</code>.</li>
+</ul>
+<pre><code class="language-carbon">// This string is a single-line raw string literal.
+// The contents of this string start and end with exactly two &quot;s.
+var String: ambig1 = #&quot;&quot;&quot;This is a raw string literal starting with &quot;&quot;&quot;#;
+
+// This string is a raw block string literal with file-type 'This', whose
+// contents start with &quot;is a &quot;.
+var String: ambig2 = #&quot;&quot;&quot;This
+  is a block string literal with file type 'This', first character 'i',
+  and last character 'X': X\#
+  &quot;&quot;&quot;#;
+
+// This is a single-line raw string literal, equivalent to &quot;\&quot;&quot;.
+var String: ambig3 = #&quot;&quot;&quot;#;
+</code></pre>
+<h3 id="encoding">Encoding</h3>
+<p>A string literal results in a sequence of 8-bit bytes. Like Carbon source files,
+string literals are encoded in UTF-8. There is no guarantee that the string is
+valid UTF-8, however, because arbitrary byte sequences can be inserted by way of
+<code>\xHH</code> escape sequences.</p>
+<p>This is <em>experimental</em>, and should be revisited if we find sufficient motivation
+for directly expressing string literals in other encodings. Similarly, as
+library support for a string type evolves, we should consider including string
+literal syntax (perhaps as the default) that guarantees the string content is a
+valid UTF-8 encoding, so that valid UTF-8 can be distinguished from an arbitrary
+string in the type system. In such string literals, we should consider rejecting
+<code>\xHH</code> escapes in which HH is greater than 7F<sub>16</sub>, as in Rust.</p>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#block-string-literals">Block string literals</a><ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#leading-whitespace-removal">Leading whitespace removal</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#terminating-newline">Terminating newline</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#escape-sequences-1">Escape sequences</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#raw-string-literals-1">Raw string literals</a><ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#trailing-whitespace">Trailing whitespace</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#line-separators">Line separators</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0199.md#internal-whitespace">Internal whitespace</a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Proposal
+    <a href="https://github.com/carbon-language/carbon-lang/pull/199">#199: String literals</a></li>
+</ul>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../numeric_literals/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Numeric literals" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Numeric literals
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../whitespace/" class="md-footer__link md-footer__link--next" aria-label="Next: Whitespace" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Whitespace
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

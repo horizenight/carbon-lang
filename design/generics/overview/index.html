@@ -1,0 +1,2858 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Generics: Overview - Carbon Language</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#generics-overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Carbon Language" class="md-header__button md-logo" aria-label="Carbon Language" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Carbon Language
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Generics: Overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Carbon Language" class="md-nav__button md-logo" aria-label="Carbon Language" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Carbon Language
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Docs
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Design
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Design" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Design
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        Language design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aliases/" class="md-nav__link">
+        Aliases
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blocks_and_statements/" class="md-nav__link">
+        Blocks and statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classes/" class="md-nav__link">
+        Classes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../functions/" class="md-nav__link">
+        Functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metaprogramming/" class="md-nav__link">
+        Metaprogramming
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../name_lookup/" class="md-nav__link">
+        Name lookup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../naming_conventions/" class="md-nav__link">
+        Naming conventions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pattern_matching/" class="md-nav__link">
+        Pattern matching
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../primitive_types/" class="md-nav__link">
+        Primitive types
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../templates/" class="md-nav__link">
+        Templates
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tuples/" class="md-nav__link">
+        Tuples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../type_inference/" class="md-nav__link">
+        Type inference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../variables/" class="md-nav__link">
+        Variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_15" type="checkbox" id="__nav_2_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_15">
+          Code and name organization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Code and name organization" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_15">
+          <span class="md-nav__icon md-icon"></span>
+          Code and name organization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../code_and_name_organization/" class="md-nav__link">
+        Code and name organization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../code_and_name_organization/source_files/" class="md-nav__link">
+        Source files
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_16" type="checkbox" id="__nav_2_16" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_16">
+          Control flow
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Control flow" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_16">
+          <span class="md-nav__icon md-icon"></span>
+          Control flow
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/" class="md-nav__link">
+        Control flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/conditionals/" class="md-nav__link">
+        Control flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/loops/" class="md-nav__link">
+        Loops
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/return/" class="md-nav__link">
+        `return`
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_17" type="checkbox" id="__nav_2_17" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_17">
+          Expressions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Expressions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_17">
+          <span class="md-nav__icon md-icon"></span>
+          Expressions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/" class="md-nav__link">
+        Expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/arithmetic/" class="md-nav__link">
+        Arithmetic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/as_expressions/" class="md-nav__link">
+        `as` expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/bitwise/" class="md-nav__link">
+        Bitwise and shift operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/comparison_operators/" class="md-nav__link">
+        Comparison operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/if/" class="md-nav__link">
+        `if` expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/implicit_conversions/" class="md-nav__link">
+        Implicit conversions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/logical_operators/" class="md-nav__link">
+        Logical operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/member_access/" class="md-nav__link">
+        Qualified names and member access
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_18" type="checkbox" id="__nav_2_18" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_18">
+          Generics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Generics" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_18">
+          <span class="md-nav__icon md-icon"></span>
+          Generics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Generics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-coherence/" class="md-nav__link">
+        Carbon: alternatives to coherence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../details/" class="md-nav__link">
+        Generics: Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../goals/" class="md-nav__link">
+        Generics: Goals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Generics: Overview
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Generics: Overview
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    Goals
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-are-generics" class="md-nav__link">
+    What are generics?
+  </a>
+  
+    <nav class="md-nav" aria-label="What are generics?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interfaces" class="md-nav__link">
+    Interfaces
+  </a>
+  
+    <nav class="md-nav" aria-label="Interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defining-interfaces" class="md-nav__link">
+    Defining interfaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contrast-with-templates" class="md-nav__link">
+    Contrast with templates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-interfaces" class="md-nav__link">
+    Implementing interfaces
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementing interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accessing-members-of-interfaces" class="md-nav__link">
+    Accessing members of interfaces
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-of-types" class="md-nav__link">
+    Type-of-types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-functions" class="md-nav__link">
+    Generic functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Generic functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deduced-parameters" class="md-nav__link">
+    Deduced parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-type-parameters" class="md-nav__link">
+    Generic type parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requiring-or-extending-another-interface" class="md-nav__link">
+    Requiring or extending another interface
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combining-interfaces" class="md-nav__link">
+    Combining interfaces
+  </a>
+  
+    <nav class="md-nav" aria-label="Combining interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#named-constraints" class="md-nav__link">
+    Named constraints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-erasure" class="md-nav__link">
+    Type erasure
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adapting-types" class="md-nav__link">
+    Adapting types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interface-input-and-output-types" class="md-nav__link">
+    Interface input and output types
+  </a>
+  
+    <nav class="md-nav" aria-label="Interface input and output types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#associated-types" class="md-nav__link">
+    Associated types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameterized-interfaces" class="md-nav__link">
+    Parameterized interfaces
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraints" class="md-nav__link">
+    Constraints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameterized-impls" class="md-nav__link">
+    Parameterized impls
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operator-overloading" class="md-nav__link">
+    Operator overloading
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-work" class="md-nav__link">
+    Future work
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../terminology/" class="md-nav__link">
+        Generics: Terminology
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_19" type="checkbox" id="__nav_2_19" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_19">
+          Interoperability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Interoperability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_19">
+          <span class="md-nav__icon md-icon"></span>
+          Interoperability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interoperability/" class="md-nav__link">
+        Bidirectional interoperability with C/C++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interoperability/philosophy_and_goals/" class="md-nav__link">
+        Interoperability philosophy and goals
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_20" type="checkbox" id="__nav_2_20" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_20">
+          Lexical conventions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lexical conventions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_20">
+          <span class="md-nav__icon md-icon"></span>
+          Lexical conventions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/" class="md-nav__link">
+        Lexical conventions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/numeric_literals/" class="md-nav__link">
+        Numeric literals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/string_literals/" class="md-nav__link">
+        String literals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/whitespace/" class="md-nav__link">
+        Whitespace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/words/" class="md-nav__link">
+        Words
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/" class="md-nav__link">
+        Guides
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Images
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Images" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Images
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../images/snippets/" class="md-nav__link">
+        Front page snippets for Carbon
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Project
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Project" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Project
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/" class="md-nav__link">
+        Project
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/code_review/" class="md-nav__link">
+        Code review
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/contribution_tools/" class="md-nav__link">
+        Contribution tools
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/cpp_style_guide/" class="md-nav__link">
+        C++ style guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/design_style_guide/" class="md-nav__link">
+        Language design style guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/difficulties_improving_cpp/" class="md-nav__link">
+        Difficulties improving C++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/evolution/" class="md-nav__link">
+        Evolution and governance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/faq/" class="md-nav__link">
+        Project FAQ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/goals/" class="md-nav__link">
+        Goals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/groups/" class="md-nav__link">
+        Groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/pull_request_workflow/" class="md-nav__link">
+        Trunk-based pull-request GitHub workflow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/roadmap/" class="md-nav__link">
+        Roadmap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/roadmap_process/" class="md-nav__link">
+        Roadmap process
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_14" type="checkbox" id="__nav_5_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_14">
+          Principles
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Principles" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_14">
+          <span class="md-nav__icon md-icon"></span>
+          Principles
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/" class="md-nav__link">
+        Principles
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/error_handling/" class="md-nav__link">
+        Principle: Errors are values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/information_accumulation/" class="md-nav__link">
+        Principle: Information accumulation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/library_apis_only/" class="md-nav__link">
+        Principle: All APIs are library APIs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/low_context_sensitivity/" class="md-nav__link">
+        Principle: Low context-sensitivity
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/one_way/" class="md-nav__link">
+        Principle: Prefer providing only one way to do a given thing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/safety_strategy/" class="md-nav__link">
+        Safety strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/static_open_extension/" class="md-nav__link">
+        Principle: One static open extension mechanism
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/success_criteria/" class="md-nav__link">
+        Principle: Success criteria
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Spec
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Spec" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Spec
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/" class="md-nav__link">
+        Spec
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_2" type="checkbox" id="__nav_6_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_2">
+          Lang
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lang" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Lang
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/" class="md-nav__link">
+        Carbon language specification
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/execution/" class="md-nav__link">
+        Execution
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/lex/" class="md-nav__link">
+        Lexical analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/libs/" class="md-nav__link">
+        Libraries and packages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/names/" class="md-nav__link">
+        Names
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/parsing/" class="md-nav__link">
+        Parsing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/semantics/" class="md-nav__link">
+        Semantic analysis
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_3" type="checkbox" id="__nav_6_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_3">
+          Lib
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lib" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          Lib
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lib/" class="md-nav__link">
+        Carbon standard library specification
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    Goals
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-are-generics" class="md-nav__link">
+    What are generics?
+  </a>
+  
+    <nav class="md-nav" aria-label="What are generics?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interfaces" class="md-nav__link">
+    Interfaces
+  </a>
+  
+    <nav class="md-nav" aria-label="Interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defining-interfaces" class="md-nav__link">
+    Defining interfaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contrast-with-templates" class="md-nav__link">
+    Contrast with templates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-interfaces" class="md-nav__link">
+    Implementing interfaces
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementing interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accessing-members-of-interfaces" class="md-nav__link">
+    Accessing members of interfaces
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-of-types" class="md-nav__link">
+    Type-of-types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-functions" class="md-nav__link">
+    Generic functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Generic functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deduced-parameters" class="md-nav__link">
+    Deduced parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-type-parameters" class="md-nav__link">
+    Generic type parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requiring-or-extending-another-interface" class="md-nav__link">
+    Requiring or extending another interface
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combining-interfaces" class="md-nav__link">
+    Combining interfaces
+  </a>
+  
+    <nav class="md-nav" aria-label="Combining interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#named-constraints" class="md-nav__link">
+    Named constraints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-erasure" class="md-nav__link">
+    Type erasure
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adapting-types" class="md-nav__link">
+    Adapting types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interface-input-and-output-types" class="md-nav__link">
+    Interface input and output types
+  </a>
+  
+    <nav class="md-nav" aria-label="Interface input and output types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#associated-types" class="md-nav__link">
+    Associated types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameterized-interfaces" class="md-nav__link">
+    Parameterized interfaces
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraints" class="md-nav__link">
+    Constraints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameterized-impls" class="md-nav__link">
+    Parameterized impls
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operator-overloading" class="md-nav__link">
+    Operator overloading
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-work" class="md-nav__link">
+    Future work
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="generics-overview">Generics: Overview</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<p>This document is a high-level description of Carbon's generics design, with
+pointers to other design documents that dive deeper into individual topics.</p>
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#goals">Goals</a></li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#what-are-generics">What are generics?</a><ul>
+<li><a href="#interfaces">Interfaces</a><ul>
+<li><a href="#defining-interfaces">Defining interfaces</a></li>
+<li><a href="#contrast-with-templates">Contrast with templates</a></li>
+</ul>
+</li>
+<li><a href="#implementing-interfaces">Implementing interfaces</a><ul>
+<li><a href="#accessing-members-of-interfaces">Accessing members of interfaces</a></li>
+</ul>
+</li>
+<li><a href="#type-of-types">Type-of-types</a></li>
+<li><a href="#generic-functions">Generic functions</a><ul>
+<li><a href="#deduced-parameters">Deduced parameters</a></li>
+<li><a href="#generic-type-parameters">Generic type parameters</a></li>
+</ul>
+</li>
+<li><a href="#requiring-or-extending-another-interface">Requiring or extending another interface</a></li>
+<li><a href="#combining-interfaces">Combining interfaces</a><ul>
+<li><a href="#named-constraints">Named constraints</a></li>
+<li><a href="#type-erasure">Type erasure</a></li>
+</ul>
+</li>
+<li><a href="#adapting-types">Adapting types</a></li>
+<li><a href="#interface-input-and-output-types">Interface input and output types</a><ul>
+<li><a href="#associated-types">Associated types</a></li>
+<li><a href="#parameterized-interfaces">Parameterized interfaces</a></li>
+</ul>
+</li>
+<li><a href="#constraints">Constraints</a></li>
+<li><a href="#parameterized-impls">Parameterized impls</a></li>
+<li><a href="#operator-overloading">Operator overloading</a></li>
+</ul>
+</li>
+<li><a href="#future-work">Future work</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="goals">Goals</h2>
+<p>The goal of Carbon generics is to provide an alternative to Carbon (or C++)
+templates. Generics in this form should provide many advantages, including:</p>
+<ul>
+<li>Function calls and bodies are checked independently against the function
+    signatures.</li>
+<li>Clearer and earlier error messages.</li>
+<li>Fast builds, particularly development builds.</li>
+<li>Support for both static and dynamic dispatch.</li>
+</ul>
+<p>For more detail, see <a href="../goals/">the detailed discussion of generics goals</a> and
+<a href="../terminology/">generics terminology</a>.</p>
+<h2 id="summary">Summary</h2>
+<p>Summary of how Carbon generics work:</p>
+<ul>
+<li><em>Generics</em> are parameterized functions and types that can apply generally.
+    They are used to avoid writing specialized, near-duplicate code for similar
+    situations.</li>
+<li>Generics are written using <em>interfaces</em> which have a name and describe
+    methods, functions, and other entities for types to implement.</li>
+<li>Types must explicitly <em>implement</em> interfaces to indicate that they support
+    its functionality. A given type may implement an interface at most once.</li>
+<li>Implementations may be part of the type's definition, in which case you can
+    directly call the interface's methods on those types. Or, they may be
+    external, in which case the implementation is allowed to be defined in the
+    library defining the interface.</li>
+<li>Interfaces are used as the type of a generic type parameter, acting as a
+    <em>type-of-type</em>. Type-of-types in general specify the capabilities and
+    requirements of the type. Types define specific implementations of those
+    capabilities. Inside such a generic function, the API of the type is
+    <a href="../terminology/#type-erasure">erased</a>, except for the names defined in the
+    type-of-type.</li>
+<li><em>Deduced parameters</em> are parameters whose values are determined by the
+    values and (most commonly) the types of the explicit arguments. Generic type
+    parameters are typically deduced.</li>
+<li>A function with a generic type parameter can have the same function body as
+    an unparameterized one. Functions can freely mix generic, template, and
+    regular parameters.</li>
+<li>Interfaces can require other interfaces be implemented.</li>
+<li>Interfaces can <a href="../terminology/#extending-an-interface">extend</a> required
+    interfaces.</li>
+<li>The <code>&amp;</code> operation on type-of-types allows you conveniently combine
+    interfaces. It gives you all the names that don't conflict.</li>
+<li>You may also declare a new type-of-type directly using
+    <a href="../terminology/#named-constraints">"named constraints"</a>. Named constraints
+    can express requirements that multiple interfaces be implemented, and give
+    you control over how name conflicts are handled.</li>
+<li>Alternatively, you may resolve name conflicts by using a qualified member
+    access expression to directly call a function from a specific interface
+    using a qualified name.</li>
+</ul>
+<h2 id="what-are-generics">What are generics?</h2>
+<p>Generics are a mechanism for writing parameterized code that applies generally
+instead of making near-duplicates for very similar situations, much like C++
+templates. For example, instead of having one function per type-you-can-sort:</p>
+<pre><code>fn SortInt32Vector(a: Vector(i32)*) { ... }
+fn SortStringVector(a: Vector(String)*) { ... }
+...
+</code></pre>
+<p>You might have one generic function that could sort any array with comparable
+elements:</p>
+<pre><code>fn SortVector(T:! Comparable, a: Vector(T)*) { ... }
+</code></pre>
+<p>The syntax above adds a <code>!</code> to indicate that the parameter named <code>T</code> is generic
+and the caller will have to provide a value known at compile time.</p>
+<p>Given an <code>i32</code> vector <code>iv</code>, <code>SortVector(i32, &amp;iv)</code> is equivalent to
+<code>SortInt32Vector(&amp;iv)</code>. Similarly for a <code>String</code> vector <code>sv</code>,
+<code>SortVector(String, &amp;sv)</code> is equivalent to <code>SortStringVector(&amp;sv)</code>. Thus, we can
+sort any vector containing comparable elements using this single <code>SortVector</code>
+function.</p>
+<p>This ability to generalize makes <code>SortVector</code> a <em>generic</em>.</p>
+<h3 id="interfaces">Interfaces</h3>
+<p>The <code>SortVector</code> function requires a definition of <code>Comparable</code>, with the goal
+that the compiler can:</p>
+<ul>
+<li>completely type check a generic definition without information from where
+    it's called.</li>
+<li>completely type check a call to a generic with information only from the
+    function's signature, and not from its body.</li>
+</ul>
+<p>In this example, then, <code>Comparable</code> is an <em>interface</em>.</p>
+<p>Interfaces describe all the requirements needed for the type <code>T</code>. Given that the
+compiler knows <code>T</code> satisfies those requirements, it can type check the body of
+the <code>SortVector</code> function. This includes checking that the <code>Comparable</code>
+requirement covers all of the uses of <code>T</code> inside the function.</p>
+<p>Later, when the compiler comes across a call to <code>SortVector</code>, it can type check
+against the requirements expressed in the function's signature. Using only the
+types at the call site, the compiler can check that the member elements of the
+passed-in array satisfy the function's requirements. There is no need to look at
+the body of the <code>SortVector</code> function, since we separately checked that those
+requirements were sufficient.</p>
+<h4 id="defining-interfaces">Defining interfaces</h4>
+<p>Interfaces, then, have a name and describe methods, functions, and other
+entities for types to implement.</p>
+<p>Example:</p>
+<pre><code>interface Comparable {
+  // `Less` is an associated method.
+  fn Less[me: Self](rhs: Self) -&gt; Bool;
+}
+</code></pre>
+<p>Functions and methods may be given a default implementation by prefixing the
+declaration with <code>default</code> and putting the function body in curly braces
+<code>{</code>...<code>}</code> in place of the terminating <code>;</code> of the function declaration. To
+prevent that implementation from being overridden, use <code>final</code> instead of
+<code>default</code>.</p>
+<p>Interfaces describe functionality, but not data; no variables may be declared in
+an interface.</p>
+<h4 id="contrast-with-templates">Contrast with templates</h4>
+<p>Contrast these generics with a C++ template, where the compiler may be able to
+do some checking given a function definition, but more checking of the
+definition is required after seeing the call sites once all the
+<a href="../terminology/#instantiation">instantiations</a> are known.</p>
+<p>Note: <a href="../terminology/">Generics terminology</a> goes into more detail about the
+<a href="../terminology/#generic-versus-template-parameters">differences between generics and templates</a>.</p>
+<h3 id="implementing-interfaces">Implementing interfaces</h3>
+<p>Interfaces themselves only describe functionality by way of method descriptions.
+A type needs to <em>implement</em> an interface to indicate that it supports its
+functionality. A given type may implement an interface at most once.</p>
+<p>Consider this interface:</p>
+<pre><code>interface Printable {
+  fn Print[me: Self]();
+}
+</code></pre>
+<p>The <code>interface</code> keyword is used to define a
+<a href="../terminology/#nominal-interfaces"><em>nominal interface</em></a>. That means that types
+need to explicitly implement them, using an <code>impl</code> block, such as here:</p>
+<pre><code>class Song {
+  // ...
+
+  // Implementing `Printable` for `Song` inside the definition of `Song`
+  // without the keyword `external` means all names of `Printable`, such
+  // as `F`, are included as a part of the `Song` API.
+  impl as Printable {
+    // Could use `Self` in place of `Song` here.
+    fn Print[me: Song]() { ... }
+  }
+}
+
+// Implement `Comparable` for `Song` without changing the API of `Song`
+// using an `external impl` declaration. This may be defined in either
+// the library defining `Song` or `Comparable`.
+external impl Song as Comparable {
+  // Could use either `Self` or `Song` here.
+  fn Less[me: Self](rhs: Self) -&gt; Bool { ... }
+}
+</code></pre>
+<p>Implementations may be defined within the class definition itself or
+out-of-line. Implementations may optionally be start with the <code>external</code> keyword
+to say the members of the interface are not members of the class. Out-of-line
+implementations must be external. External implementations may be defined in the
+library defining either the class or the interface.</p>
+<h4 id="accessing-members-of-interfaces">Accessing members of interfaces</h4>
+<p>The methods of an interface implemented internally within the class definition
+may be called with the
+<a href="../terminology/#simple-member-access">simple member access syntax</a>. Methods of
+all implemented interfaces may be called with a
+<a href="../terminology/#qualified-member-access-expression">qualified member access expression</a>,
+whether they are defined internally or externally.</p>
+<pre><code>var song: Song;
+// `song.Print()` is allowed, unlike `song.Play()`.
+song.Print();
+// `Less` is defined in `Comparable`, which is
+// implemented externally for `Song`
+song.(Comparable.Less)(song);
+// Can also call `Print` using a qualified member
+// access expression, using the compound member access
+// syntax with the qualified name `Printable.Print`:
+song.(Printable.Print)();
+</code></pre>
+<h3 id="type-of-types">Type-of-types</h3>
+<p>To type check a function, the compiler needs to be able to verify that uses of a
+value match the capabilities of the value's type. In <code>SortVector</code>, the parameter
+<code>T</code> is a type, but that type is a generic parameter. That means that the
+specific type value assigned to <code>T</code> is not known when type checking the
+<code>SortVector</code> function. Instead it is the constraints on <code>T</code> that let the
+compiler know what operations may be performed on values of type <code>T</code>. Those
+constraints are represented by the type of <code>T</code>, a
+<a href="../terminology/#type-of-type"><strong><em>type-of-type</em></strong></a>.</p>
+<p>In general, a type-of-type describes the capabilities of a type, while a type
+defines specific implementations of those capabilities. An interface, like
+<code>Comparable</code>, may be used as a type-of-type. In that case, the constraint on the
+type is that it must implement the interface <code>Comparable</code>.</p>
+<p>A type-of-type also defines a set of names and a mapping to corresponding
+qualified names. Those names are used for
+<a href="../terminology/#simple-member-access">simple member lookup</a> in scopes where the
+value of the type is not known, such as when the type is a generic parameter.</p>
+<p>You may combine interfaces into new type-of-types using
+<a href="#combining-interfaces">the <code>&amp;</code> operator</a> or
+<a href="#named-constraints">named constraints</a>.</p>
+<h3 id="generic-functions">Generic functions</h3>
+<p>We want to be able to call generic functions just like ordinary functions, and
+write generic function bodies like ordinary functions. There are only a few
+differences, like that you can't take the address of generic functions.</p>
+<h4 id="deduced-parameters">Deduced parameters</h4>
+<p>This <code>SortVector</code> function is explicitly providing type information that is
+already included in the type of the second argument. To eliminate the argument
+at the call site, use a <em>deduced parameter</em>.</p>
+<pre><code>fn SortVectorDeduced[T:! Comparable](a: Vector(T)*) { ... }
+</code></pre>
+<p>The <code>T</code> parameter is defined in square brackets before the explicit parameter
+list in parenthesis to indicate it should be deduced. This means you may call
+the function without the type argument, just like the ordinary functions
+<code>SortInt32Vector</code> or <code>SortStringVector</code>:</p>
+<pre><code>SortVectorDeduced(&amp;anIntVector);
+// or
+SortVectorDeduced(&amp;aStringVector);
+</code></pre>
+<p>and the compiler deduces that the <code>T</code> argument should be set to <code>i32</code> or
+<code>String</code> from the type of the argument.</p>
+<p>Deduced arguments are always determined from the call and its explicit
+arguments. There is no syntax for specifying deduced arguments directly at the
+call site.</p>
+<pre><code>// ERROR: can't determine `U` from explicit parameters
+fn Illegal[T:! Type, U:! Type](x: T) -&gt; U { ... }
+</code></pre>
+<h4 id="generic-type-parameters">Generic type parameters</h4>
+<p>A function with a generic type parameter can have the same function body as an
+unparameterized one.</p>
+<pre><code>fn PrintIt[T:! Printable](p: T*) {
+  p-&gt;Print();
+}
+
+fn PrintIt(p: Song*) {
+  p-&gt;Print();
+}
+</code></pre>
+<p>Inside the function body, you can treat the generic type parameter just like any
+other type. There is no need to refer to or access generic parameters
+differently because they are defined as generic, as long as you only refer to
+the names defined by <a href="#type-of-types">type-of-type</a> for the type parameter.</p>
+<p>You may also refer to any of the methods of interfaces required by the
+type-of-type using a
+<a href="#accessing-members-of-interfaces">qualified member access expression</a>, as shown
+in the following sections.</p>
+<p>A function can have a mix of generic, template, and regular parameters.
+Likewise, it's allowed to pass a template or generic value to a generic or
+regular parameter. <em>However, passing a generic value to a template parameter is
+future work.</em></p>
+<h3 id="requiring-or-extending-another-interface">Requiring or extending another interface</h3>
+<p>Interfaces can require other interfaces be implemented:</p>
+<pre><code>interface Equatable {
+  fn IsEqual[me: Self](rhs: Self) -&gt; Bool;
+}
+
+// `Iterable` requires that `Equatable` is implemented.
+interface Iterable {
+  impl as Equatable;
+  fn Advance[addr me: Self*]();
+}
+</code></pre>
+<p>The <code>extends</code> keyword is used to <a href="../terminology/#extending-an-interface">extend</a>
+another interface. If interface <code>Derived</code> extends interface <code>Base</code>, <code>Base</code>'s
+interface is both required and all its methods are included in <code>Derived</code>'s
+interface.</p>
+<pre><code>// `Hashable` extends `Equatable`.
+interface Hashable {
+  extends Equatable;
+  fn Hash[me: Self]() -&gt; u64;
+}
+// `Hashable` is equivalent to:
+interface Hashable {
+  impl as Equatable;
+  alias IsEqual = Equatable.IsEqual;
+  fn Hash[me: Self]() -&gt; u64;
+}
+</code></pre>
+<p>A type may implement the base interface implicitly by implementing all the
+methods in the implementation of the derived interface.</p>
+<pre><code>class Key {
+  // ...
+  impl as Hashable {
+    fn IsEqual[me: Key](rhs: Key) -&gt; Bool { ... }
+    fn Hash[me: Key]() -&gt; u64 { ... }
+  }
+  // No need to separately implement `Equatable`.
+}
+var k: Key = ...;
+k.Hash();
+k.IsEqual(k);
+</code></pre>
+<h3 id="combining-interfaces">Combining interfaces</h3>
+<p>The <code>&amp;</code> operation on type-of-types allows you conveniently combine interfaces.
+It gives you all the names that don't conflict.</p>
+<pre><code>interface Renderable {
+  fn GetCenter[me: Self]() -&gt; (i32, i32);
+  // Draw the object to the screen
+  fn Draw[me: Self]();
+}
+interface EndOfGame {
+  fn SetWinner[addr me: Self*](player: i32);
+  // Indicate the game was a draw
+  fn Draw[addr me: Self*]();
+}
+
+fn F[T:! Renderable &amp; EndOfGame](game_state: T*) -&gt; (i32, i32) {
+  game_state-&gt;SetWinner(1);
+  return game_state-&gt;Center();
+}
+</code></pre>
+<p>Names with conflicts can be accessed using a
+<a href="#accessing-members-of-interfaces">qualified member access expression</a>.</p>
+<pre><code>fn BothDraws[T:! Renderable &amp; EndOfGame](game_state: T*) {
+  game_state-&gt;(Renderable.Draw)();
+  game_state-&gt;(GameState.Draw)();
+}
+</code></pre>
+<h4 id="named-constraints">Named constraints</h4>
+<p>You may also declare a new type-of-type directly using
+<a href="../terminology/#named-constraints">"named constraints"</a>. Named constraints can
+express requirements that multiple interfaces be implemented, and give you
+control over how name conflicts are handled. Named constraints have other
+applications and capabilities not covered here.</p>
+<pre><code>constraint Combined {
+  impl as Renderable;
+  impl as EndOfGame;
+  alias Draw_Renderable = Renderable.Draw;
+  alias Draw_EndOfGame = EndOfGame.Draw;
+  alias SetWinner = EndOfGame.SetWinner;
+}
+
+fn CallItAll[T:! Combined](game_state: T*, int winner) {
+  if (winner &gt; 0) {
+    game_state-&gt;SetWinner(winner);
+  } else {
+    game_state-&gt;Draw_EndOfGame();
+  }
+  game_state-&gt;Draw_Renderable();
+  // Can still use a qualified member access expression
+  // for names not defined in the named constraint.
+  return game_state-&gt;(Renderable.Center)();
+}
+</code></pre>
+<h4 id="type-erasure">Type erasure</h4>
+<p>Inside a generic function, the API of a type argument is
+<a href="../terminology/#type-erasure">erased</a> except for the names defined in the
+type-of-type. An equivalent model is to say an
+<a href="../terminology/#archetype">archetype</a> is used for type checking and name lookup
+when the actual type is not known in that scope. The archetype has members
+dictated by the type-of-type.</p>
+<p>For example: If there were a class <code>CDCover</code> defined this way:</p>
+<pre><code>class CDCover  {
+  impl as Printable {
+    ...
+  }
+}
+</code></pre>
+<p>it can be passed to this <code>PrintIt</code> function:</p>
+<pre><code>fn PrintIt[T:! Printable](p: T*) {
+  p-&gt;Print();
+}
+</code></pre>
+<p>Inside <code>PrintIt</code>, <code>T</code> is an archetype with the API of <code>Printable</code>. A call to
+<code>PrintIt</code> with a value of type <code>CDCover</code> erases everything except the members or
+<code>Printable</code>. This includes the type connection to <code>CDCover</code>, so it is illegal to
+cast from <code>T</code> to <code>CDCover</code>.</p>
+<h3 id="adapting-types">Adapting types</h3>
+<p>Carbon has a mechanism called <a href="../terminology/#adapting-a-type">adapting types</a>)
+to create new types that are <a href="../terminology/#compatible-types">compatible</a> with
+existing types but with different interface implementations. This could be used
+to add or replace implementations, or define implementations for reuse.</p>
+<p>In this example, we have multiple ways of sorting a collection of <code>Song</code> values.</p>
+<pre><code>class Song { ... }
+
+adapter SongByArtist extends Song {
+  impl as Comparable { ... }
+}
+
+adapter SongByTitle extends Song {
+  impl as Comparable { ... }
+}
+</code></pre>
+<p>Values of type <code>Song</code> may be cast to <code>SongByArtist</code> or <code>SongByTitle</code> to get a
+specific sort order.</p>
+<h3 id="interface-input-and-output-types">Interface input and output types</h3>
+<p><a href="../terminology/#interface-type-parameters-and-associated-types">Associated types and interface parameters</a>
+allow function signatures to vary with the implementing type. The biggest
+difference between these is that associated types ("output types") may be
+deduced from a type, and types can implement the same interface multiple times
+with different interface parameters ("input types").</p>
+<h4 id="associated-types">Associated types</h4>
+<p>Expect types that vary in an interface to be associated types by default. Since
+associated types may be deduced, they are more convenient to use. Imagine a
+<code>Stack</code> interface. Different types implementing <code>Stack</code> will have different
+element types:</p>
+<pre><code>interface Stack {
+  let ElementType:! Movable;
+  fn Push[addr me: Self*](value: ElementType);
+  fn Pop[addr me: Self*]() -&gt; ElementType;
+  fn IsEmpty[addr me: Self*]() -&gt; Bool;
+}
+</code></pre>
+<p><code>ElementType</code> is an associated type of the interface <code>Stack</code>. Types that
+implement <code>Stack</code> give <code>ElementType</code> a specific value of some type implementing
+<code>Movable</code>. Functions that accept a type implementing <code>Stack</code> can deduce the
+<code>ElementType</code> from the stack type.</p>
+<pre><code>// ✅ This is allowed, since the type of the stack will determine
+// `ElementType`.
+fn PeekAtTopOfStack[StackType:! Stack](s: StackType*)
+    -&gt; StackType.ElementType;
+</code></pre>
+<h4 id="parameterized-interfaces">Parameterized interfaces</h4>
+<p>Parameterized interfaces are commonly associated with overloaded operators.
+Imagine an interface for determining if two values are equivalent that allows
+those types to be different. An element in a hash map might have type
+<code>Pair(String, i64)</code> that implements both <code>Equatable(String)</code> and
+<code>Equatable(Pair(String, i64))</code>.</p>
+<pre><code>interface Equatable(T:! Type) {
+  fn IsEqual[me: Self](compare_to: T) -&gt; Bool;
+}
+</code></pre>
+<p><code>T</code> is a parameter to interface <code>Equatable</code>. A type can implement <code>Equatable</code>
+multiple times as long as each time it is with a different value of the <code>T</code>
+parameter. Functions may accept types implementing <code>Equatable(i32)</code> or
+<code>Equatable(f32)</code>. Functions can't accept types implementing <code>Equatable(T)</code> in
+general, unless some other parameter determines <code>T</code>.</p>
+<pre><code>// ✅ This is allowed, since the value of `T` is determined by the
+// `v` parameter.
+fn FindInVector[T:! Type, U:! Equatable(T)](v: Vector(T), needle: U)
+    -&gt; Optional(i32);
+
+// ❌ This is forbidden. Since `U` could implement `Equatable`
+// multiple times, there is no way to determine the value for `T`.
+// Contrast with `PeekAtTopOfStack` in the associated type example.
+fn CompileError[T:! Type, U:! Equatable(T)](x: U) -&gt; T;
+</code></pre>
+<h3 id="constraints">Constraints</h3>
+<p>Type-of-types can be further constrained using a <code>where</code> clause:</p>
+<pre><code>fn FindFirstPrime[T:! Container where .Element == i32]
+    (c: T, i: i32) -&gt; Optional(i32) {
+  // The elements of `c` have type `T.Element`, which is `i32`.
+  ...
+}
+
+fn PrintContainer[T:! Container where .Element is Printable](c: T) {
+  // The type of the elements of `c` is not known, but we do know
+  // that type satisfies the `Printable` interface.
+  ...
+}
+</code></pre>
+<p>Constraints limit the types that the generic function can operate on, but
+increase the knowledge that may be used in the body of the function to operate
+on values of those types.</p>
+<p>Constraints are also used when implementing an interface to specify the values
+of associated types (and other associated constants).</p>
+<pre><code>class Vector(T:! Movable) {
+  impl as Stack where .ElementType = T { ... }
+}
+</code></pre>
+<h3 id="parameterized-impls">Parameterized impls</h3>
+<p>Implementations can be parameterized to apply to multiple types. Those
+parameters can have constraints to restrict when the implementation applies.
+When multiple implementations apply, there is a rule to pick which one is
+considered the most specific:</p>
+<ul>
+<li>All type parameters in each <code>impl</code> declaration are replaced with question
+    marks <code>?</code>. This is called the type structure of the <code>impl</code> declaration.</li>
+<li>Given two type structures, find the first difference when read from
+    left-to-right. The one with a <code>?</code> is less specific, the one with a concrete
+    type name in that position is more specific.</li>
+<li>If there is more than one <code>impl</code> declaration with the most specific type
+    structure, pick the one listed first in the priority ordering.</li>
+</ul>
+<p>To ensure <a href="../goals/#coherence">coherence</a>, an <code>impl</code> may only be declared in a
+library defining some name from its type structure. If a library defines
+multiple implementations with the same type structure, they must be listed in
+priority order in a prioritization block.</p>
+<h3 id="operator-overloading">Operator overloading</h3>
+<p>To overload an operator, implement the corresponding interface from the standard
+library. For example, to define how the unary <code>-</code> operator behaves for a type,
+implement the <code>Negatable</code> interface for that type. The interfaces and rewrites
+used for a given operator may be found in the
+<a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/design/expressions/README.md">expressions design</a>.</p>
+<p>As a convenience, there is a shorcut for defining an implementation that
+supports any type implicitly convertible to a specified type, using <code>like</code>:</p>
+<pre><code>// Support multiplying values of type `Distance` with
+// values of type `f64` or any type implicitly
+// convertible to `f64`.
+external impl Distance as MultipliableWith(like f64) ...
+</code></pre>
+<h2 id="future-work">Future work</h2>
+<ul>
+<li>Functions should have a way to accept types that vary at runtime.</li>
+<li>You should have the ability to mark entities as <code>upcoming</code> or <code>deprecated</code>
+    to support evolution.</li>
+<li>There should be a way to define generic associated and higher-ranked/kinded
+    types.</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/pull/524">#524: Generics overview</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/pull/731">#731: Generics details 2: adapters, associated types, parameterized interfaces</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/pull/818">#818: Constraints for generics (generics details 3)</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/pull/920">#920: Generic parameterized impls (details 5)</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/pull/950">#950: Generic details 6: remove facets</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/pull/1013">#1013: Generics: Set associated constants using <code>where</code> constraints</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/pull/1084">#1084: Generics details 9: forward declarations</a></li>
+</ul>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../goals/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Generics: Goals" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Generics: Goals
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../terminology/" class="md-footer__link md-footer__link--next" aria-label="Next: Generics: Terminology" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Generics: Terminology
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

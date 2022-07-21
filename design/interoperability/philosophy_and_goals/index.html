@@ -1,0 +1,2804 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Interoperability philosophy and goals - Carbon Language</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#interoperability-philosophy-and-goals" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Carbon Language" class="md-header__button md-logo" aria-label="Carbon Language" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Carbon Language
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Interoperability philosophy and goals
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Carbon Language" class="md-nav__button md-logo" aria-label="Carbon Language" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Carbon Language
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Docs
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Design
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Design" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Design
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        Language design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aliases/" class="md-nav__link">
+        Aliases
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blocks_and_statements/" class="md-nav__link">
+        Blocks and statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classes/" class="md-nav__link">
+        Classes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../functions/" class="md-nav__link">
+        Functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metaprogramming/" class="md-nav__link">
+        Metaprogramming
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../name_lookup/" class="md-nav__link">
+        Name lookup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../naming_conventions/" class="md-nav__link">
+        Naming conventions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pattern_matching/" class="md-nav__link">
+        Pattern matching
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../primitive_types/" class="md-nav__link">
+        Primitive types
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../templates/" class="md-nav__link">
+        Templates
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tuples/" class="md-nav__link">
+        Tuples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../type_inference/" class="md-nav__link">
+        Type inference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../variables/" class="md-nav__link">
+        Variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_15" type="checkbox" id="__nav_2_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_15">
+          Code and name organization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Code and name organization" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_15">
+          <span class="md-nav__icon md-icon"></span>
+          Code and name organization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../code_and_name_organization/" class="md-nav__link">
+        Code and name organization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../code_and_name_organization/source_files/" class="md-nav__link">
+        Source files
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_16" type="checkbox" id="__nav_2_16" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_16">
+          Control flow
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Control flow" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_16">
+          <span class="md-nav__icon md-icon"></span>
+          Control flow
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/" class="md-nav__link">
+        Control flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/conditionals/" class="md-nav__link">
+        Control flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/loops/" class="md-nav__link">
+        Loops
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/return/" class="md-nav__link">
+        `return`
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_17" type="checkbox" id="__nav_2_17" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_17">
+          Expressions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Expressions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_17">
+          <span class="md-nav__icon md-icon"></span>
+          Expressions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/" class="md-nav__link">
+        Expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/arithmetic/" class="md-nav__link">
+        Arithmetic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/as_expressions/" class="md-nav__link">
+        `as` expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/bitwise/" class="md-nav__link">
+        Bitwise and shift operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/comparison_operators/" class="md-nav__link">
+        Comparison operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/if/" class="md-nav__link">
+        `if` expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/implicit_conversions/" class="md-nav__link">
+        Implicit conversions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/logical_operators/" class="md-nav__link">
+        Logical operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/member_access/" class="md-nav__link">
+        Qualified names and member access
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_18" type="checkbox" id="__nav_2_18" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_18">
+          Generics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Generics" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_18">
+          <span class="md-nav__icon md-icon"></span>
+          Generics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/" class="md-nav__link">
+        Generics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/appendix-coherence/" class="md-nav__link">
+        Carbon: alternatives to coherence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/details/" class="md-nav__link">
+        Generics: Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/goals/" class="md-nav__link">
+        Generics: Goals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/overview/" class="md-nav__link">
+        Generics: Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/terminology/" class="md-nav__link">
+        Generics: Terminology
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_19" type="checkbox" id="__nav_2_19" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_19">
+          Interoperability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Interoperability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_19">
+          <span class="md-nav__icon md-icon"></span>
+          Interoperability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Bidirectional interoperability with C/C++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Interoperability philosophy and goals
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Interoperability philosophy and goals
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    Background
+  </a>
+  
+    <nav class="md-nav" aria-label="Background">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#other-interoperability-layers" class="md-nav__link">
+    Other interoperability layers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#philosophy" class="md-nav__link">
+    Philosophy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language-goal-influences" class="md-nav__link">
+    Language goal influences
+  </a>
+  
+    <nav class="md-nav" aria-label="Language goal influences">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performance-critical-software" class="md-nav__link">
+    Performance-critical software
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#software-and-language-evolution" class="md-nav__link">
+    Software and language evolution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-that-is-easy-to-read-understand-and-write" class="md-nav__link">
+    Code that is easy to read, understand, and write
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-safety-guarantees-and-testing-mechanisms" class="md-nav__link">
+    Practical safety guarantees and testing mechanisms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fast-and-scalable-development" class="md-nav__link">
+    Fast and scalable development
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modern-os-platforms-hardware-architectures-and-environments" class="md-nav__link">
+    Modern OS platforms, hardware architectures, and environments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interoperability-with-and-migration-from-existing-c-code" class="md-nav__link">
+    Interoperability with and migration from existing C++ code
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    Goals
+  </a>
+  
+    <nav class="md-nav" aria-label="Goals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#support-mixing-carbon-and-c-toolchains" class="md-nav__link">
+    Support mixing Carbon and C++ toolchains
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compatibility-with-the-c-memory-model" class="md-nav__link">
+    Compatibility with the C++ memory model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimize-bridge-code" class="md-nav__link">
+    Minimize bridge code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unsurprising-mappings-between-c-and-carbon-types" class="md-nav__link">
+    Unsurprising mappings between C++ and Carbon types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allow-c-bridge-code-in-carbon-files" class="md-nav__link">
+    Allow C++ bridge code in Carbon files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#carbon-inheritance-from-c-types" class="md-nav__link">
+    Carbon inheritance from C++ types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#support-use-of-advanced-c-features" class="md-nav__link">
+    Support use of advanced C++ features
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#support-basic-c-interoperability" class="md-nav__link">
+    Support basic C interoperability
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-goals" class="md-nav__link">
+    Non-goals
+  </a>
+  
+    <nav class="md-nav" aria-label="Non-goals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full-parity-between-a-carbon-only-toolchain-and-mixing-ccarbon-toolchains" class="md-nav__link">
+    Full parity between a Carbon-only toolchain and mixing C++/Carbon toolchains
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#never-require-bridge-code" class="md-nav__link">
+    Never require bridge code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convert-all-c-types-to-carbon-types" class="md-nav__link">
+    Convert all C++ types to Carbon types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#support-for-c-exceptions-without-bridge-code" class="md-nav__link">
+    Support for C++ exceptions without bridge code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-language-metaprogramming" class="md-nav__link">
+    Cross-language metaprogramming
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offer-equivalent-support-for-languages-other-than-c" class="md-nav__link">
+    Offer equivalent support for languages other than C++
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions-to-be-resolved-later" class="md-nav__link">
+    Open questions to be resolved later
+  </a>
+  
+    <nav class="md-nav" aria-label="Open questions to be resolved later">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#carbon-type-inheritance-from-non-pure-interface-c-types" class="md-nav__link">
+    Carbon type inheritance from non-pure interface C++ types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crtp-support" class="md-nav__link">
+    CRTP support
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-lifetimes" class="md-nav__link">
+    Object lifetimes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_20" type="checkbox" id="__nav_2_20" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_20">
+          Lexical conventions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lexical conventions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_20">
+          <span class="md-nav__icon md-icon"></span>
+          Lexical conventions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/" class="md-nav__link">
+        Lexical conventions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/numeric_literals/" class="md-nav__link">
+        Numeric literals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/string_literals/" class="md-nav__link">
+        String literals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/whitespace/" class="md-nav__link">
+        Whitespace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/words/" class="md-nav__link">
+        Words
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/" class="md-nav__link">
+        Guides
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Images
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Images" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Images
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../images/snippets/" class="md-nav__link">
+        Front page snippets for Carbon
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Project
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Project" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Project
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/" class="md-nav__link">
+        Project
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/code_review/" class="md-nav__link">
+        Code review
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/contribution_tools/" class="md-nav__link">
+        Contribution tools
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/cpp_style_guide/" class="md-nav__link">
+        C++ style guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/design_style_guide/" class="md-nav__link">
+        Language design style guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/difficulties_improving_cpp/" class="md-nav__link">
+        Difficulties improving C++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/evolution/" class="md-nav__link">
+        Evolution and governance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/faq/" class="md-nav__link">
+        Project FAQ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/goals/" class="md-nav__link">
+        Goals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/groups/" class="md-nav__link">
+        Groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/pull_request_workflow/" class="md-nav__link">
+        Trunk-based pull-request GitHub workflow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/roadmap/" class="md-nav__link">
+        Roadmap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/roadmap_process/" class="md-nav__link">
+        Roadmap process
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_14" type="checkbox" id="__nav_5_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_14">
+          Principles
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Principles" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_14">
+          <span class="md-nav__icon md-icon"></span>
+          Principles
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/" class="md-nav__link">
+        Principles
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/error_handling/" class="md-nav__link">
+        Principle: Errors are values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/information_accumulation/" class="md-nav__link">
+        Principle: Information accumulation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/library_apis_only/" class="md-nav__link">
+        Principle: All APIs are library APIs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/low_context_sensitivity/" class="md-nav__link">
+        Principle: Low context-sensitivity
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/one_way/" class="md-nav__link">
+        Principle: Prefer providing only one way to do a given thing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/safety_strategy/" class="md-nav__link">
+        Safety strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/static_open_extension/" class="md-nav__link">
+        Principle: One static open extension mechanism
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/success_criteria/" class="md-nav__link">
+        Principle: Success criteria
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Spec
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Spec" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Spec
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/" class="md-nav__link">
+        Spec
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_2" type="checkbox" id="__nav_6_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_2">
+          Lang
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lang" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Lang
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/" class="md-nav__link">
+        Carbon language specification
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/execution/" class="md-nav__link">
+        Execution
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/lex/" class="md-nav__link">
+        Lexical analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/libs/" class="md-nav__link">
+        Libraries and packages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/names/" class="md-nav__link">
+        Names
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/parsing/" class="md-nav__link">
+        Parsing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/semantics/" class="md-nav__link">
+        Semantic analysis
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_3" type="checkbox" id="__nav_6_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_3">
+          Lib
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lib" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          Lib
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lib/" class="md-nav__link">
+        Carbon standard library specification
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    Background
+  </a>
+  
+    <nav class="md-nav" aria-label="Background">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#other-interoperability-layers" class="md-nav__link">
+    Other interoperability layers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#philosophy" class="md-nav__link">
+    Philosophy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language-goal-influences" class="md-nav__link">
+    Language goal influences
+  </a>
+  
+    <nav class="md-nav" aria-label="Language goal influences">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performance-critical-software" class="md-nav__link">
+    Performance-critical software
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#software-and-language-evolution" class="md-nav__link">
+    Software and language evolution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-that-is-easy-to-read-understand-and-write" class="md-nav__link">
+    Code that is easy to read, understand, and write
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-safety-guarantees-and-testing-mechanisms" class="md-nav__link">
+    Practical safety guarantees and testing mechanisms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fast-and-scalable-development" class="md-nav__link">
+    Fast and scalable development
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modern-os-platforms-hardware-architectures-and-environments" class="md-nav__link">
+    Modern OS platforms, hardware architectures, and environments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interoperability-with-and-migration-from-existing-c-code" class="md-nav__link">
+    Interoperability with and migration from existing C++ code
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    Goals
+  </a>
+  
+    <nav class="md-nav" aria-label="Goals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#support-mixing-carbon-and-c-toolchains" class="md-nav__link">
+    Support mixing Carbon and C++ toolchains
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compatibility-with-the-c-memory-model" class="md-nav__link">
+    Compatibility with the C++ memory model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimize-bridge-code" class="md-nav__link">
+    Minimize bridge code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unsurprising-mappings-between-c-and-carbon-types" class="md-nav__link">
+    Unsurprising mappings between C++ and Carbon types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allow-c-bridge-code-in-carbon-files" class="md-nav__link">
+    Allow C++ bridge code in Carbon files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#carbon-inheritance-from-c-types" class="md-nav__link">
+    Carbon inheritance from C++ types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#support-use-of-advanced-c-features" class="md-nav__link">
+    Support use of advanced C++ features
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#support-basic-c-interoperability" class="md-nav__link">
+    Support basic C interoperability
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-goals" class="md-nav__link">
+    Non-goals
+  </a>
+  
+    <nav class="md-nav" aria-label="Non-goals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full-parity-between-a-carbon-only-toolchain-and-mixing-ccarbon-toolchains" class="md-nav__link">
+    Full parity between a Carbon-only toolchain and mixing C++/Carbon toolchains
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#never-require-bridge-code" class="md-nav__link">
+    Never require bridge code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convert-all-c-types-to-carbon-types" class="md-nav__link">
+    Convert all C++ types to Carbon types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#support-for-c-exceptions-without-bridge-code" class="md-nav__link">
+    Support for C++ exceptions without bridge code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-language-metaprogramming" class="md-nav__link">
+    Cross-language metaprogramming
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offer-equivalent-support-for-languages-other-than-c" class="md-nav__link">
+    Offer equivalent support for languages other than C++
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions-to-be-resolved-later" class="md-nav__link">
+    Open questions to be resolved later
+  </a>
+  
+    <nav class="md-nav" aria-label="Open questions to be resolved later">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#carbon-type-inheritance-from-non-pure-interface-c-types" class="md-nav__link">
+    Carbon type inheritance from non-pure interface C++ types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crtp-support" class="md-nav__link">
+    CRTP support
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-lifetimes" class="md-nav__link">
+    Object lifetimes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="interoperability-philosophy-and-goals">Interoperability philosophy and goals</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#background">Background</a><ul>
+<li><a href="#other-interoperability-layers">Other interoperability layers</a></li>
+</ul>
+</li>
+<li><a href="#philosophy">Philosophy</a></li>
+<li><a href="#language-goal-influences">Language goal influences</a><ul>
+<li><a href="#performance-critical-software">Performance-critical software</a></li>
+<li><a href="#software-and-language-evolution">Software and language evolution</a></li>
+<li><a href="#code-that-is-easy-to-read-understand-and-write">Code that is easy to read, understand, and write</a></li>
+<li><a href="#practical-safety-guarantees-and-testing-mechanisms">Practical safety guarantees and testing mechanisms</a></li>
+<li><a href="#fast-and-scalable-development">Fast and scalable development</a></li>
+<li><a href="#modern-os-platforms-hardware-architectures-and-environments">Modern OS platforms, hardware architectures, and environments</a></li>
+<li><a href="#interoperability-with-and-migration-from-existing-c-code">Interoperability with and migration from existing C++ code</a></li>
+</ul>
+</li>
+<li><a href="#goals">Goals</a><ul>
+<li><a href="#support-mixing-carbon-and-c-toolchains">Support mixing Carbon and C++ toolchains</a></li>
+<li><a href="#compatibility-with-the-c-memory-model">Compatibility with the C++ memory model</a></li>
+<li><a href="#minimize-bridge-code">Minimize bridge code</a></li>
+<li><a href="#unsurprising-mappings-between-c-and-carbon-types">Unsurprising mappings between C++ and Carbon types</a></li>
+<li><a href="#allow-c-bridge-code-in-carbon-files">Allow C++ bridge code in Carbon files</a></li>
+<li><a href="#carbon-inheritance-from-c-types">Carbon inheritance from C++ types</a></li>
+<li><a href="#support-use-of-advanced-c-features">Support use of advanced C++ features</a></li>
+<li><a href="#support-basic-c-interoperability">Support basic C interoperability</a></li>
+</ul>
+</li>
+<li><a href="#non-goals">Non-goals</a><ul>
+<li><a href="#full-parity-between-a-carbon-only-toolchain-and-mixing-ccarbon-toolchains">Full parity between a Carbon-only toolchain and mixing C++/Carbon toolchains</a></li>
+<li><a href="#never-require-bridge-code">Never require bridge code</a></li>
+<li><a href="#convert-all-c-types-to-carbon-types">Convert all C++ types to Carbon types</a></li>
+<li><a href="#support-for-c-exceptions-without-bridge-code">Support for C++ exceptions without bridge code</a></li>
+<li><a href="#cross-language-metaprogramming">Cross-language metaprogramming</a></li>
+<li><a href="#offer-equivalent-support-for-languages-other-than-c">Offer equivalent support for languages other than C++</a></li>
+</ul>
+</li>
+<li><a href="#open-questions-to-be-resolved-later">Open questions to be resolved later</a><ul>
+<li><a href="#carbon-type-inheritance-from-non-pure-interface-c-types">Carbon type inheritance from non-pure interface C++ types</a></li>
+<li><a href="#crtp-support">CRTP support</a></li>
+<li><a href="#object-lifetimes">Object lifetimes</a></li>
+</ul>
+</li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="background">Background</h2>
+<p>Interoperability with and migration from C++ are a
+<a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/project/goals.md#interoperability-with-and-migration-from-existing-c-code">language goal</a>.
+However, performance and evolution are
+<a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/project/goals.md#language-goals-and-priorities"><em>higher</em> priorities</a>.
+This interaction of priorities is important to understanding Carbon's
+interoperability goals and trade-offs.</p>
+<h3 id="other-interoperability-layers">Other interoperability layers</h3>
+<p>Other language interoperability layers that may offer useful examples are:</p>
+<ul>
+<li>
+<p><a href="https://kotlinlang.org/docs/reference/java-to-kotlin-interop.html">Java/Kotlin</a>
+    should be a comparable interoperability story. The languages are different,
+    but share an underlying runtime. This may be closest to the model we desire
+    for Carbon.</p>
+</li>
+<li>
+<p><a href="https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html">JavaScript/TypeScript</a>
+    is similar to C/C++, where one language is essentially a subset of the
+    other, allowing high interoperability. This is an interesting reference
+    point, but we are looking at a different approach with a clearer boundary.</p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Java_Native_Interface">C++/Java</a> is an
+    example of requiring specialized code for the bridge layer, making
+    interoperability more burden on developers. The burden of the approach may
+    be considered to correspond to the difference in language memory models and
+    other language design choices. Regardless, the result can be considered
+    higher maintenance for developers than we want for Carbon.</p>
+</li>
+<li>
+<p><a href="https://golang.org/cmd/cgo/">C++/Go</a> is similar to C++/Java. However, Go
+    notably allows C++ bridge code to exist in the .go files, which can ease
+    maintenance of the bridge layer, and is desirable for Carbon.</p>
+</li>
+</ul>
+<h2 id="philosophy">Philosophy</h2>
+<p>The C++ interoperability layer of Carbon allows a subset of C++ APIs to be
+accessed from Carbon code, and similarly a subset of Carbon APIs to be accessed
+from C++ code. This requires expressing one language as a subset of the other.
+Bridge code may be needed to map some APIs into the relevant subset, but the
+constraints on expressivity should be loose enough to keep the amount of such
+bridge code sustainable.</p>
+<p>The design for interoperability between Carbon and C++ hinges on:</p>
+<ol>
+<li>The ability to interoperate with a wide variety of code, such as
+    classes/structs and templates, not just free functions.</li>
+<li>A willingness to expose the idioms of C++ into Carbon code, and the other
+    way around, when necessary to maximize performance of the interoperability
+    layer.</li>
+<li>The use of wrappers and generic programming, including templates, to
+    minimize or eliminate runtime overhead.</li>
+</ol>
+<p>These things come together when looking at how custom data structures in C++ are
+exposed into Carbon, and the other way around. In both languages, it is
+reasonable and even common to have customized low-level data structures, such as
+associative containers. For example, there are numerous data structures for
+mapping from a key to a value that might be best for a particular use case,
+including hash tables, linked hash tables, sorted vectors, and btrees. Even for
+a given data structure, there may be slow but meaningful evolution in
+implementations strategies.</p>
+<p>The result is that it will often be reasonable to directly expose a C++ data
+structure to Carbon without converting it to a "native" or "idiomatic" Carbon
+data structure. Although interfaces may differ, a trivial adapter wrapper should
+be sufficient. Many Carbon data structures should also be able to support
+multiple implementations with C++ data structures being one such implementation,
+allowing for idiomatic use of C++ hidden behind Carbon.</p>
+<p>The reverse is also true. C++ code will often not care, or can be refactored to
+not care, what specific data structure is used. Carbon data structures can be
+exposed as yet another implementation in C++, and wrapped to match C++ idioms
+and even templates.</p>
+<p>For example, a C++ class template like <code>std::vector&lt;T&gt;</code> should be usable without
+wrapper code or runtime overhead, and passing a Carbon type as <code>T</code>. The
+resulting type should be equally usable from either C++ or Carbon code. It
+should also be easy to wrap <code>std::vector&lt;T&gt;</code> with a Carbon interface for
+transparent use in idiomatic Carbon code.</p>
+<h2 id="language-goal-influences">Language goal influences</h2>
+<h3 id="performance-critical-software">Performance-critical software</h3>
+<p>Interoperability with C++ will be frequently used in Carbon, whether it's C++
+developers trying out Carbon, incrementally migrating a large C++ codebase, or
+continuing to use a C++ library long-term. In all cases, it must be possible to
+write interoperable code with zero overhead; copies must not be required.</p>
+<h3 id="software-and-language-evolution">Software and language evolution</h3>
+<p>Interoperability will require the addition of features to Carbon which exist
+primarily to support interoperability use cases. However, these features must
+not unduly impinge the overall evolution of Carbon. In particular, only a subset
+of Carbon features will support interoperability with C++. To do otherwise would
+restrict Carbon's feature set.</p>
+<h3 id="code-that-is-easy-to-read-understand-and-write">Code that is easy to read, understand, and write</h3>
+<p>Interoperability-related Carbon code will likely be more difficult to read than
+other, more idiomatic Carbon code. This is okay: aiming to make Carbon code
+readable doesn't mean that it needs to <em>all</em> be trivial to read. At the same
+time, the extra costs that interoperability exerts on Carbon developers should
+be minimized.</p>
+<h3 id="practical-safety-guarantees-and-testing-mechanisms">Practical safety guarantees and testing mechanisms</h3>
+<p>Safety is important to maintain around interoperability code, and mitigations
+should be provided where possible. However, safety guarantees will be focused on
+native Carbon code. C++ code will not benefit from the same set of safety
+mechanisms that Carbon offers, so Carbon code calling into C++ will accept
+higher safety risks.</p>
+<h3 id="fast-and-scalable-development">Fast and scalable development</h3>
+<p>The interoperability layer will likely have tooling limitations similar to C++.
+For example, Carbon aims to compile quickly. However, C++ interoperability
+hinges on compiling C++ code, which is relatively slow. Carbon libraries that
+use interoperability will see bottlenecks from C++ compile time. Improving C++
+is outside the scope of Carbon.</p>
+<h3 id="modern-os-platforms-hardware-architectures-and-environments">Modern OS platforms, hardware architectures, and environments</h3>
+<p>Interoperability will apply to the intersection of environments supported by
+both Carbon and C++. Pragmatically, Carbon will likely be the limiting factor
+here.</p>
+<h3 id="interoperability-with-and-migration-from-existing-c-code">Interoperability with and migration from existing C++ code</h3>
+<p>Carbon's language goal for interoperability will focus on C++17 compatibility.
+The language design must be mindful of the prioritization; trade-offs harming
+other goals may still be made so long as they offer greater benefits for
+interoperability and Carbon as a whole.</p>
+<p>Although the below interoperability-specific goals will focus on
+interoperability, it's also important to consider how migration would be
+affected. If interoperability requires complex work, particularly to avoid
+performance impacts, it could impair the ability to incrementally migrate C++
+codebases to Carbon.</p>
+<h2 id="goals">Goals</h2>
+<h3 id="support-mixing-carbon-and-c-toolchains">Support mixing Carbon and C++ toolchains</h3>
+<p>The Carbon toolchain will support compiling C++ code. It will contain a
+customized C++ compiler that enables some more advanced interoperability
+features, such as calling Carbon templates from C++.</p>
+<p>Mixing toolchains will also be supported in both directions:</p>
+<ul>
+<li>
+<p>C++ libraries compiled by a non-Carbon toolchain will be usable from Carbon,
+    so long as they are ABI-compatible with Carbon's C++ toolchain.</p>
+</li>
+<li>
+<p>The Carbon toolchain will support, as an option, generating a C++ header and
+    object file from a Carbon library, with an ABI that's suitable for use with
+    non-Carbon toolchains.</p>
+</li>
+</ul>
+<p>Mixing toolchains restricts functionality to what's feasible with the C++ ABI.
+For example, developers should expect that Carbon templates will be callable
+from C++ when using the Carbon toolchain, and will not be available when mixing
+toolchains because it would require a substantially different and more complex
+interoperability implementation. This degraded interoperability should still be
+sufficient for most developers, albeit with the potential of more bridge code.</p>
+<p>Any C++ interoperability code that works when mixing toolchains must work when
+using the native Carbon toolchain. The mixed toolchain support must not have
+semantic divergence. The converse is not true, and the native Carbon toolchain
+may have additional language support and optimizations.</p>
+<h3 id="compatibility-with-the-c-memory-model">Compatibility with the C++ memory model</h3>
+<p>It must be straightforward for any Carbon interoperability code to be compatible
+with the C++ memory model. This does not mean that Carbon must exclusively use
+the C++ memory model, only that it must be supported.</p>
+<h3 id="minimize-bridge-code">Minimize bridge code</h3>
+<p>The majority of simple C++ functions and types should be usable from Carbon
+without any custom bridge code and without any runtime overhead. That is, Carbon
+code should be able to call most C++ code without any code changes to add
+support for interoperability, even if that code was built with a non-Carbon
+toolchain. This includes instantiating Carbon templates or generics using C++
+types.</p>
+<p>In the other direction, Carbon may need some minimal markup to expose functions
+and types to C++. This should help avoid requiring Carbon to generate
+C++-compatible endpoints unconditionally, which could have compile and linking
+overheads that may in many cases be unnecessary. Also, it should help produce
+errors that indicate when a function or type may require additional changes to
+make compatible with C++.</p>
+<p>Carbon's priority developers should be able to easily reuse the mature ecosystem
+of C++ libraries provided by third-parties. A third-party library's language
+choice should not be a barrier to Carbon adoption.</p>
+<p>Even for first-party libraries, migration of C++ codebases to Carbon will often
+be incremental due to human costs of executing and verifying source migrations.
+Minimizing the amount of bridge code required should be expected to simplify
+such migrations.</p>
+<h3 id="unsurprising-mappings-between-c-and-carbon-types">Unsurprising mappings between C++ and Carbon types</h3>
+<p>Carbon will provide unsurprising mappings for common types.</p>
+<p><strong>Primitive types</strong> will have mappings with zero overhead conversions. They are
+frequently used, making it important that interoperability code be able to use
+them seamlessly.</p>
+<p>The storage and representation will need to be equivalent in both languages. For
+example, if a C++ <code>__int64</code> maps to Carbon's <code>Int64</code>, the memory layout of both
+types must be identical.</p>
+<p>Semantics need to be similar, but edge-case behaviors don't need to be
+identical, allowing Carbon flexibility to evolve. For example, where C++ would
+have modulo wrapping on integers, Carbon could instead have trapping behavior on
+the default-mapped primitive types.</p>
+<p>Carbon may have versions of these types with no C++ mapping, such as <code>Int256</code>.</p>
+<p><strong>Non-owning vocabulary types</strong>, such as pointers and references, will have
+transparent, automatic translation between C++ and Carbon non-owning vocabulary
+types with zero overhead.</p>
+<p><strong>Other vocabulary types</strong> will typically have reasonable, but potentially
+non-zero overhead, conversions available to map into Carbon vocabulary types.
+Code using these may choose whether to pay the overhead to convert. They may
+also use the C++ type directly from Carbon code, and the other way around.</p>
+<p><strong>Incomplete types</strong> must have a mapping with similar semantics, similar to
+primitive types.</p>
+<h3 id="allow-c-bridge-code-in-carbon-files">Allow C++ bridge code in Carbon files</h3>
+<p>Carbon files should support inline bridge code written in C++. Where bridge code
+is necessary, this will allow for maintenance of it directly alongside the code
+that uses it.</p>
+<h3 id="carbon-inheritance-from-c-types">Carbon inheritance from C++ types</h3>
+<p>Carbon will support inheritance from C++ types for interoperability, although
+the syntax constructs may look different from C++ inheritance. This is
+considered necessary to address cases where a C++ library API expects users to
+inherit from a given C++ type.</p>
+<p>This might be restricted to pure interface types; see
+<a href="#carbon-type-inheritance-from-non-pure-interface-c-types">the open question</a>.</p>
+<h3 id="support-use-of-advanced-c-features">Support use of advanced C++ features</h3>
+<p>There should be support for most idiomatic usage of advanced C++ features. A few
+examples are templates, overload sets,
+<a href="https://en.cppreference.com/w/cpp/language/attributes">attributes</a> and
+<a href="https://en.wikipedia.org/wiki/Argument-dependent_name_lookup">ADL</a>.</p>
+<p>Although these features can be considered "advanced", their use is widespread
+throughout C++ code, including STL. Support for such features is key to
+supporting migration from C++ features.</p>
+<h3 id="support-basic-c-interoperability">Support basic C interoperability</h3>
+<p>C interoperability support must be sufficient for Carbon code to call popular
+APIs that are written in C. The ability of C to call Carbon will be more
+restricted, limited to where it echoes C++ interoperability support. Basic C
+interoperability will include functions, primitive types, and structs that only
+contain member variables.</p>
+<p>Features where interoperability will rely on more advanced C++-specific
+features, such as templates, inheritance, and class functions, need not be
+supported for C. These would require a C-specific interoperability model that
+will not be included.</p>
+<h2 id="non-goals">Non-goals</h2>
+<h3 id="full-parity-between-a-carbon-only-toolchain-and-mixing-ccarbon-toolchains">Full parity between a Carbon-only toolchain and mixing C++/Carbon toolchains</h3>
+<p>Making mixed C++/Carbon toolchain support equivalent to Carbon-only toolchain
+support affects all interoperability features. Mixed toolchains will have
+degraded support because full parity would be too expensive.</p>
+<p>The feature of calling Carbon templates from C++ code is key when analyzing this
+option. Template instantiation during compilation is pervasive in C++.</p>
+<p>With a Carbon toolchain compiling both Carbon and C++ code, the C++ compiler
+<em>can</em> be modified to handle Carbon templates differently. Carbon templates can
+be handled by exposing the Carbon compiler's AST to the C++ compiler directly,
+as a compiler extension. While this approach is still complex and may not always
+work, it should offer substantial value and ability to migrate C++ code to
+Carbon without requiring parallel maintenance of implementations in C++.</p>
+<p>With a mixed toolchain, the C++ compiler <em>cannot</em> be modified to handle Carbon
+templates differently. The only way to support template instantiation would be
+by having Carbon templates converted into equivalent C++ templates in C++
+headers; in other words, template support would require source-to-source
+translation. Supporting Carbon to C++ code translations would be a complex and
+high cost feature to achieve full parity for mixed toolchains. Requiring bridge
+code for mixed toolchains is the likely solution to avoid this cost.</p>
+<p>Note that this issue differs when considering interoperability for Carbon code
+instantiating C++ templates. The C++ templates must be in C++ headers for
+re-use, which in turn must compile with the Carbon toolchain to re-use the built
+C++ code, regardless of whether a separate C++ toolchain is in use. This may
+also be considered a constraint on mixed toolchain interoperability, but it's
+simpler to address and less likely to burden developers.</p>
+<p>To summarize, developers should expect that while <em>most</em> features will work
+equivalently for mixed toolchains, there will never be full parity.</p>
+<h3 id="never-require-bridge-code">Never require bridge code</h3>
+<p>Corner cases of C++ will not receive equal support to common cases: the
+complexity of supporting any given construct must be balanced by the real world
+need for that support. For example:</p>
+<ul>
+<li>
+<p>Interoperability will target C++17. Any interoperability support for future
+    versions of C++, including features such as C++20 modules, will be based on
+    a cost-benefit analysis. Exhaustive support should not be assumed.</p>
+</li>
+<li>
+<p>Support will be focused on idiomatic code, interfaces, and patterns used in
+    widespread open source libraries or by other key constituencies. C++ code
+    will have edge cases where the benefits of limiting Carbon's maintenance
+    costs by avoiding complex interoperability outweighs the value of avoiding
+    bridge code.</p>
+</li>
+<li>
+<p>Support for low-level C ABIs may be focused on modern 64-bit ABIs, including
+    Linux, POSIX, and a small subset of Windows' calling conventions.</p>
+</li>
+</ul>
+<h3 id="convert-all-c-types-to-carbon-types">Convert all C++ types to Carbon types</h3>
+<p>Non-zero overhead conversions should only be <em>supported</em>, never <em>required</em>, in
+order to offer reliable, unsurprising performance behaviors. This does not mean
+that conversions will <em>always</em> be supported, as support is a cost-benefit
+decision for specific type mappings. For example, consider conversions between
+<code>std::vector&lt;T&gt;</code> and an equivalent, idiomatic Carbon type:</p>
+<ul>
+<li>
+<p>Making conversions zero-overhead would require the Carbon type to mirror the
+    memory layout and implementation semantics of <code>std::vector&lt;T&gt;</code>. However,
+    doing so would constrain the evolution of the Carbon type to match C++.
+    Although some constraints are accepted for most primitive types, it would
+    pose a major burden on Carbon's evolution to constrain Carbon's types to
+    match C++ vocabulary type implementations.</p>
+</li>
+<li>
+<p>These conversions may not always be present, but <code>std::vector&lt;T&gt;</code> is a
+    frequently used type. As a result, it can be expected that there will be
+    functions supporting a copy-based conversion to the idiomatic Carbon type.</p>
+</li>
+<li>
+<p>An interface which can hide the difference between whether <code>std::vector&lt;T&gt;</code>
+    or the equivalent, idiomatic Carbon type is in use may also be offered for
+    common types.</p>
+</li>
+<li>
+<p>It will still be normal to handle C++ types in Carbon code without
+    conversions. Developers should be given the choice of when to convert.</p>
+</li>
+</ul>
+<h3 id="support-for-c-exceptions-without-bridge-code">Support for C++ exceptions without bridge code</h3>
+<p>Carbon may not provide seamless interoperability support for C++ exceptions. For
+example, translating C++ exceptions to or from Carbon errors might require
+annotations or bridge code, and those translations may have some performance
+overhead or lose information. Furthermore, if Carbon code calls a C++ function
+without suitable annotations or bridging, and that function exits with an
+exception, the program might terminate.</p>
+<h3 id="cross-language-metaprogramming">Cross-language metaprogramming</h3>
+<p>Carbon's metaprogramming design will be more restrictive than C++'s preprocessor
+macros. Although interoperability should handle simple cases, such as
+<code>#define STDIN_FILENO 0</code>, complex metaprogramming libraries may require a deep
+ability to understand code rewrites. It should be reasonable to have these
+instead rewritten to use Carbon's metaprogramming model.</p>
+<h3 id="offer-equivalent-support-for-languages-other-than-c">Offer equivalent support for languages other than C++</h3>
+<p>Long-term, it should be anticipated that Carbon will add interoperability with
+non-C++ languages. However, interoperability discussions will be focused on C++
+in order to support the
+<a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/project/goals.md#interoperability-with-and-migration-from-existing-c-code">language goal</a>.
+Although we should work to consider extensibility when building interoperability
+facilities, C++ should be expected to have more robust support.</p>
+<p>Many languages do offer interoperability layers with C. Carbon's
+<a href="#support-basic-c-interoperability">C interoperability</a> will likely offer a
+degree of multi-language interoperability using C as an intermediary.</p>
+<h2 id="open-questions-to-be-resolved-later">Open questions to be resolved later</h2>
+<h3 id="carbon-type-inheritance-from-non-pure-interface-c-types">Carbon type inheritance from non-pure interface C++ types</h3>
+<p>Some C++ APIs will expect that consumers use classes that inherit from a type
+provided by the API. It's desirable to have Carbon support, in some way,
+inheritance from API types in order to use these APIs.</p>
+<p>It may be sufficient to require the parent type be a pure interface, and that
+APIs with either use bridge code or switch implementations. That will be
+determined later.</p>
+<h3 id="crtp-support">CRTP support</h3>
+<p>Although
+<a href="https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern">CRTP</a> is a
+common technique in C++, interoperability support may require substantial work.
+Libraries based on use of CRTP may require bridge code or a rewrite for Carbon
+interoperability.</p>
+<p>More analysis should be done on the cost-benefit of supporting CRTP before
+making a support decision.</p>
+<h3 id="object-lifetimes">Object lifetimes</h3>
+<p>Carbon may have a different object lifetime design than C++. For example, Carbon
+may choose different rules for determining the lifetime of temporaries. This
+could affect idiomatic use of C++ APIs, turning code that would be safe in C++
+into unsafe Carbon code, requiring developers to learn new coding patterns.</p>
+<p>More analysis should be done on object lifetimes and potential Carbon designs
+for it before deciding how to treat object lifetimes in the scope of
+interoperability.</p>
+<h2 id="references">References</h2>
+<ul>
+<li>Proposal
+    <a href="https://github.com/carbon-language/carbon-lang/pull/175">#175: C++ interoperability goals</a></li>
+</ul>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Bidirectional interoperability with C/C++" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Bidirectional interoperability with C/C++
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../lexical_conventions/" class="md-footer__link md-footer__link--next" aria-label="Next: Lexical conventions" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Lexical conventions
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

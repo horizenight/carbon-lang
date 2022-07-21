@@ -1,0 +1,2529 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Contribution tools - Carbon Language</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#contribution-tools" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Carbon Language" class="md-header__button md-logo" aria-label="Carbon Language" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Carbon Language
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Contribution tools
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Carbon Language" class="md-nav__button md-logo" aria-label="Carbon Language" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Carbon Language
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Docs
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Design
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Design" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Design
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/" class="md-nav__link">
+        Language design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/aliases/" class="md-nav__link">
+        Aliases
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/blocks_and_statements/" class="md-nav__link">
+        Blocks and statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/classes/" class="md-nav__link">
+        Classes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/functions/" class="md-nav__link">
+        Functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/metaprogramming/" class="md-nav__link">
+        Metaprogramming
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/name_lookup/" class="md-nav__link">
+        Name lookup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/naming_conventions/" class="md-nav__link">
+        Naming conventions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/pattern_matching/" class="md-nav__link">
+        Pattern matching
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/primitive_types/" class="md-nav__link">
+        Primitive types
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/templates/" class="md-nav__link">
+        Templates
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/tuples/" class="md-nav__link">
+        Tuples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/type_inference/" class="md-nav__link">
+        Type inference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/variables/" class="md-nav__link">
+        Variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_15" type="checkbox" id="__nav_2_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_15">
+          Code and name organization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Code and name organization" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_15">
+          <span class="md-nav__icon md-icon"></span>
+          Code and name organization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/code_and_name_organization/" class="md-nav__link">
+        Code and name organization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/code_and_name_organization/source_files/" class="md-nav__link">
+        Source files
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_16" type="checkbox" id="__nav_2_16" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_16">
+          Control flow
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Control flow" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_16">
+          <span class="md-nav__icon md-icon"></span>
+          Control flow
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/control_flow/" class="md-nav__link">
+        Control flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/control_flow/conditionals/" class="md-nav__link">
+        Control flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/control_flow/loops/" class="md-nav__link">
+        Loops
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/control_flow/return/" class="md-nav__link">
+        `return`
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_17" type="checkbox" id="__nav_2_17" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_17">
+          Expressions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Expressions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_17">
+          <span class="md-nav__icon md-icon"></span>
+          Expressions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/expressions/" class="md-nav__link">
+        Expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/expressions/arithmetic/" class="md-nav__link">
+        Arithmetic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/expressions/as_expressions/" class="md-nav__link">
+        `as` expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/expressions/bitwise/" class="md-nav__link">
+        Bitwise and shift operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/expressions/comparison_operators/" class="md-nav__link">
+        Comparison operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/expressions/if/" class="md-nav__link">
+        `if` expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/expressions/implicit_conversions/" class="md-nav__link">
+        Implicit conversions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/expressions/logical_operators/" class="md-nav__link">
+        Logical operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/expressions/member_access/" class="md-nav__link">
+        Qualified names and member access
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_18" type="checkbox" id="__nav_2_18" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_18">
+          Generics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Generics" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_18">
+          <span class="md-nav__icon md-icon"></span>
+          Generics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/generics/" class="md-nav__link">
+        Generics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/generics/appendix-coherence/" class="md-nav__link">
+        Carbon: alternatives to coherence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/generics/details/" class="md-nav__link">
+        Generics: Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/generics/goals/" class="md-nav__link">
+        Generics: Goals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/generics/overview/" class="md-nav__link">
+        Generics: Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/generics/terminology/" class="md-nav__link">
+        Generics: Terminology
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_19" type="checkbox" id="__nav_2_19" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_19">
+          Interoperability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Interoperability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_19">
+          <span class="md-nav__icon md-icon"></span>
+          Interoperability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/interoperability/" class="md-nav__link">
+        Bidirectional interoperability with C/C++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/interoperability/philosophy_and_goals/" class="md-nav__link">
+        Interoperability philosophy and goals
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_20" type="checkbox" id="__nav_2_20" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_20">
+          Lexical conventions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lexical conventions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_20">
+          <span class="md-nav__icon md-icon"></span>
+          Lexical conventions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/lexical_conventions/" class="md-nav__link">
+        Lexical conventions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/lexical_conventions/numeric_literals/" class="md-nav__link">
+        Numeric literals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/lexical_conventions/string_literals/" class="md-nav__link">
+        String literals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/lexical_conventions/whitespace/" class="md-nav__link">
+        Whitespace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/lexical_conventions/words/" class="md-nav__link">
+        Words
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/" class="md-nav__link">
+        Guides
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Images
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Images" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Images
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../images/snippets/" class="md-nav__link">
+        Front page snippets for Carbon
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Project
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Project" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Project
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Project
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code_review/" class="md-nav__link">
+        Code review
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Contribution tools
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Contribution tools
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tool-setup-flow" class="md-nav__link">
+    Tool setup flow
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-managers" class="md-nav__link">
+    Package managers
+  </a>
+  
+    <nav class="md-nav" aria-label="Package managers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux-and-macos" class="md-nav__link">
+    Linux and MacOS
+  </a>
+  
+    <nav class="md-nav" aria-label="Linux and MacOS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#homebrew" class="md-nav__link">
+    Homebrew
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python3-and-pip3" class="md-nav__link">
+    python3 and pip3
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main-tools" class="md-nav__link">
+    Main tools
+  </a>
+  
+    <nav class="md-nav" aria-label="Main tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bazel-and-bazelisk" class="md-nav__link">
+    Bazel and Bazelisk
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clang-and-llvm" class="md-nav__link">
+    Clang and LLVM
+  </a>
+  
+    <nav class="md-nav" aria-label="Clang and LLVM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-installations-not-recommended" class="md-nav__link">
+    Manual installations (not recommended)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-commit" class="md-nav__link">
+    pre-commit
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-tools" class="md-nav__link">
+    Optional tools
+  </a>
+  
+    <nav class="md-nav" aria-label="Optional tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#carbon-maintained" class="md-nav__link">
+    Carbon-maintained
+  </a>
+  
+    <nav class="md-nav" aria-label="Carbon-maintained">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new_proposalpy" class="md-nav__link">
+    new_proposal.py
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pr_commentspy" class="md-nav__link">
+    pr_comments.py
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github" class="md-nav__link">
+    GitHub
+  </a>
+  
+    <nav class="md-nav" aria-label="GitHub">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gh-cli" class="md-nav__link">
+    gh CLI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-desktop" class="md-nav__link">
+    GitHub Desktop
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rs-git-fsmonitor-and-watchman" class="md-nav__link">
+    rs-git-fsmonitor and Watchman
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cpp_style_guide/" class="md-nav__link">
+        C++ style guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_style_guide/" class="md-nav__link">
+        Language design style guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../difficulties_improving_cpp/" class="md-nav__link">
+        Difficulties improving C++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../evolution/" class="md-nav__link">
+        Evolution and governance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        Project FAQ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../goals/" class="md-nav__link">
+        Goals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../groups/" class="md-nav__link">
+        Groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pull_request_workflow/" class="md-nav__link">
+        Trunk-based pull-request GitHub workflow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roadmap/" class="md-nav__link">
+        Roadmap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roadmap_process/" class="md-nav__link">
+        Roadmap process
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_14" type="checkbox" id="__nav_5_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_14">
+          Principles
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Principles" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_14">
+          <span class="md-nav__icon md-icon"></span>
+          Principles
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../principles/" class="md-nav__link">
+        Principles
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../principles/error_handling/" class="md-nav__link">
+        Principle: Errors are values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../principles/information_accumulation/" class="md-nav__link">
+        Principle: Information accumulation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../principles/library_apis_only/" class="md-nav__link">
+        Principle: All APIs are library APIs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../principles/low_context_sensitivity/" class="md-nav__link">
+        Principle: Low context-sensitivity
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../principles/one_way/" class="md-nav__link">
+        Principle: Prefer providing only one way to do a given thing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../principles/safety_strategy/" class="md-nav__link">
+        Safety strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../principles/static_open_extension/" class="md-nav__link">
+        Principle: One static open extension mechanism
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../principles/success_criteria/" class="md-nav__link">
+        Principle: Success criteria
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Spec
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Spec" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Spec
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/" class="md-nav__link">
+        Spec
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_2" type="checkbox" id="__nav_6_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_2">
+          Lang
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lang" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Lang
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lang/" class="md-nav__link">
+        Carbon language specification
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lang/execution/" class="md-nav__link">
+        Execution
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lang/lex/" class="md-nav__link">
+        Lexical analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lang/libs/" class="md-nav__link">
+        Libraries and packages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lang/names/" class="md-nav__link">
+        Names
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lang/parsing/" class="md-nav__link">
+        Parsing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lang/semantics/" class="md-nav__link">
+        Semantic analysis
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_3" type="checkbox" id="__nav_6_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_3">
+          Lib
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lib" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          Lib
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lib/" class="md-nav__link">
+        Carbon standard library specification
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tool-setup-flow" class="md-nav__link">
+    Tool setup flow
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-managers" class="md-nav__link">
+    Package managers
+  </a>
+  
+    <nav class="md-nav" aria-label="Package managers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux-and-macos" class="md-nav__link">
+    Linux and MacOS
+  </a>
+  
+    <nav class="md-nav" aria-label="Linux and MacOS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#homebrew" class="md-nav__link">
+    Homebrew
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python3-and-pip3" class="md-nav__link">
+    python3 and pip3
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main-tools" class="md-nav__link">
+    Main tools
+  </a>
+  
+    <nav class="md-nav" aria-label="Main tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bazel-and-bazelisk" class="md-nav__link">
+    Bazel and Bazelisk
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clang-and-llvm" class="md-nav__link">
+    Clang and LLVM
+  </a>
+  
+    <nav class="md-nav" aria-label="Clang and LLVM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-installations-not-recommended" class="md-nav__link">
+    Manual installations (not recommended)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-commit" class="md-nav__link">
+    pre-commit
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-tools" class="md-nav__link">
+    Optional tools
+  </a>
+  
+    <nav class="md-nav" aria-label="Optional tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#carbon-maintained" class="md-nav__link">
+    Carbon-maintained
+  </a>
+  
+    <nav class="md-nav" aria-label="Carbon-maintained">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new_proposalpy" class="md-nav__link">
+    new_proposal.py
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pr_commentspy" class="md-nav__link">
+    pr_comments.py
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github" class="md-nav__link">
+    GitHub
+  </a>
+  
+    <nav class="md-nav" aria-label="GitHub">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gh-cli" class="md-nav__link">
+    gh CLI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-desktop" class="md-nav__link">
+    GitHub Desktop
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rs-git-fsmonitor-and-watchman" class="md-nav__link">
+    rs-git-fsmonitor and Watchman
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="contribution-tools">Contribution tools</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<p>The Carbon language project has a number of tools used to assist in preparing
+contributions.</p>
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#tool-setup-flow">Tool setup flow</a></li>
+<li><a href="#package-managers">Package managers</a><ul>
+<li><a href="#linux-and-macos">Linux and MacOS</a><ul>
+<li><a href="#homebrew">Homebrew</a></li>
+<li><a href="#python3-and-pip3"><code>python3</code> and <code>pip3</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#main-tools">Main tools</a><ul>
+<li><a href="#bazel-and-bazelisk">Bazel and Bazelisk</a></li>
+<li><a href="#clang-and-llvm">Clang and LLVM</a><ul>
+<li><a href="#manual-installations-not-recommended">Manual installations (not recommended)</a></li>
+</ul>
+</li>
+<li><a href="#pre-commit">pre-commit</a></li>
+</ul>
+</li>
+<li><a href="#optional-tools">Optional tools</a><ul>
+<li><a href="#carbon-maintained">Carbon-maintained</a><ul>
+<li><a href="#new_proposalpy">new_proposal.py</a></li>
+<li><a href="#pr_commentspy">pr_comments.py</a></li>
+</ul>
+</li>
+<li><a href="#github">GitHub</a><ul>
+<li><a href="#gh-cli">gh CLI</a></li>
+<li><a href="#github-desktop">GitHub Desktop</a></li>
+</ul>
+</li>
+<li><a href="#rs-git-fsmonitor-and-watchman"><code>rs-git-fsmonitor</code> and Watchman</a></li>
+<li><a href="#vim">Vim</a><ul>
+<li><a href="#vim-prettier">vim-prettier</a></li>
+</ul>
+</li>
+<li><a href="#visual-studio-code">Visual Studio Code</a></li>
+<li><a href="#pre-commit-enabled-tools">pre-commit enabled tools</a><ul>
+<li><a href="#black">black</a></li>
+<li><a href="#codespell">codespell</a></li>
+<li><a href="#prettier">Prettier</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="tool-setup-flow">Tool setup flow</h2>
+<p>In order to set up a machine and git repository for developing on Carbon, a
+typical tool setup flow is:</p>
+<!-- google-doc-style-ignore -->
+<!-- Need to retain "repo" in "gh repo clone". -->
+
+<ol>
+<li>Install <a href="#package-managers">package managers</a>.</li>
+<li>Install <a href="#main-tools">main tools</a> and any desired
+    <a href="#optional-tools">optional tools</a>.</li>
+<li>Set up the <a href="https://git-scm.com/">git</a> repository:<ul>
+<li>In GitHub, create a fork for development at
+    https://github.com/carbon-language/carbon-lang.</li>
+<li><code>gh repo clone USER/carbon-lang</code>, or otherwise clone the fork.</li>
+<li><code>cd carbon-lang</code> to go into the cloned fork's directory.</li>
+<li><code>pre-commit install</code> to set up <a href="#pre-commit">pre-commit</a> in the clone.</li>
+</ul>
+</li>
+<li>Validate your installation by invoking `bazel test //...:all' from the
+    project root. All tests should pass.</li>
+</ol>
+<!-- google-doc-style-resume -->
+
+<h2 id="package-managers">Package managers</h2>
+<p>Instructions for installing tools can be helpful for installing tooling. These
+instructions will try to rely on a minimum of managers.</p>
+<h3 id="linux-and-macos">Linux and MacOS</h3>
+<h4 id="homebrew">Homebrew</h4>
+<p><a href="https://brew.sh/">Homebrew</a> is a package manager, and can help install several
+tools that we recommend.</p>
+<p>Our recommended way of installing is to run
+<a href="https://brew.sh/">the canonical install command</a>.</p>
+<p>To get the latest version of <code>brew</code> packages, it will be necessary to
+periodically run <code>brew upgrade</code>.</p>
+<h4 id="python3-and-pip3"><code>python3</code> and <code>pip3</code></h4>
+<p>Carbon requires Python 3.9 or newer. The included <code>pip3</code> should typically be
+used for Python package installation rather than other package managers.</p>
+<p><strong>NOTE</strong>: Carbon will focus support on Homebrew installs of Python 3.9, but it
+may not be necessary if you have Python 3.9 installed another way. If you're
+trying to use a non-Homebrew Python but have issues involving Carbon and Python,
+please try Homebrew's Python.</p>
+<p>Our recommended way of installing is:</p>
+<pre><code class="language-bash">brew install python@3.9
+pip3 install -U pip
+</code></pre>
+<p><strong>NOTE</strong>: <code>pip3</code> runs may print deprecation warnings referencing
+https://github.com/Homebrew/homebrew-core/issues/76621. These will need to be
+addressed in the future, but as of August 2021 can be ignored.</p>
+<p>To get the latest version of <code>pip3</code> packages, it will be necessary to
+periodically run <code>pip3 list --outdated</code>, then <code>pip3 install -U &lt;package&gt;</code> to
+upgrade desired packages. Keep in mind when upgrading that version dependencies
+may mean packages <em>should</em> be outdated, and not be upgraded.</p>
+<h2 id="main-tools">Main tools</h2>
+<p>These tools are key for contributions, primarily focused on validating
+contributions.</p>
+<h3 id="bazel-and-bazelisk">Bazel and Bazelisk</h3>
+<p><a href="https://www.bazel.build/">Bazel</a> is Carbon's standard build system.
+<a href="https://docs.bazel.build/versions/master/install-bazelisk.html">Bazelisk</a> is
+recommended for installing Bazel.</p>
+<p>Our recommended way of installing is:</p>
+<pre><code class="language-bash">brew install bazelisk
+</code></pre>
+<h3 id="clang-and-llvm">Clang and LLVM</h3>
+<p><a href="https://clang.llvm.org/">Clang</a> and <a href="https://llvm.org/">LLVM</a> are used to
+compile and link Carbon as part of its build. Bazel will also download and build
+against a specific upstream LLVM commit. While the Bazel uses upstream LLVM
+sources, the project expects the LLVM 12 release (or newer) to be installed with
+Clang and other tools in your <code>PATH</code> for use in building Carbon itself.</p>
+<p>Our recommended way of installing is:</p>
+<pre><code class="language-bash">brew install llvm
+</code></pre>
+<p>On <strong>MacOS only</strong> (not Linux), <code>llvm</code> is keg-only; bear in mind this requires
+updating <code>PATH</code> for it because it's not part of the standard Homebrew path. Read
+the output of <code>brew install</code> for the necessary path changes, or add something to
+your <code>PATH</code> like:</p>
+<pre><code class="language-bash">export PATH=&quot;$(brew --prefix llvm)/bin:${PATH}&quot;
+</code></pre>
+<p>Carbon expects the <code>PATH</code> to include the installed tooling. If set, <code>CC</code> should
+also point at <code>clang</code>. Our build environment will detect the <code>clang</code> binary
+using <code>CC</code> then <code>PATH</code>, and will expect the rest of the LLVM toolchain to be
+available in the same directory as <code>clang</code>. However, various scripts and tools
+assume that the LLVM toolchain will be in <code>PATH</code>, particularly for tools like
+<code>clang-format</code> and <code>clang-tidy</code>.</p>
+<blockquote>
+<p>TODO: We'd like to use <code>apt</code>, but standard LLVM Debian packages are not
+configured correctly for our needs. We are currently aware of two libc++
+issues, <a href="https://bugs.llvm.org/show_bug.cgi?id=43604">43604</a> and
+<a href="https://bugs.llvm.org/show_bug.cgi?id=46321">46321</a>.</p>
+</blockquote>
+<h4 id="manual-installations-not-recommended">Manual installations (not recommended)</h4>
+<p>You can also build and install <code>LLVM</code> yourself if you prefer. The essential
+CMake options to pass in order for this to work reliably include:</p>
+<pre><code>-DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra;lld
+-DLLVM_ENABLE_RUNTIMES=compiler-rt;libcxx;libcxxabi;libunwind
+-DRUNTIMES_CMAKE_ARGS=-DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=OFF;-DCMAKE_POSITION_INDEPENDENT_CODE=ON;-DLIBCXX_ENABLE_STATIC_ABI_LIBRARY=ON;-DLIBCXX_STATICALLY_LINK_ABI_IN_SHARED_LIBRARY=OFF;-DLIBCXX_STATICALLY_LINK_ABI_IN_STATIC_LIBRARY=ON;-DLIBCXX_USE_COMPILER_RT=ON;-DLIBCXXABI_USE_COMPILER_RT=ON;-DLIBCXXABI_USE_LLVM_UNWINDER=ON
+</code></pre>
+<p>However, we primarily test against the Homebrew installation, so if building
+LLVM and Clang yourself you may hit some issues.</p>
+<h3 id="pre-commit">pre-commit</h3>
+<p>We use <a href="https://pre-commit.com">pre-commit</a> to run
+<a href="https://github.com/carbon-language/carbon-lang/tree/trunk/.pre-commit-config.yaml">various checks</a>. This will automatically run
+important checks, including formatting.</p>
+<p>Our recommended way of installing is:</p>
+<pre><code class="language-bash">pip3 install pre-commit
+
+# From within each carbon-language git repository:
+pre-commit install
+</code></pre>
+<blockquote>
+<p>NOTE: There are other ways of installing listed at
+<a href="https://pre-commit.com/#installation">pre-commit.com</a>, but <code>pip</code> is
+recommended for reliability.</p>
+</blockquote>
+<p>When you have changes to commit to git, a standard pre-commit workflow can look
+like:</p>
+<pre><code class="language-bash"># Let pre-commit fix style issues.
+pre-commit run
+# Add modifications made by pre-commit.
+git add .
+# Commit the changes
+git commit
+</code></pre>
+<p>When modifying or adding pre-commit hooks, please run
+<code>pre-commit run --all-files</code> to see what changes.</p>
+<h2 id="optional-tools">Optional tools</h2>
+<h3 id="carbon-maintained">Carbon-maintained</h3>
+<p>Carbon-maintained tools are provided by the <code>carbon-lang</code> repository, rather
+than a separate install. They are noted here mainly to help findability.</p>
+<h4 id="new_proposalpy">new_proposal.py</h4>
+<p><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/scripts/new_proposal.py">new_proposal.py</a> is a helper for generating
+the PR and proposal file for a new proposal. It's documented in
+<a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/scripts/template.md">the proposal template</a>.</p>
+<p><strong>NOTE</strong>: This requires installing <a href="#gh-cli">the gh CLI</a>.</p>
+<h4 id="pr_commentspy">pr_comments.py</h4>
+<p><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/github_tools/pr_comments.py">pr_comments.py</a> is a helper for scanning comments
+in GitHub. It's particularly intended to help find threads which need to be
+resolved.</p>
+<p>Options can be seen with <code>-h</code>. A couple key options to be aware of are:</p>
+<ul>
+<li><code>--long</code>: Prints long output, with the full comment.</li>
+<li><code>--comments-after LOGIN</code>: Only print threads where the final comment is not
+    from the given user. For example, use when looking for threads that you
+    still need to respond to.</li>
+<li><code>--comments-from LOGIN</code>: Only print threads with comments from the given
+    user. For example, use when looking for threads that you've commented on.</li>
+</ul>
+<p>This script may be run directly if <code>gql</code> is installed:</p>
+<pre><code class="language-bash">pip install gql
+./github_tools/pr_comments.py &lt;PR#&gt;
+</code></pre>
+<p>It may also be run using <code>bazel</code>, without installing <code>gql</code>:</p>
+<pre><code class="language-bash">bazel run //github_tools:pr_comments -- &lt;PR#&gt;
+</code></pre>
+<h3 id="github">GitHub</h3>
+<h4 id="gh-cli">gh CLI</h4>
+<p><a href="https://github.com/cli/cli">The gh CLI</a> supports some GitHub queries, and is
+used by some scripts.</p>
+<p>Our recommended way of installing is:</p>
+<pre><code class="language-bash">brew install github/gh/gh
+</code></pre>
+<h4 id="github-desktop">GitHub Desktop</h4>
+<p><a href="https://desktop.github.com/">GitHub Desktop</a> provides a UI for managing git
+repositories. See the page for installation instructions.</p>
+<h3 id="rs-git-fsmonitor-and-watchman"><code>rs-git-fsmonitor</code> and Watchman</h3>
+<blockquote>
+<p><strong>WARNING</strong>: Bugs in <code>rs-git-fsmonitor</code> and/or Watchman can result in
+<code>pre-commit</code> deleting files. If you see files being deleted, disable
+<code>rs-git-fsmonitor</code> with <code>git config --unset core.fsmonitor</code>.</p>
+</blockquote>
+<p><a href="https://github.com/jgavris/rs-git-fsmonitor">rs-git-fsmonitor</a> is a file system
+monitor that uses <a href="https://github.com/facebook/watchman">Watchman</a> to speed up
+git on large repositories, such as <code>carbon-lang</code>.</p>
+<p>Our recommended way of installing is:</p>
+<ul>
+<li>
+<p>Linux:</p>
+<blockquote>
+<p>If you don't have Rust's <a href="https://doc.rust-lang.org/cargo/">Cargo</a> package
+manager, install it first with
+<a href="https://rustup.rs/">the official install command</a>.</p>
+</blockquote>
+<p>```bash
+brew install watchman
+cargo install --git https://github.com/jgavris/rs-git-fsmonitor.git</p>
+<h1 id="configure-the-git-repository-to-use-fsmonitor">Configure the git repository to use fsmonitor.</h1>
+<p>git config core.fsmonitor rs-git-fsmonitor
+```</p>
+</li>
+<li>
+<p>MacOS:</p>
+<p>```bash
+brew tap jgavris/rs-git-fsmonitor \
+  https://github.com/jgavris/rs-git-fsmonitor.git
+brew install rs-git-fsmonitor</p>
+<h1 id="configure-the-git-repository-to-use-fsmonitor_1">Configure the git repository to use fsmonitor.</h1>
+<p>git config core.fsmonitor rs-git-fsmonitor
+```</p>
+</li>
+</ul>
+<h3 id="vim">Vim</h3>
+<h4 id="vim-prettier">vim-prettier</h4>
+<p><a href="https://github.com/prettier/vim-prettier">vim-prettier</a> is a vim integration
+for <a href="#prettier">Prettier</a>.</p>
+<p>If you use vim-prettier, the <code>.prettierrc.yaml</code> should still apply as long as
+<code>config_precedence</code> is set to the default <code>file-override</code>. However, we may need
+to add additional settings where the <code>vim-prettier</code> default diverges from
+<code>prettier</code>, as we notice them.</p>
+<p>Our recommended way of installing is to use
+<a href="https://github.com/prettier/vim-prettier#install">the canonical instructions</a>.</p>
+<h3 id="visual-studio-code">Visual Studio Code</h3>
+<p><a href="https://code.visualstudio.com/">Visual Studio Code</a> is an IDE used by several
+of us. We provide <a href="https://github.com/carbon-language/carbon-lang/tree/trunk/.vscode/extensions.json">recommended extensions</a> to assist
+Carbon development. Some settings changes must be made separately:</p>
+<ul>
+<li>Python › Formatting: Provider: <code>black</code></li>
+</ul>
+<p>Our recommended way of installing is to use
+<a href="https://code.visualstudio.com/Download">the canonical download</a>.</p>
+<blockquote>
+<p><strong>WARNING:</strong> Visual Studio Code modifies the <code>PATH</code> environment variable,
+particularly in the terminals it creates. The <code>PATH</code> difference can cause
+<code>bazel</code> to detect different startup options, discarding its build cache. As a
+consequence, it's recommended to use <strong>either</strong> normal terminals <strong>or</strong> Visual
+Studio Code to run <code>bazel</code>, not both in combination. Visual Studio Code can
+still be used for other purposes, such as editing files, without interfering
+with <code>bazel</code>.</p>
+</blockquote>
+<h3 id="pre-commit-enabled-tools">pre-commit enabled tools</h3>
+<p>If you're using pre-commit, it will run these tools. Installing and running them
+manually is <em>entirely optional</em>, as they can be run without being installed
+through <code>pre-commit run</code>, but install instructions are still noted here for
+direct execution.</p>
+<h4 id="black">black</h4>
+<p>We use <a href="https://github.com/psf/black">Black</a> to format Python code. Although
+<a href="#prettier">Prettier</a> is used for most languages, it doesn't support Python.</p>
+<p>Our recommended way of installing is:</p>
+<pre><code class="language-bash">pip install black
+</code></pre>
+<h4 id="codespell">codespell</h4>
+<p>We use <a href="https://github.com/codespell-project/codespell">codespell</a> to spellcheck
+common errors. This won't catch every error; we're trying to balance true and
+false positives.</p>
+<p>Our recommended way of installing is:</p>
+<pre><code class="language-bash">pip install codespell
+</code></pre>
+<h4 id="prettier">Prettier</h4>
+<p>We use <a href="https://prettier.io/">Prettier</a> for formatting. There is an
+<a href="https://github.com/carbon-language/carbon-lang/tree/trunk/.prettierrc.yaml">rc file</a> for configuration.</p>
+<p>Our recommended way of installing is to use
+<a href="https://prettier.io/docs/en/install.html">the canonical instructions</a>.</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../code_review/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Code review" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Code review
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../cpp_style_guide/" class="md-footer__link md-footer__link--next" aria-label="Next: C++ style guide" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              C++ style guide
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

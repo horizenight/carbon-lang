@@ -1,3 +1,1966 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Expressions - Carbon Language</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#expressions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Carbon Language" class="md-header__button md-logo" aria-label="Carbon Language" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Carbon Language
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Expressions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Carbon Language" class="md-nav__button md-logo" aria-label="Carbon Language" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Carbon Language
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Docs
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Design
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Design" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Design
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Language design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aliases/" class="md-nav__link">
+        Aliases
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blocks_and_statements/" class="md-nav__link">
+        Blocks and statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classes/" class="md-nav__link">
+        Classes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../functions/" class="md-nav__link">
+        Functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metaprogramming/" class="md-nav__link">
+        Metaprogramming
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../name_lookup/" class="md-nav__link">
+        Name lookup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../naming_conventions/" class="md-nav__link">
+        Naming conventions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pattern_matching/" class="md-nav__link">
+        Pattern matching
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../primitive_types/" class="md-nav__link">
+        Primitive types
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templates/" class="md-nav__link">
+        Templates
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tuples/" class="md-nav__link">
+        Tuples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../type_inference/" class="md-nav__link">
+        Type inference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../variables/" class="md-nav__link">
+        Variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_15" type="checkbox" id="__nav_2_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_15">
+          Code and name organization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Code and name organization" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_15">
+          <span class="md-nav__icon md-icon"></span>
+          Code and name organization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code_and_name_organization/" class="md-nav__link">
+        Code and name organization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code_and_name_organization/source_files/" class="md-nav__link">
+        Source files
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_16" type="checkbox" id="__nav_2_16" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_16">
+          Control flow
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Control flow" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_16">
+          <span class="md-nav__icon md-icon"></span>
+          Control flow
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../control_flow/" class="md-nav__link">
+        Control flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../control_flow/conditionals/" class="md-nav__link">
+        Control flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../control_flow/loops/" class="md-nav__link">
+        Loops
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../control_flow/return/" class="md-nav__link">
+        `return`
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_17" type="checkbox" id="__nav_2_17" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_17">
+          Expressions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Expressions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_17">
+          <span class="md-nav__icon md-icon"></span>
+          Expressions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Expressions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Expressions
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#precedence" class="md-nav__link">
+    Precedence
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#names" class="md-nav__link">
+    Names
+  </a>
+  
+    <nav class="md-nav" aria-label="Names">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unqualified-names" class="md-nav__link">
+    Unqualified names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qualified-names-and-member-access" class="md-nav__link">
+    Qualified names and member access
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operators" class="md-nav__link">
+    Operators
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversions-and-casts" class="md-nav__link">
+    Conversions and casts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-expressions" class="md-nav__link">
+    if expressions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternatives-considered" class="md-nav__link">
+    Alternatives considered
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="arithmetic/" class="md-nav__link">
+        Arithmetic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="as_expressions/" class="md-nav__link">
+        `as` expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bitwise/" class="md-nav__link">
+        Bitwise and shift operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="comparison_operators/" class="md-nav__link">
+        Comparison operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="if/" class="md-nav__link">
+        `if` expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="implicit_conversions/" class="md-nav__link">
+        Implicit conversions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="logical_operators/" class="md-nav__link">
+        Logical operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="member_access/" class="md-nav__link">
+        Qualified names and member access
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_18" type="checkbox" id="__nav_2_18" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_18">
+          Generics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Generics" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_18">
+          <span class="md-nav__icon md-icon"></span>
+          Generics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generics/" class="md-nav__link">
+        Generics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generics/appendix-coherence/" class="md-nav__link">
+        Carbon: alternatives to coherence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generics/details/" class="md-nav__link">
+        Generics: Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generics/goals/" class="md-nav__link">
+        Generics: Goals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generics/overview/" class="md-nav__link">
+        Generics: Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generics/terminology/" class="md-nav__link">
+        Generics: Terminology
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_19" type="checkbox" id="__nav_2_19" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_19">
+          Interoperability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Interoperability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_19">
+          <span class="md-nav__icon md-icon"></span>
+          Interoperability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interoperability/" class="md-nav__link">
+        Bidirectional interoperability with C/C++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interoperability/philosophy_and_goals/" class="md-nav__link">
+        Interoperability philosophy and goals
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_20" type="checkbox" id="__nav_2_20" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_20">
+          Lexical conventions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lexical conventions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_20">
+          <span class="md-nav__icon md-icon"></span>
+          Lexical conventions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lexical_conventions/" class="md-nav__link">
+        Lexical conventions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lexical_conventions/numeric_literals/" class="md-nav__link">
+        Numeric literals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lexical_conventions/string_literals/" class="md-nav__link">
+        String literals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lexical_conventions/whitespace/" class="md-nav__link">
+        Whitespace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lexical_conventions/words/" class="md-nav__link">
+        Words
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/" class="md-nav__link">
+        Guides
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Images
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Images" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Images
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../images/snippets/" class="md-nav__link">
+        Front page snippets for Carbon
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Project
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Project" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Project
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/" class="md-nav__link">
+        Project
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/code_review/" class="md-nav__link">
+        Code review
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/contribution_tools/" class="md-nav__link">
+        Contribution tools
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/cpp_style_guide/" class="md-nav__link">
+        C++ style guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/design_style_guide/" class="md-nav__link">
+        Language design style guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/difficulties_improving_cpp/" class="md-nav__link">
+        Difficulties improving C++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/evolution/" class="md-nav__link">
+        Evolution and governance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/faq/" class="md-nav__link">
+        Project FAQ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/goals/" class="md-nav__link">
+        Goals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/groups/" class="md-nav__link">
+        Groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/pull_request_workflow/" class="md-nav__link">
+        Trunk-based pull-request GitHub workflow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/roadmap/" class="md-nav__link">
+        Roadmap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/roadmap_process/" class="md-nav__link">
+        Roadmap process
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_14" type="checkbox" id="__nav_5_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_14">
+          Principles
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Principles" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_14">
+          <span class="md-nav__icon md-icon"></span>
+          Principles
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/principles/" class="md-nav__link">
+        Principles
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/principles/error_handling/" class="md-nav__link">
+        Principle: Errors are values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/principles/information_accumulation/" class="md-nav__link">
+        Principle: Information accumulation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/principles/library_apis_only/" class="md-nav__link">
+        Principle: All APIs are library APIs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/principles/low_context_sensitivity/" class="md-nav__link">
+        Principle: Low context-sensitivity
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/principles/one_way/" class="md-nav__link">
+        Principle: Prefer providing only one way to do a given thing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/principles/safety_strategy/" class="md-nav__link">
+        Safety strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/principles/static_open_extension/" class="md-nav__link">
+        Principle: One static open extension mechanism
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/principles/success_criteria/" class="md-nav__link">
+        Principle: Success criteria
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Spec
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Spec" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Spec
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/" class="md-nav__link">
+        Spec
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_2" type="checkbox" id="__nav_6_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_2">
+          Lang
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lang" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Lang
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lang/" class="md-nav__link">
+        Carbon language specification
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lang/execution/" class="md-nav__link">
+        Execution
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lang/lex/" class="md-nav__link">
+        Lexical analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lang/libs/" class="md-nav__link">
+        Libraries and packages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lang/names/" class="md-nav__link">
+        Names
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lang/parsing/" class="md-nav__link">
+        Parsing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lang/semantics/" class="md-nav__link">
+        Semantic analysis
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_3" type="checkbox" id="__nav_6_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_3">
+          Lib
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lib" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          Lib
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spec/lib/" class="md-nav__link">
+        Carbon standard library specification
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#precedence" class="md-nav__link">
+    Precedence
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#names" class="md-nav__link">
+    Names
+  </a>
+  
+    <nav class="md-nav" aria-label="Names">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unqualified-names" class="md-nav__link">
+    Unqualified names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qualified-names-and-member-access" class="md-nav__link">
+    Qualified names and member access
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operators" class="md-nav__link">
+    Operators
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversions-and-casts" class="md-nav__link">
+    Conversions and casts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-expressions" class="md-nav__link">
+    if expressions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternatives-considered" class="md-nav__link">
+    Alternatives considered
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
 <h1 id="expressions">Expressions</h1>
 <!--
 Part of the Carbon Language project, under the Apache License v2.0 with LLVM
@@ -11,11 +1974,11 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 <ul>
 <li><a href="#overview">Overview</a></li>
 <li><a href="#precedence">Precedence</a></li>
-<li><a href="#names">Names</a>
-<ul>
+<li><a href="#names">Names</a><ul>
 <li><a href="#unqualified-names">Unqualified names</a></li>
 <li><a href="#qualified-names-and-member-access">Qualified names and member access</a></li>
-</ul></li>
+</ul>
+</li>
 <li><a href="#operators">Operators</a></li>
 <li><a href="#conversions-and-casts">Conversions and casts</a></li>
 <li><a href="#if-expressions"><code>if</code> expressions</a></li>
@@ -25,15 +1988,24 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 <!-- tocstop -->
 
 <h2 id="overview">Overview</h2>
-<p>Expressions are the portions of Carbon syntax that produce values. Because types in Carbon are values, this includes anywhere that a type is specified.</p>
+<p>Expressions are the portions of Carbon syntax that produce values. Because types
+in Carbon are values, this includes anywhere that a type is specified.</p>
 <pre><code>fn Foo(a: i32*) -&gt; i32 {
   return *a;
-}</code></pre>
-<p>Here, the parameter type <code>i32*</code>, the return type <code>i32</code>, and the operand <code>*a</code> of the <code>return</code> statement are all expressions.</p>
+}
+</code></pre>
+<p>Here, the parameter type <code>i32*</code>, the return type <code>i32</code>, and the operand <code>*a</code> of
+the <code>return</code> statement are all expressions.</p>
 <h2 id="precedence">Precedence</h2>
-<p>Expressions are interpreted based on a partial <a href="https://en.wikipedia.org/wiki/Order_of_operations">precedence ordering</a>. Expression components which lack a relative ordering must be disambiguated by the developer, for example by adding parentheses; otherwise, the expression will be invalid due to ambiguity. Precedence orderings will only be added when it's reasonable to expect most developers to understand the precedence without parentheses.</p>
+<p>Expressions are interpreted based on a partial
+<a href="https://en.wikipedia.org/wiki/Order_of_operations">precedence ordering</a>.
+Expression components which lack a relative ordering must be disambiguated by
+the developer, for example by adding parentheses; otherwise, the expression will
+be invalid due to ambiguity. Precedence orderings will only be added when it's
+reasonable to expect most developers to understand the precedence without
+parentheses.</p>
 <p>The precedence diagram is defined thusly:</p>
-<pre class="mermaid"><code>%%{init: {&#39;themeVariables&#39;: {&#39;fontFamily&#39;: &#39;monospace&#39;}}}%%
+<pre><code class="language-mermaid">%%{init: {'themeVariables': {'fontFamily': 'monospace'}}}%%
 graph BT
     parens[&quot;(...)&quot;]
 
@@ -118,32 +2090,56 @@ graph BT
     logicalOperand --&gt; comparison &amp; not
     and &amp; or --&gt; logicalOperand
     logicalExpression --&gt; and &amp; or
-    if &amp; expressionEnd --&gt; logicalExpression</code></pre>
+    if &amp; expressionEnd --&gt; logicalExpression
+</code></pre>
 <p>The diagram's attributes are:</p>
 <ul>
-<li><p>Each non-empty node represents a precedence group. Empty circles are used to simplify the graph, and do not represent a precedence group.</p></li>
-<li><p>When an expression is composed from different precedence groups, the interpretation is determined by the precedence edges:</p>
+<li>
+<p>Each non-empty node represents a precedence group. Empty circles are used to
+    simplify the graph, and do not represent a precedence group.</p>
+</li>
+<li>
+<p>When an expression is composed from different precedence groups, the
+    interpretation is determined by the precedence edges:</p>
 <ul>
-<li><p>A precedence edge A --&gt; B means that A is lower precedence than B, so A can contain B without parentheses. For example, <code>or --&gt; not</code> means that <code>not x or y</code> is treated as <code>(not x) or y</code>.</p></li>
-<li><p>Precedence edges are transitive. For example, <code>or --&gt; == --&gt; as</code> means that <code>or</code> is lower precedence than <code>as</code>.</p></li>
-</ul></li>
-<li><p>When an expression is composed from a single precedence group, the interpretation is determined by the <a href="https://en.wikipedia.org/wiki/Operator_associativity">associativity</a> of the precedence group:</p>
-<pre class="mermaid"><code>graph TD
-    non[&quot;Non-associative&quot;]
-    left&gt;&quot;Left associative&quot;]</code></pre>
+<li>
+<p>A precedence edge A --&gt; B means that A is lower precedence than B, so A
+    can contain B without parentheses. For example, <code>or --&gt; not</code> means that
+    <code>not x or y</code> is treated as <code>(not x) or y</code>.</p>
+</li>
+<li>
+<p>Precedence edges are transitive. For example, <code>or --&gt; == --&gt; as</code> means
+    that <code>or</code> is lower precedence than <code>as</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>When an expression is composed from a single precedence group, the
+    interpretation is determined by the
+    <a href="https://en.wikipedia.org/wiki/Operator_associativity">associativity</a> of the
+    precedence group:</p>
+<p><code>mermaid
+graph TD
+    non["Non-associative"]
+    left&gt;"Left associative"]</code></p>
 <ul>
-<li>For example, <code>+</code> and <code>-</code> are left-associative and in the same precedence group, so <code>a + b + c - d</code> is treated as <code>((a + b) + c) - d</code>.</li>
-</ul></li>
+<li>For example, <code>+</code> and <code>-</code> are left-associative and in the same precedence
+    group, so <code>a + b + c - d</code> is treated as <code>((a + b) + c) - d</code>.</li>
+</ul>
+</li>
 </ul>
 <h2 id="names">Names</h2>
 <h3 id="unqualified-names">Unqualified names</h3>
-<p>An <em>unqualified name</em> is a <a href="../lexical_conventions/words.html">word</a> that is not a keyword and is not preceded by a period (<code>.</code>).</p>
+<p>An <em>unqualified name</em> is a <a href="../lexical_conventions/words/">word</a> that is not a
+keyword and is not preceded by a period (<code>.</code>).</p>
 <p><strong>TODO:</strong> Name lookup rules for unqualified names.</p>
 <h3 id="qualified-names-and-member-access">Qualified names and member access</h3>
-<p>A <em>qualified name</em> is a word that appears immediately after a period. Qualified names appear in the following contexts:</p>
+<p>A <em>qualified name</em> is a word that appears immediately after a period. Qualified
+names appear in the following contexts:</p>
 <ul>
 <li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/design/classes.md#literals">Designators</a>: <code>.</code> <em>word</em></li>
-<li><a href="member_access.html">Simple member access expressions</a>: <em>expression</em> <code>.</code> <em>word</em></li>
+<li><a href="member_access/">Simple member access expressions</a>: <em>expression</em> <code>.</code>
+    <em>word</em></li>
 </ul>
 <pre><code>var x: auto = {.hello = 1, .world = 2};
                 ^^^^^       ^^^^^ qualified name
@@ -151,8 +2147,12 @@ graph BT
 
 x.hello = x.world;
   ^^^^^     ^^^^^ qualified name
-^^^^^^^   ^^^^^^^ member access expression</code></pre>
-<p>Qualified names refer to members of an entity determined by the context in which the expression appears. For a member access, the entity is named by the expression preceding the period. In a struct literal, the entity is the struct type. For example:</p>
+^^^^^^^   ^^^^^^^ member access expression
+</code></pre>
+<p>Qualified names refer to members of an entity determined by the context in which
+the expression appears. For a member access, the entity is named by the
+expression preceding the period. In a struct literal, the entity is the struct
+type. For example:</p>
 <pre><code>package Foo api;
 namespace N;
 fn N.F() {}
@@ -174,8 +2174,11 @@ fn H(a: {.n: i32}) -&gt; i32 {
 fn J() {
   // `.n` refers to the member `n of `{.n: i32}`.
   H({.n = 5 as i32});
-}</code></pre>
-<p>Member access expressions associate left-to-right. If the member name is more complex than a single <em>word</em>, a compound member access expression can be used, with parentheses around the member name:</p>
+}
+</code></pre>
+<p>Member access expressions associate left-to-right. If the member name is more
+complex than a single <em>word</em>, a compound member access expression can be used,
+with parentheses around the member name:</p>
 <ul>
 <li><em>expression</em> <code>.</code> <code>(</code> <em>expression</em> <code>)</code></li>
 </ul>
@@ -184,12 +2187,13 @@ class X {}
 external impl X as I { fn F[me: Self]() {} }
 
 // `x.I.F()` would mean `(x.I).F()`.
-fn Q(x: X) { x.(I.F)(); }</code></pre>
+fn Q(x: X) { x.(I.F)(); }
+</code></pre>
 <h2 id="operators">Operators</h2>
 <p>Most expressions are modeled as operators:</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Category</th>
 <th>Operator</th>
 <th>Syntax</th>
@@ -197,163 +2201,246 @@ fn Q(x: X) { x.(I.F)(); }</code></pre>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Arithmetic</td>
-<td><a href="arithmetic.html"><code>-</code></a> (unary)</td>
+<td><a href="arithmetic/"><code>-</code></a> (unary)</td>
 <td><code>-x</code></td>
 <td>The negation of <code>x</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Bitwise</td>
-<td><a href="bitwise.html"><code>^</code></a> (unary)</td>
+<td><a href="bitwise/"><code>^</code></a> (unary)</td>
 <td><code>^x</code></td>
 <td>The bitwise complement of <code>x</code>.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Arithmetic</td>
-<td><a href="arithmetic.html"><code>+</code></a></td>
+<td><a href="arithmetic/"><code>+</code></a></td>
 <td><code>x + y</code></td>
 <td>The sum of <code>x</code> and <code>y</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Arithmetic</td>
-<td><a href="arithmetic.html"><code>-</code></a> (binary)</td>
+<td><a href="arithmetic/"><code>-</code></a> (binary)</td>
 <td><code>x - y</code></td>
 <td>The difference of <code>x</code> and <code>y</code>.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Arithmetic</td>
-<td><a href="arithmetic.html"><code>*</code></a></td>
+<td><a href="arithmetic/"><code>*</code></a></td>
 <td><code>x * y</code></td>
 <td>The product of <code>x</code> and <code>y</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Arithmetic</td>
-<td><a href="arithmetic.html"><code>/</code></a></td>
+<td><a href="arithmetic/"><code>/</code></a></td>
 <td><code>x / y</code></td>
 <td><code>x</code> divided by <code>y</code>, or the quotient thereof.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Arithmetic</td>
-<td><a href="arithmetic.html"><code>%</code></a></td>
+<td><a href="arithmetic/"><code>%</code></a></td>
 <td><code>x % y</code></td>
 <td><code>x</code> modulo <code>y</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Bitwise</td>
-<td><a href="bitwise.html"><code>&amp;</code></a></td>
+<td><a href="bitwise/"><code>&amp;</code></a></td>
 <td><code>x &amp; y</code></td>
 <td>The bitwise AND of <code>x</code> and <code>y</code>.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Bitwise</td>
-<td><a href="bitwise.html"><code>|</code></a></td>
-<td><code>x | y</code></td>
+<td><a href="bitwise/"><code>\|</code></a></td>
+<td><code>x \| y</code></td>
 <td>The bitwise OR of <code>x</code> and <code>y</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Bitwise</td>
-<td><a href="bitwise.html"><code>^</code></a> (binary)</td>
+<td><a href="bitwise/"><code>^</code></a> (binary)</td>
 <td><code>x ^ y</code></td>
 <td>The bitwise XOR of <code>x</code> and <code>y</code>.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Bitwise</td>
-<td><a href="bitwise.html"><code>&lt;&lt;</code></a></td>
+<td><a href="bitwise/"><code>&lt;&lt;</code></a></td>
 <td><code>x &lt;&lt; y</code></td>
 <td><code>x</code> bit-shifted left <code>y</code> places.</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Bitwise</td>
-<td><a href="bitwise.html"><code>&gt;&gt;</code></a></td>
+<td><a href="bitwise/"><code>&gt;&gt;</code></a></td>
 <td><code>x &gt;&gt; y</code></td>
 <td><code>x</code> bit-shifted right <code>y</code> places.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Conversion</td>
-<td><a href="as_expressions.html"><code>as</code></a></td>
+<td><a href="as_expressions/"><code>as</code></a></td>
 <td><code>x as T</code></td>
 <td>Converts the value <code>x</code> to the type <code>T</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Comparison</td>
-<td><a href="comparison_operators.html"><code>==</code></a></td>
+<td><a href="comparison_operators/"><code>==</code></a></td>
 <td><code>x == y</code></td>
 <td>Equality: <code>true</code> if <code>x</code> is equal to <code>y</code>.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Comparison</td>
-<td><a href="comparison_operators.html"><code>!=</code></a></td>
+<td><a href="comparison_operators/"><code>!=</code></a></td>
 <td><code>x != y</code></td>
 <td>Inequality: <code>true</code> if <code>x</code> is not equal to <code>y</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Comparison</td>
-<td><a href="comparison_operators.html"><code>&lt;</code></a></td>
+<td><a href="comparison_operators/"><code>&lt;</code></a></td>
 <td><code>x &lt; y</code></td>
 <td>Less than: <code>true</code> if <code>x</code> is less than <code>y</code>.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Comparison</td>
-<td><a href="comparison_operators.html"><code>&lt;=</code></a></td>
+<td><a href="comparison_operators/"><code>&lt;=</code></a></td>
 <td><code>x &lt;= y</code></td>
 <td>Less than or equal: <code>true</code> if <code>x</code> is less than or equal to <code>y</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Comparison</td>
-<td><a href="comparison_operators.html"><code>&gt;</code></a></td>
+<td><a href="comparison_operators/"><code>&gt;</code></a></td>
 <td><code>x &gt; y</code></td>
 <td>Greater than: <code>true</code> if <code>x</code> is greater than to <code>y</code>.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Comparison</td>
-<td><a href="comparison_operators.html"><code>&gt;=</code></a></td>
+<td><a href="comparison_operators/"><code>&gt;=</code></a></td>
 <td><code>x &gt;= y</code></td>
 <td>Greater than or equal: <code>true</code> if <code>x</code> is greater than or equal to <code>y</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Logical</td>
-<td><a href="logical_operators.html"><code>and</code></a></td>
+<td><a href="logical_operators/"><code>and</code></a></td>
 <td><code>x and y</code></td>
 <td>A short-circuiting logical AND: <code>true</code> if both operands are <code>true</code>.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Logical</td>
-<td><a href="logical_operators.html"><code>or</code></a></td>
+<td><a href="logical_operators/"><code>or</code></a></td>
 <td><code>x or y</code></td>
 <td>A short-circuiting logical OR: <code>true</code> if either operand is <code>true</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Logical</td>
-<td><a href="logical_operators.html"><code>not</code></a></td>
+<td><a href="logical_operators/"><code>not</code></a></td>
 <td><code>not x</code></td>
 <td>Logical NOT: <code>true</code> if the operand is <code>false</code>.</td>
 </tr>
 </tbody>
 </table>
 <h2 id="conversions-and-casts">Conversions and casts</h2>
-<p>When an expression appears in a context in which an expression of a specific type is expected, <a href="implicit_conversions.html">implicit conversions</a> are applied to convert the expression to the target type.</p>
-<p>Expressions can also be converted to a specific type using an <a href="as_expressions.html"><code>as</code> expression</a>.</p>
+<p>When an expression appears in a context in which an expression of a specific
+type is expected, <a href="implicit_conversions/">implicit conversions</a> are applied to
+convert the expression to the target type.</p>
+<p>Expressions can also be converted to a specific type using an
+<a href="as_expressions/"><code>as</code> expression</a>.</p>
 <pre><code>fn Bar(n: i32);
 fn Baz(n: i64) {
   // OK, same as Bar(n as i32)
   Bar(n);
-}</code></pre>
+}
+</code></pre>
 <h2 id="if-expressions"><code>if</code> expressions</h2>
-<p>An <a href="if.html"><code>if</code> expression</a> chooses between two expressions.</p>
+<p>An <a href="if/"><code>if</code> expression</a> chooses between two expressions.</p>
 <pre><code>fn Run(args: Span(StringView)) {
   var file: StringView = if args.size() &gt; 1 then args[1] else &quot;/dev/stdin&quot;;
-}</code></pre>
+}
+</code></pre>
 <p><code>if</code> expressions are analogous to <code>?:</code> ternary expressions in C and C++.</p>
 <h2 id="alternatives-considered">Alternatives considered</h2>
-<p>Other expression documents will list more alternatives; this lists alternatives not noted elsewhere.</p>
+<p>Other expression documents will list more alternatives; this lists alternatives
+not noted elsewhere.</p>
 <ul>
 <li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0555.md#total-order">Total order</a></li>
 <li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0555.md#different-precedence-for-different-operands">Different precedence for different operands</a></li>
 <li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0555.md#require-less-than-a-partial-order">Require less than a partial order</a></li>
 </ul>
 <h2 id="references">References</h2>
-<p>Other expression documents will list more references; this lists references not noted elsewhere.</p>
+<p>Other expression documents will list more references; this lists references not
+noted elsewhere.</p>
 <ul>
-<li>Proposal <a href="https://github.com/carbon-language/carbon-lang/pull/555">#555: Operator precedence</a>.</li>
+<li>Proposal
+    <a href="https://github.com/carbon-language/carbon-lang/pull/555">#555: Operator precedence</a>.</li>
 </ul>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../control_flow/return/" class="md-footer__link md-footer__link--prev" aria-label="Previous: `return`" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              `return`
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="arithmetic/" class="md-footer__link md-footer__link--next" aria-label="Next: Arithmetic" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Arithmetic
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

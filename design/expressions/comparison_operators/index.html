@@ -1,0 +1,2651 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Comparison operators - Carbon Language</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#comparison-operators" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Carbon Language" class="md-header__button md-logo" aria-label="Carbon Language" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Carbon Language
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Comparison operators
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Carbon Language" class="md-nav__button md-logo" aria-label="Carbon Language" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Carbon Language
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Docs
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Design
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Design" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Design
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        Language design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aliases/" class="md-nav__link">
+        Aliases
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blocks_and_statements/" class="md-nav__link">
+        Blocks and statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classes/" class="md-nav__link">
+        Classes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../functions/" class="md-nav__link">
+        Functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metaprogramming/" class="md-nav__link">
+        Metaprogramming
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../name_lookup/" class="md-nav__link">
+        Name lookup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../naming_conventions/" class="md-nav__link">
+        Naming conventions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pattern_matching/" class="md-nav__link">
+        Pattern matching
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../primitive_types/" class="md-nav__link">
+        Primitive types
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../templates/" class="md-nav__link">
+        Templates
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tuples/" class="md-nav__link">
+        Tuples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../type_inference/" class="md-nav__link">
+        Type inference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../variables/" class="md-nav__link">
+        Variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_15" type="checkbox" id="__nav_2_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_15">
+          Code and name organization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Code and name organization" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_15">
+          <span class="md-nav__icon md-icon"></span>
+          Code and name organization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../code_and_name_organization/" class="md-nav__link">
+        Code and name organization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../code_and_name_organization/source_files/" class="md-nav__link">
+        Source files
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_16" type="checkbox" id="__nav_2_16" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_16">
+          Control flow
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Control flow" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_16">
+          <span class="md-nav__icon md-icon"></span>
+          Control flow
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/" class="md-nav__link">
+        Control flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/conditionals/" class="md-nav__link">
+        Control flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/loops/" class="md-nav__link">
+        Loops
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/return/" class="md-nav__link">
+        `return`
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_17" type="checkbox" id="__nav_2_17" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_17">
+          Expressions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Expressions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_17">
+          <span class="md-nav__icon md-icon"></span>
+          Expressions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arithmetic/" class="md-nav__link">
+        Arithmetic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../as_expressions/" class="md-nav__link">
+        `as` expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bitwise/" class="md-nav__link">
+        Bitwise and shift operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Comparison operators
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Comparison operators
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#details" class="md-nav__link">
+    Details
+  </a>
+  
+    <nav class="md-nav" aria-label="Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#precedence" class="md-nav__link">
+    Precedence
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#associativity" class="md-nav__link">
+    Associativity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#built-in-comparisons-and-implicit-conversions" class="md-nav__link">
+    Built-in comparisons and implicit conversions
+  </a>
+  
+    <nav class="md-nav" aria-label="Built-in comparisons and implicit conversions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#consistency-with-implicit-conversions" class="md-nav__link">
+    Consistency with implicit conversions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparisons-with-constants" class="md-nav__link">
+    Comparisons with constants
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extensibility" class="md-nav__link">
+    Extensibility
+  </a>
+  
+    <nav class="md-nav" aria-label="Extensibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#equality" class="md-nav__link">
+    Equality
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ordering" class="md-nav__link">
+    Ordering
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compatibility-of-equality-and-ordering" class="md-nav__link">
+    Compatibility of equality and ordering
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-result-types" class="md-nav__link">
+    Custom result types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-implementations-for-basic-types" class="md-nav__link">
+    Default implementations for basic types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions" class="md-nav__link">
+    Open questions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternatives-considered" class="md-nav__link">
+    Alternatives considered
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../if/" class="md-nav__link">
+        `if` expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../implicit_conversions/" class="md-nav__link">
+        Implicit conversions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logical_operators/" class="md-nav__link">
+        Logical operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../member_access/" class="md-nav__link">
+        Qualified names and member access
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_18" type="checkbox" id="__nav_2_18" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_18">
+          Generics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Generics" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_18">
+          <span class="md-nav__icon md-icon"></span>
+          Generics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/" class="md-nav__link">
+        Generics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/appendix-coherence/" class="md-nav__link">
+        Carbon: alternatives to coherence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/details/" class="md-nav__link">
+        Generics: Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/goals/" class="md-nav__link">
+        Generics: Goals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/overview/" class="md-nav__link">
+        Generics: Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generics/terminology/" class="md-nav__link">
+        Generics: Terminology
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_19" type="checkbox" id="__nav_2_19" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_19">
+          Interoperability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Interoperability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_19">
+          <span class="md-nav__icon md-icon"></span>
+          Interoperability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interoperability/" class="md-nav__link">
+        Bidirectional interoperability with C/C++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interoperability/philosophy_and_goals/" class="md-nav__link">
+        Interoperability philosophy and goals
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_20" type="checkbox" id="__nav_2_20" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_20">
+          Lexical conventions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lexical conventions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_20">
+          <span class="md-nav__icon md-icon"></span>
+          Lexical conventions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/" class="md-nav__link">
+        Lexical conventions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/numeric_literals/" class="md-nav__link">
+        Numeric literals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/string_literals/" class="md-nav__link">
+        String literals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/whitespace/" class="md-nav__link">
+        Whitespace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/words/" class="md-nav__link">
+        Words
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/" class="md-nav__link">
+        Guides
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Images
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Images" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Images
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../images/snippets/" class="md-nav__link">
+        Front page snippets for Carbon
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Project
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Project" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Project
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/" class="md-nav__link">
+        Project
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/code_review/" class="md-nav__link">
+        Code review
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/contribution_tools/" class="md-nav__link">
+        Contribution tools
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/cpp_style_guide/" class="md-nav__link">
+        C++ style guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/design_style_guide/" class="md-nav__link">
+        Language design style guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/difficulties_improving_cpp/" class="md-nav__link">
+        Difficulties improving C++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/evolution/" class="md-nav__link">
+        Evolution and governance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/faq/" class="md-nav__link">
+        Project FAQ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/goals/" class="md-nav__link">
+        Goals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/groups/" class="md-nav__link">
+        Groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/pull_request_workflow/" class="md-nav__link">
+        Trunk-based pull-request GitHub workflow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/roadmap/" class="md-nav__link">
+        Roadmap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/roadmap_process/" class="md-nav__link">
+        Roadmap process
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_14" type="checkbox" id="__nav_5_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_14">
+          Principles
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Principles" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_14">
+          <span class="md-nav__icon md-icon"></span>
+          Principles
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/" class="md-nav__link">
+        Principles
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/error_handling/" class="md-nav__link">
+        Principle: Errors are values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/information_accumulation/" class="md-nav__link">
+        Principle: Information accumulation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/library_apis_only/" class="md-nav__link">
+        Principle: All APIs are library APIs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/low_context_sensitivity/" class="md-nav__link">
+        Principle: Low context-sensitivity
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/one_way/" class="md-nav__link">
+        Principle: Prefer providing only one way to do a given thing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/safety_strategy/" class="md-nav__link">
+        Safety strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/static_open_extension/" class="md-nav__link">
+        Principle: One static open extension mechanism
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/success_criteria/" class="md-nav__link">
+        Principle: Success criteria
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Spec
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Spec" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Spec
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/" class="md-nav__link">
+        Spec
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_2" type="checkbox" id="__nav_6_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_2">
+          Lang
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lang" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Lang
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/" class="md-nav__link">
+        Carbon language specification
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/execution/" class="md-nav__link">
+        Execution
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/lex/" class="md-nav__link">
+        Lexical analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/libs/" class="md-nav__link">
+        Libraries and packages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/names/" class="md-nav__link">
+        Names
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/parsing/" class="md-nav__link">
+        Parsing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/semantics/" class="md-nav__link">
+        Semantic analysis
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_3" type="checkbox" id="__nav_6_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_3">
+          Lib
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lib" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          Lib
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lib/" class="md-nav__link">
+        Carbon standard library specification
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#details" class="md-nav__link">
+    Details
+  </a>
+  
+    <nav class="md-nav" aria-label="Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#precedence" class="md-nav__link">
+    Precedence
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#associativity" class="md-nav__link">
+    Associativity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#built-in-comparisons-and-implicit-conversions" class="md-nav__link">
+    Built-in comparisons and implicit conversions
+  </a>
+  
+    <nav class="md-nav" aria-label="Built-in comparisons and implicit conversions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#consistency-with-implicit-conversions" class="md-nav__link">
+    Consistency with implicit conversions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparisons-with-constants" class="md-nav__link">
+    Comparisons with constants
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extensibility" class="md-nav__link">
+    Extensibility
+  </a>
+  
+    <nav class="md-nav" aria-label="Extensibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#equality" class="md-nav__link">
+    Equality
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ordering" class="md-nav__link">
+    Ordering
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compatibility-of-equality-and-ordering" class="md-nav__link">
+    Compatibility of equality and ordering
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-result-types" class="md-nav__link">
+    Custom result types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-implementations-for-basic-types" class="md-nav__link">
+    Default implementations for basic types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions" class="md-nav__link">
+    Open questions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternatives-considered" class="md-nav__link">
+    Alternatives considered
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="comparison-operators">Comparison operators</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#details">Details</a><ul>
+<li><a href="#precedence">Precedence</a></li>
+<li><a href="#associativity">Associativity</a></li>
+<li><a href="#built-in-comparisons-and-implicit-conversions">Built-in comparisons and implicit conversions</a><ul>
+<li><a href="#consistency-with-implicit-conversions">Consistency with implicit conversions</a></li>
+<li><a href="#comparisons-with-constants">Comparisons with constants</a></li>
+</ul>
+</li>
+<li><a href="#extensibility">Extensibility</a><ul>
+<li><a href="#equality">Equality</a></li>
+<li><a href="#ordering">Ordering</a></li>
+<li><a href="#compatibility-of-equality-and-ordering">Compatibility of equality and ordering</a></li>
+<li><a href="#custom-result-types">Custom result types</a></li>
+</ul>
+</li>
+<li><a href="#default-implementations-for-basic-types">Default implementations for basic types</a></li>
+</ul>
+</li>
+<li><a href="#open-questions">Open questions</a></li>
+<li><a href="#alternatives-considered">Alternatives considered</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="overview">Overview</h2>
+<p>Carbon provides equality and relational comparison operators, each with a
+standard mathematical meaning:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Operator</th>
+<th>Example</th>
+<th>Mathematical meaning</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Equality</td>
+<td><code>==</code></td>
+<td><code>x == y</code></td>
+<td>=</td>
+<td>Equality or equal to</td>
+</tr>
+<tr>
+<td>Equality</td>
+<td><code>!=</code></td>
+<td><code>x != y</code></td>
+<td>≠</td>
+<td>Inequality or not equal to</td>
+</tr>
+<tr>
+<td>Relational</td>
+<td><code>&lt;</code></td>
+<td><code>x &lt; y</code></td>
+<td>&lt;</td>
+<td>Less than</td>
+</tr>
+<tr>
+<td>Relational</td>
+<td><code>&lt;=</code></td>
+<td><code>x &lt;= y</code></td>
+<td>≤</td>
+<td>Less than or equal to</td>
+</tr>
+<tr>
+<td>Relational</td>
+<td><code>&gt;</code></td>
+<td><code>x &gt; y</code></td>
+<td>&gt;</td>
+<td>Less than</td>
+</tr>
+<tr>
+<td>Relational</td>
+<td><code>&gt;=</code></td>
+<td><code>x &gt;= y</code></td>
+<td>≥</td>
+<td>Less than or equal to</td>
+</tr>
+</tbody>
+</table>
+<p>Comparison operators all return a <code>bool</code>; they evaluate to <code>true</code> when the
+indicated comparison is true. All comparison operators are infix binary
+operators.</p>
+<p>These operators have predefined meanings for some of Carbon's
+<a href="#built-in-comparisons-and-implicit-conversions">built-in types</a>, as well as for
+simple <a href="#default-implementations-for-basic-types">"data" types</a> like structs and
+tuples.</p>
+<p>User-defined types can define the meaning of these operations by
+<a href="#extensibility">implementing an interface</a> provided as part of the Carbon
+standard library.</p>
+<h2 id="details">Details</h2>
+<h3 id="precedence">Precedence</h3>
+<p>The comparison operators are all at the same precedence level. This level is
+lower than operators used to compute (non-<code>bool</code>) values, higher than the
+<a href="../logical_operators/">logical operators</a> <code>and</code> and <code>or</code>, and incomparable with
+the precedence of <code>not</code>.</p>
+<p>For example:</p>
+<pre><code class="language-carbon">// ✅ Valid: precedence provides order of evaluation.
+if (n + m * 3 &lt; n * n and 3 &lt; m and m &lt; 6) {
+  ...
+}
+// The above is equivalent to:
+if (((n + (m * 3)) &lt; (n * n)) and ((3 &lt; m) and (m &lt; 6))) {
+  ...
+}
+
+// ❌ Invalid due to ambiguity: `(not a) == b` or `not (a == b)`?
+if (not a == b) {
+  ...
+}
+// ❌ Invalid due to precedence: write `a == (not b)`.
+if (a == not b) {
+  ...
+}
+// ❌ Invalid due to precedence: write `not (f &lt; 5.0)`.
+if (not f &lt; 5.0) {
+  ....
+}
+</code></pre>
+<h3 id="associativity">Associativity</h3>
+<p>The comparison operators are non-associative. For example:</p>
+<pre><code class="language-carbon">// ❌ Invalid: write `3 &lt; m and m &lt; 6`.
+if (3 &lt; m &lt; 6) {
+  ...
+}
+// ❌ Invalid: write `a == b and b == c`.
+if (a == b == c) {
+  ...
+}
+// ❌ Invalid: write `(m &gt; 1) == (n &gt; 1)`.
+if (m &gt; 1 == n &gt; 1) {
+  ...
+}
+</code></pre>
+<h3 id="built-in-comparisons-and-implicit-conversions">Built-in comparisons and implicit conversions</h3>
+<p>Built-in comparisons are permitted in three cases:</p>
+<ol>
+<li>When both operands are of standard Carbon integer types (<code>Int(n)</code> or
+    <code>Unsigned(n)</code>).</li>
+<li>When both operands are of standard Carbon floating-point types (<code>Float(n)</code>).</li>
+<li>When one operand is of floating-point type and the other is of integer type,
+    if all values of the integer type can be exactly represented in the
+    floating-point type.</li>
+</ol>
+<p>In each case, the result is the mathematically-correct answer. This applies even
+when comparing <code>Int(n)</code> with <code>Unsigned(m)</code>.</p>
+<p>For example:</p>
+<pre><code class="language-carbon">// ✅ Valid: Fits case #1. The value of `compared` is `true` because `a` is less
+// than `b`, even though the result of a wrapping `i32` or `u32` comparison
+// would be `false`.
+fn Compare(a: i32, b: u32) -&gt; bool { return a &lt; b; }
+let compared: bool = Compare(-1, 4_000_000_000);
+
+// ❌ Invalid: Doesn't fit case #3 because `i64` values in general are not
+// exactly representable in the type `f32`.
+let float: f32 = 1.0e18;
+let integer: i64 = 1_000_000_000_000_000_000;
+let eq: bool = float == integer;
+</code></pre>
+<p>Comparisons involving integer and floating-point constants are not covered by
+these rules and are <a href="#comparisons-with-constants">discussed separately</a>.</p>
+<h4 id="consistency-with-implicit-conversions">Consistency with implicit conversions</h4>
+<p>We support the following <a href="../implicit_conversions/">implicit conversions</a>:</p>
+<ul>
+<li>From <code>Int(n)</code> to <code>Int(m)</code> if <code>m &gt; n</code>.</li>
+<li>From <code>Unsigned(n)</code> to <code>Int(m)</code> or <code>Unsigned(m)</code> if <code>m &gt; n</code>.</li>
+<li>From <code>Float(n)</code> to <code>Float(m)</code> if <code>m &gt; n</code>.</li>
+<li>From <code>Int(n)</code> to <code>Float(m)</code> if <code>Float(m)</code> can represent all values of
+    <code>Int(n)</code>.</li>
+</ul>
+<p>These rules can be summarized as: a type <code>T</code> can be converted to <code>U</code> if every
+value of type <code>T</code> is a value of type <code>U</code>.</p>
+<p>Implicit conversions are also supported from certain kinds of integer and
+floating-point constants to <code>Int(n)</code> and <code>Float(n)</code> types, if the constant can
+be represented in the type.</p>
+<p>All built-in comparisons can be viewed as performing implicit conversions on at
+most one of the operands in order to reach a suitable pair of identical or very
+similar types, and then performing a comparison on those types. The target types
+for these implicit conversions are, for each suitable value <code>n</code>:</p>
+<ul>
+<li><code>Int(n)</code> versus <code>Int(n)</code></li>
+<li><code>Unsigned(n)</code> versus <code>Unsigned(n)</code></li>
+<li><code>Int(n)</code> versus <code>Unsigned(n)</code></li>
+<li><code>Unsigned(n)</code> versus <code>Int(n)</code></li>
+<li><code>Float(n)</code> versus <code>Float(n)</code></li>
+</ul>
+<p>There will in general be multiple combinations of implicit conversions that will
+lead to one of the above forms, but we will arrive at the same result regardless
+of which is selected, because all comparisons are mathematically correct and all
+implicit conversions are lossless. Implementations are expected to do whatever
+is most efficient: for example, for <code>u16 &lt; i32</code> it is likely that the best
+choice would be to promote the <code>u16</code> to <code>i32</code>, not <code>u32</code>.</p>
+<p>Because we only ever convert at most one operand, we never use an intermediate
+type that is larger than both input types. For example, both <code>i32</code> and <code>f32</code> can
+be implicitly converted to <code>f64</code>, but we do not permit comparisons between <code>i32</code>
+and <code>f32</code> even though we could perform those comparisons in <code>f64</code>. If such
+comparisons were permitted, the results could be surprising:</p>
+<pre><code class="language-carbon">// `i32` can exactly represent this value.
+var integer: i32 = 2_000_000_001;
+// This value is within the representable range for `f32`, but will be rounded
+// to 2_000_000_000.0 due to the limited precision of `f32`.
+var float: f32 = 2_000_000_001.0;
+
+// ❌ Invalid: `f32` cannot exactly represent all values of `i32`.
+if (integer == float) {
+  ...
+}
+
+// ✅ Valid: An explicit cast to `f64` on either side makes the code valid, but
+// will compare unequal because `float` was rounded to 2_000_000_000.0
+// but `integer` will convert to exactly 2_000_000_001.0.
+if (integer == float as f64) {
+  ...
+}
+if (integer as f64 == float) {
+  ...
+}
+</code></pre>
+<p>The two kinds of mixed-type comparison may be
+<a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0702.md#performance">less efficient</a> than the other kinds due to
+the slightly wider domain.</p>
+<p>Note that this approach diverges from C++, which would convert both operands to
+a common type first, sometimes performing a lossy conversion potentially giving
+an incorrect result, sometimes converting both operands, and sometimes using a
+wider type than either of the operand types.</p>
+<h4 id="comparisons-with-constants">Comparisons with constants</h4>
+<p>We permit the following comparisons involving constants:</p>
+<ul>
+<li>A constant can be compared with a value of any type to which it can be
+    implicitly converted.</li>
+<li>Any two constants can be compared, even if there is no type that can
+    represent both.</li>
+</ul>
+<p>As described in <a href="../implicit_conversions/#data-types">implicit conversions</a>,
+integer constants can be implicitly converted to any integer or floating-point
+type that can represent their value, and floating-point constants can be
+implicitly converted to any floating-point type that can represent their value.</p>
+<p>Note that this disallows comparisons between, for example, <code>i32</code> and an integer
+literal that cannot be represented in <code>i32</code>. Such comparisons would always be
+tautological. This decision should be revisited if it proves problematic in
+practice, for example in templated code where the literal is sometimes in range.</p>
+<h3 id="extensibility">Extensibility</h3>
+<p>User-defined types can extend the behavior of the comparison operators by
+implementing interfaces. In this section, various properties are specified that
+such implementations "should" satisfy. These properties are not enforced in
+general, but the standard library might detect violations of some of them in
+some circumstances. These properties may be assumed by generic code, resulting
+in unexpected behavior if they are violated.</p>
+<h4 id="equality">Equality</h4>
+<p>Comparison operators can be provided for user-defined types by implementing the
+<code>EqWith</code> and <code>OrderedWith</code> interfaces.</p>
+<p>The <code>EqWith</code> interface is used to define the semantics of the <code>==</code> and <code>!=</code>
+operators for a given pair of types:</p>
+<pre><code>interface EqWith(U:! Type) {
+  fn Equal[me: Self](u: U) -&gt; bool;
+  default fn NotEqual[me: Self](u: U) -&gt; bool {
+    return not (me == u);
+  }
+}
+constraint Eq {
+  extends EqWith(Self);
+}
+</code></pre>
+<p>Given <code>x: T</code> and <code>y: U</code>:</p>
+<ul>
+<li>The expression <code>x == y</code> calls <code>x.(EqWith(U).Equal)(y)</code>.</li>
+<li>The expression <code>x != y</code> calls <code>x.(EqWith(U).NotEqual)(y)</code>.</li>
+</ul>
+<pre><code>class Path {
+  private var drive: String;
+  private var path: String;
+  private fn CanonicalPath[me: Self]() -&gt; String;
+
+  external impl as Eq {
+    fn Equal[me: Self](other: Self) -&gt; bool {
+      return (me.drive, me.CanonicalPath()) ==
+             (other.drive, other.CanonicalPath());
+    }
+  }
+}
+</code></pre>
+<p>The <code>EqWith</code> overload is selected without considering possible implicit
+conversions. To permit implicit conversions in the operands of an <code>==</code> overload,
+the
+<a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/design/generics/details.md#like-operator-for-implicit-conversions"><code>like</code> operator</a>
+can be used:</p>
+<pre><code>class MyInt {
+  var value: i32;
+  fn Value[me: Self]() -&gt; i32 { return me.value; }
+}
+external impl i32 as ImplicitAs(MyInt);
+external impl like MyInt as EqWith(like MyInt) {
+  fn Equal[me: Self](other: Self) -&gt; bool {
+    return me.Value() == other.Value();
+  }
+}
+fn CompareBothWays(a: MyInt, b: i32, c: MyInt) -&gt; bool {
+  // OK, calls above implementation three times.
+  return a == a and a != b and b == c;
+}
+</code></pre>
+<p>The behavior of <code>NotEqual</code> can be overridden separately from the behavior of
+<code>Equal</code> to support cases like floating-point NaN values, where two values can
+compare neither equal nor not-equal, and thus both functions would return
+<code>false</code>. However, an implementation of <code>EqWith</code> should <em>not</em> allow both <code>Equal</code>
+and <code>NotEqual</code> to return <code>true</code> for the same pair of values. Additionally, these
+operations should have no observable side-effects.</p>
+<pre><code>external impl like MyFloat as EqWith(like MyFloat) {
+  fn Equal[me: MyFloat](other: MyFloat) -&gt; bool {
+    if (me.IsNaN() or other.IsNaN()) {
+      return false;
+    }
+    return me.Representation() == other.Representation();
+  }
+  fn NotEqual[me: MyFloat](other: MyFloat) -&gt; bool {
+    if (me.IsNaN() or other.IsNaN()) {
+      return false;
+    }
+    return me.Representation() != other.Representation();
+  }
+}
+</code></pre>
+<p>Heterogeneous comparisons must be defined both ways around:</p>
+<pre><code>external impl like MyInt as EqWith(like MyFloat);
+external impl like MyFloat as EqWith(like MyInt);
+</code></pre>
+<p><strong>TODO:</strong> Add an adapter to the standard library to make it easy to define the
+reverse comparison.</p>
+<h4 id="ordering">Ordering</h4>
+<p>The <code>OrderedWith</code> interface is used to define the semantics of the <code>&lt;</code>, <code>&lt;=</code>,
+<code>&gt;</code>, and <code>&gt;=</code> operators for a given pair of types.</p>
+<pre><code>choice Ordering {
+  Less,
+  Equivalent,
+  Greater,
+  Incomparable
+}
+interface OrderedWith(U:! Type) {
+  fn Compare[me: Self](u: U) -&gt; Ordering;
+  default fn Less[me: Self](u: U) -&gt; bool {
+    return me.Compare(u) == Ordering.Less;
+  }
+  default fn LessOrEquivalent[me: Self](u: U) -&gt; bool {
+    let c: Ordering = me.Compare(u);
+    return c == Ordering.Less or c == Ordering.Equivalent;
+  }
+  default fn Greater[me: Self](u: U) -&gt; bool {
+    return me.Compare(u) == Ordering.Greater;
+  }
+  default fn GreaterOrEquivalent[me: Self](u: U) -&gt; bool {
+    let c: Ordering = me.Compare(u);
+    return c == Ordering.Greater or c == Ordering.Equivalent;
+  }
+}
+constraint Ordered {
+  extends OrderedWith(Self);
+}
+
+// Ordering.Less &lt; Ordering.Equivalent &lt; Ordering.Greater.
+// Ordering.Incomparable is incomparable with all three.
+external impl Ordering as Ordered;
+</code></pre>
+<p><strong>TODO:</strong> Revise the above when we have a concrete design for enumerated types.</p>
+<p>Given <code>x: T</code> and <code>y: U</code>:</p>
+<ul>
+<li>The expression <code>x &lt; y</code> calls <code>x.(OrderedWith(U).Less)(y)</code>.</li>
+<li>The expression <code>x &lt;= y</code> calls <code>x.(OrderedWith(U).LessOrEquivalent)(y)</code>.</li>
+<li>The expression <code>x &gt; y</code> calls <code>x.(OrderedWith(U).Greater)(y)</code>.</li>
+<li>The expression <code>x &gt;= y</code> calls <code>x.(OrderedWith(U).GreaterOrEquivalent)(y)</code>.</li>
+</ul>
+<p>For example:</p>
+<pre><code>class MyWidget {
+  var width: i32;
+  var height: i32;
+
+  fn Size[me: Self]() -&gt; i32 { return me.width * me.height; }
+
+  // Widgets are normally ordered by size.
+  external impl as Ordered {
+    fn Compare[me: Self](other: Self) -&gt; Ordering {
+      return me.Size().(Ordered.Compare)(other.Size());
+    }
+  }
+}
+fn F(a: MyWidget, b: MyWidget) -&gt; bool {
+  return a &lt;= b;
+}
+</code></pre>
+<p>As for <code>EqWith</code>, the
+<a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/design/generics/details.md#like-operator-for-implicit-conversions"><code>like</code> operator</a>
+can be used to permit implicit conversions when invoking a comparison, and
+heterogeneous comparisons must be defined both ways around:</p>
+<pre><code>fn ReverseOrdering(o: Ordering) -&gt; Ordering {
+  return Ordering.Equivalent.(Ordered.Compare)(o);
+}
+external impl like MyInt as OrderedWith(like MyFloat);
+external impl like MyFloat as OrderedWith(like MyInt) {
+  fn Compare[me: Self](other: Self) -&gt; Ordering {
+    return Reverse(other.(OrderedWith(Self).Compare)(me));
+  }
+}
+</code></pre>
+<p>The default implementations of <code>Less</code>, <code>LessOrEquivalent</code>, <code>Greater</code>, and
+<code>GreaterOrEquivalent</code> can be overridden if a more efficient version can be
+implemented. The behaviors of such overrides should follow those of the above
+default implementations, and the members of an <code>OrderedWith</code> implementation
+should have no observable side-effects.</p>
+<p><code>OrderedWith</code> implementations should be <em>transitive</em>. That is, given <code>V:! Type</code>,
+<code>U:! OrderedWith(V)</code>, <code>T:! OrderedWith(U) &amp; OrderedWith(V)</code>, <code>a: T</code>, <code>b: U</code>,
+<code>c: V</code>, then:</p>
+<ul>
+<li>If <code>a &lt;= b</code> and <code>b &lt;= c</code> then <code>a &lt;= c</code>, and moreover if either <code>a &lt; b</code> or
+    <code>b &lt; c</code> then <code>a &lt; c</code>.</li>
+<li>If <code>a &gt;= b</code> and <code>b &gt;= c</code> then <code>a &gt;= c</code>, and moreover if either <code>a &gt; b</code> or
+    <code>b &gt; c</code> then <code>a &gt; c</code>.</li>
+<li>If <code>a</code> and <code>b</code> are equivalent, then <code>a.Compare(c) == b.Compare(c)</code>.
+    Similarly, if <code>b</code> and <code>c</code> are equivalent, then
+    <code>a.Compare(b) == a.Compare(c)</code>.</li>
+</ul>
+<p><code>OrderedWith</code> implementations should also be <em>consistent under reversal</em>. That
+is, given types <code>T</code> and <code>U</code> where <code>T is OrderedWith(U)</code> and
+<code>U is OrderedWith(T)</code>, and values <code>a: T</code> and <code>b: U</code>:</p>
+<ul>
+<li>If <code>a.(OrderedWith.Compare)(b)</code> is <code>Ordering.Greater</code>, then
+    <code>b.(OrderedWith.Compare)(a)</code> is <code>Ordering.Less</code>, and the other way around.</li>
+<li>Otherwise, <code>a.(OrderedWith.Compare)(b)</code> returns the same value as
+    <code>b.(OrderedWith.Compare)(a)</code>.</li>
+</ul>
+<p>There is no expectation that an <code>Ordered</code> implementation be a total order, a
+weak order, or a partial order, and in particular the implementation for
+floating-point types is none of these because NaN values do not compare less
+than or equivalent to themselves.</p>
+<p><strong>TODO:</strong> The standard library should provide a way to specify that an ordering
+is a weak, partial, or total ordering, and a way to request such an ordering in
+a generic.</p>
+<h4 id="compatibility-of-equality-and-ordering">Compatibility of equality and ordering</h4>
+<p>There is no requirement that a pair of types that implements <code>OrderedWith</code> also
+implements <code>EqWith</code>. If a pair of types does implement both, however, the
+equality relation provided by <code>x.(EqWith.Equal)(y)</code> should be a refinement of
+the equivalence relation provided by
+<code>x.(OrderedWith.Compare)(y) == Ordering.Equivalent</code>.</p>
+<h4 id="custom-result-types">Custom result types</h4>
+<p><strong>TODO:</strong> Support a lower-level extensibility mechanism that allows a result
+type other than <code>bool</code>.</p>
+<h3 id="default-implementations-for-basic-types">Default implementations for basic types</h3>
+<p>In addition to being defined for standard Carbon numeric types, equality and
+relational comparisons are also defined for all "data" types:</p>
+<ul>
+<li><a href="../../tuples/">Tuples</a></li>
+<li><a href="../../classes/#struct-types">Struct types</a></li>
+<li><a href="../../classes/#interfaces-implemented-for-data-classes">Classes implementing an interface that identifies them as data classes</a></li>
+</ul>
+<p>Relational comparisons for these types provide a lexicographical ordering. In
+each case, the comparison is only available if it is supported by all element
+types.</p>
+<p>Because implicit conversions between data classes can reorder fields, the
+implementations for data classes do not permit implicit conversions on their
+arguments in general. Instead:</p>
+<ul>
+<li>Equality comparisons are permitted between any two data classes that have
+    the same <em>unordered set</em> of field names, if each corresponding pair of
+    fields has an <code>EqWith</code> implementation. Fields are compared in the order they
+    appear in the left-hand operand.</li>
+<li>Relational comparisons are permitted between any two data classes that have
+    the same <em>ordered sequence</em> of field names, if each corresponding pair of
+    fields has an <code>OrderedWith</code> implementation. Fields are compared in order.</li>
+</ul>
+<p>Comparisons between tuples permit implicit conversions for either operand, but
+not both.</p>
+<h2 id="open-questions">Open questions</h2>
+<p>The <code>bool</code> type should be treated as a choice type, and so should support
+equality comparisons and relational comparisons if and only if choice types do
+in general. That decision is left to a future proposal.</p>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0702.md#alternative-symbols">Alternative symbols</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0702.md#chained-comparisons-1">Chained comparisons</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0702.md#convert-operands-like-c">Convert operands like C++</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0702.md#provide-a-three-way-comparison-operator">Provide a three-way comparison operator</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p0702.md#allow-comparisons-as-the-operand-of-not">Allow comparisons as the operand of <code>not</code></a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/tree/trunk/proposals/p1178.md#use-comparablewith-instead-of-orderedwith">Rename <code>OrderedWith</code> to <code>ComparableWith</code></a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Proposal
+    <a href="https://github.com/carbon-language/carbon-lang/pull/702">#702: Comparison operators</a></li>
+<li>Proposal
+    <a href="https://github.com/carbon-language/carbon-lang/pull/1178">#1178: Rework operator interfaces</a></li>
+<li>Issue
+    <a href="https://github.com/carbon-language/carbon-lang/issues/710">#710: Default comparison for data classes</a></li>
+</ul>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../bitwise/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Bitwise and shift operators" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Bitwise and shift operators
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../if/" class="md-footer__link md-footer__link--next" aria-label="Next: `if` expressions" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              `if` expressions
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

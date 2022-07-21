@@ -1,0 +1,3221 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Generics: Terminology - Carbon Language</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#generics-terminology" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Carbon Language" class="md-header__button md-logo" aria-label="Carbon Language" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Carbon Language
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Generics: Terminology
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Carbon Language" class="md-nav__button md-logo" aria-label="Carbon Language" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Carbon Language
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Docs
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Design
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Design" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Design
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        Language design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aliases/" class="md-nav__link">
+        Aliases
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blocks_and_statements/" class="md-nav__link">
+        Blocks and statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classes/" class="md-nav__link">
+        Classes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../functions/" class="md-nav__link">
+        Functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metaprogramming/" class="md-nav__link">
+        Metaprogramming
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../name_lookup/" class="md-nav__link">
+        Name lookup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../naming_conventions/" class="md-nav__link">
+        Naming conventions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pattern_matching/" class="md-nav__link">
+        Pattern matching
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../primitive_types/" class="md-nav__link">
+        Primitive types
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../templates/" class="md-nav__link">
+        Templates
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tuples/" class="md-nav__link">
+        Tuples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../type_inference/" class="md-nav__link">
+        Type inference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../variables/" class="md-nav__link">
+        Variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_15" type="checkbox" id="__nav_2_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_15">
+          Code and name organization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Code and name organization" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_15">
+          <span class="md-nav__icon md-icon"></span>
+          Code and name organization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../code_and_name_organization/" class="md-nav__link">
+        Code and name organization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../code_and_name_organization/source_files/" class="md-nav__link">
+        Source files
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_16" type="checkbox" id="__nav_2_16" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_16">
+          Control flow
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Control flow" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_16">
+          <span class="md-nav__icon md-icon"></span>
+          Control flow
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/" class="md-nav__link">
+        Control flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/conditionals/" class="md-nav__link">
+        Control flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/loops/" class="md-nav__link">
+        Loops
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_flow/return/" class="md-nav__link">
+        `return`
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_17" type="checkbox" id="__nav_2_17" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_17">
+          Expressions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Expressions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_17">
+          <span class="md-nav__icon md-icon"></span>
+          Expressions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/" class="md-nav__link">
+        Expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/arithmetic/" class="md-nav__link">
+        Arithmetic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/as_expressions/" class="md-nav__link">
+        `as` expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/bitwise/" class="md-nav__link">
+        Bitwise and shift operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/comparison_operators/" class="md-nav__link">
+        Comparison operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/if/" class="md-nav__link">
+        `if` expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/implicit_conversions/" class="md-nav__link">
+        Implicit conversions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/logical_operators/" class="md-nav__link">
+        Logical operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../expressions/member_access/" class="md-nav__link">
+        Qualified names and member access
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_18" type="checkbox" id="__nav_2_18" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_18">
+          Generics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Generics" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_18">
+          <span class="md-nav__icon md-icon"></span>
+          Generics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Generics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-coherence/" class="md-nav__link">
+        Carbon: alternatives to coherence
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../details/" class="md-nav__link">
+        Generics: Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../goals/" class="md-nav__link">
+        Generics: Goals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        Generics: Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Generics: Terminology
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Generics: Terminology
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameterized-language-constructs" class="md-nav__link">
+    Parameterized language constructs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generic-versus-template-parameters" class="md-nav__link">
+    Generic versus template parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="Generic versus template parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polymorphism" class="md-nav__link">
+    Polymorphism
+  </a>
+  
+    <nav class="md-nav" aria-label="Polymorphism">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametric-polymorphism" class="md-nav__link">
+    Parametric polymorphism
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compile-time-duck-typing" class="md-nav__link">
+    Compile-time duck typing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ad-hoc-polymorphism" class="md-nav__link">
+    Ad-hoc polymorphism
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constrained-genericity" class="md-nav__link">
+    Constrained genericity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependent-names" class="md-nav__link">
+    Dependent names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#definition-checking" class="md-nav__link">
+    Definition checking
+  </a>
+  
+    <nav class="md-nav" aria-label="Definition checking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#complete-definition-checking" class="md-nav__link">
+    Complete definition checking
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#early-versus-late-type-checking" class="md-nav__link">
+    Early versus late type checking
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deduced-parameter" class="md-nav__link">
+    Deduced parameter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interface" class="md-nav__link">
+    Interface
+  </a>
+  
+    <nav class="md-nav" aria-label="Interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#structural-interfaces" class="md-nav__link">
+    Structural interfaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nominal-interfaces" class="md-nav__link">
+    Nominal interfaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#named-constraints" class="md-nav__link">
+    Named constraints
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#associated-entity" class="md-nav__link">
+    Associated entity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#impls-implementations-of-interfaces" class="md-nav__link">
+    Impls: Implementations of interfaces
+  </a>
+  
+    <nav class="md-nav" aria-label="Impls: Implementations of interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#internal-impl" class="md-nav__link">
+    Internal impl
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#external-impl" class="md-nav__link">
+    External impl
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#member-access" class="md-nav__link">
+    Member access
+  </a>
+  
+    <nav class="md-nav" aria-label="Member access">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-member-access" class="md-nav__link">
+    Simple member access
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qualified-member-access-expression" class="md-nav__link">
+    Qualified member access expression
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compatible-types" class="md-nav__link">
+    Compatible types
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subtyping-and-casting" class="md-nav__link">
+    Subtyping and casting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coherence" class="md-nav__link">
+    Coherence
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adapting-a-type" class="md-nav__link">
+    Adapting a type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-erasure" class="md-nav__link">
+    Type erasure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#archetype" class="md-nav__link">
+    Archetype
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extending-an-interface" class="md-nav__link">
+    Extending an interface
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#witness-tables" class="md-nav__link">
+    Witness tables
+  </a>
+  
+    <nav class="md-nav" aria-label="Witness tables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-dispatch-witness-table" class="md-nav__link">
+    Dynamic-dispatch witness table
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#static-dispatch-witness-table" class="md-nav__link">
+    Static-dispatch witness table
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instantiation" class="md-nav__link">
+    Instantiation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specialization" class="md-nav__link">
+    Specialization
+  </a>
+  
+    <nav class="md-nav" aria-label="Specialization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#template-specialization" class="md-nav__link">
+    Template specialization
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-specialization" class="md-nav__link">
+    Generic specialization
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conditional-conformance" class="md-nav__link">
+    Conditional conformance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interface-type-parameters-and-associated-types" class="md-nav__link">
+    Interface type parameters and associated types
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-constraints" class="md-nav__link">
+    Type constraints
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-of-type" class="md-nav__link">
+    Type-of-type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_19" type="checkbox" id="__nav_2_19" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_19">
+          Interoperability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Interoperability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_19">
+          <span class="md-nav__icon md-icon"></span>
+          Interoperability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interoperability/" class="md-nav__link">
+        Bidirectional interoperability with C/C++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interoperability/philosophy_and_goals/" class="md-nav__link">
+        Interoperability philosophy and goals
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_20" type="checkbox" id="__nav_2_20" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_20">
+          Lexical conventions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lexical conventions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_20">
+          <span class="md-nav__icon md-icon"></span>
+          Lexical conventions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/" class="md-nav__link">
+        Lexical conventions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/numeric_literals/" class="md-nav__link">
+        Numeric literals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/string_literals/" class="md-nav__link">
+        String literals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/whitespace/" class="md-nav__link">
+        Whitespace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lexical_conventions/words/" class="md-nav__link">
+        Words
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/" class="md-nav__link">
+        Guides
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Images
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Images" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Images
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../images/snippets/" class="md-nav__link">
+        Front page snippets for Carbon
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Project
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Project" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Project
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/" class="md-nav__link">
+        Project
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/code_review/" class="md-nav__link">
+        Code review
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/contribution_tools/" class="md-nav__link">
+        Contribution tools
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/cpp_style_guide/" class="md-nav__link">
+        C++ style guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/design_style_guide/" class="md-nav__link">
+        Language design style guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/difficulties_improving_cpp/" class="md-nav__link">
+        Difficulties improving C++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/evolution/" class="md-nav__link">
+        Evolution and governance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/faq/" class="md-nav__link">
+        Project FAQ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/goals/" class="md-nav__link">
+        Goals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/groups/" class="md-nav__link">
+        Groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/pull_request_workflow/" class="md-nav__link">
+        Trunk-based pull-request GitHub workflow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/roadmap/" class="md-nav__link">
+        Roadmap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/roadmap_process/" class="md-nav__link">
+        Roadmap process
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_14" type="checkbox" id="__nav_5_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_14">
+          Principles
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Principles" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_14">
+          <span class="md-nav__icon md-icon"></span>
+          Principles
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/" class="md-nav__link">
+        Principles
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/error_handling/" class="md-nav__link">
+        Principle: Errors are values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/information_accumulation/" class="md-nav__link">
+        Principle: Information accumulation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/library_apis_only/" class="md-nav__link">
+        Principle: All APIs are library APIs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/low_context_sensitivity/" class="md-nav__link">
+        Principle: Low context-sensitivity
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/one_way/" class="md-nav__link">
+        Principle: Prefer providing only one way to do a given thing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/safety_strategy/" class="md-nav__link">
+        Safety strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/static_open_extension/" class="md-nav__link">
+        Principle: One static open extension mechanism
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/principles/success_criteria/" class="md-nav__link">
+        Principle: Success criteria
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Spec
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Spec" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Spec
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/" class="md-nav__link">
+        Spec
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_2" type="checkbox" id="__nav_6_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_2">
+          Lang
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lang" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Lang
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/" class="md-nav__link">
+        Carbon language specification
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/execution/" class="md-nav__link">
+        Execution
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/lex/" class="md-nav__link">
+        Lexical analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/libs/" class="md-nav__link">
+        Libraries and packages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/names/" class="md-nav__link">
+        Names
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/parsing/" class="md-nav__link">
+        Parsing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lang/semantics/" class="md-nav__link">
+        Semantic analysis
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_3" type="checkbox" id="__nav_6_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_3">
+          Lib
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lib" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          Lib
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../spec/lib/" class="md-nav__link">
+        Carbon standard library specification
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameterized-language-constructs" class="md-nav__link">
+    Parameterized language constructs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generic-versus-template-parameters" class="md-nav__link">
+    Generic versus template parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="Generic versus template parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polymorphism" class="md-nav__link">
+    Polymorphism
+  </a>
+  
+    <nav class="md-nav" aria-label="Polymorphism">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametric-polymorphism" class="md-nav__link">
+    Parametric polymorphism
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compile-time-duck-typing" class="md-nav__link">
+    Compile-time duck typing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ad-hoc-polymorphism" class="md-nav__link">
+    Ad-hoc polymorphism
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constrained-genericity" class="md-nav__link">
+    Constrained genericity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependent-names" class="md-nav__link">
+    Dependent names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#definition-checking" class="md-nav__link">
+    Definition checking
+  </a>
+  
+    <nav class="md-nav" aria-label="Definition checking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#complete-definition-checking" class="md-nav__link">
+    Complete definition checking
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#early-versus-late-type-checking" class="md-nav__link">
+    Early versus late type checking
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deduced-parameter" class="md-nav__link">
+    Deduced parameter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interface" class="md-nav__link">
+    Interface
+  </a>
+  
+    <nav class="md-nav" aria-label="Interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#structural-interfaces" class="md-nav__link">
+    Structural interfaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nominal-interfaces" class="md-nav__link">
+    Nominal interfaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#named-constraints" class="md-nav__link">
+    Named constraints
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#associated-entity" class="md-nav__link">
+    Associated entity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#impls-implementations-of-interfaces" class="md-nav__link">
+    Impls: Implementations of interfaces
+  </a>
+  
+    <nav class="md-nav" aria-label="Impls: Implementations of interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#internal-impl" class="md-nav__link">
+    Internal impl
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#external-impl" class="md-nav__link">
+    External impl
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#member-access" class="md-nav__link">
+    Member access
+  </a>
+  
+    <nav class="md-nav" aria-label="Member access">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-member-access" class="md-nav__link">
+    Simple member access
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qualified-member-access-expression" class="md-nav__link">
+    Qualified member access expression
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compatible-types" class="md-nav__link">
+    Compatible types
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subtyping-and-casting" class="md-nav__link">
+    Subtyping and casting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coherence" class="md-nav__link">
+    Coherence
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adapting-a-type" class="md-nav__link">
+    Adapting a type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-erasure" class="md-nav__link">
+    Type erasure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#archetype" class="md-nav__link">
+    Archetype
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extending-an-interface" class="md-nav__link">
+    Extending an interface
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#witness-tables" class="md-nav__link">
+    Witness tables
+  </a>
+  
+    <nav class="md-nav" aria-label="Witness tables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-dispatch-witness-table" class="md-nav__link">
+    Dynamic-dispatch witness table
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#static-dispatch-witness-table" class="md-nav__link">
+    Static-dispatch witness table
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instantiation" class="md-nav__link">
+    Instantiation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specialization" class="md-nav__link">
+    Specialization
+  </a>
+  
+    <nav class="md-nav" aria-label="Specialization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#template-specialization" class="md-nav__link">
+    Template specialization
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-specialization" class="md-nav__link">
+    Generic specialization
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conditional-conformance" class="md-nav__link">
+    Conditional conformance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interface-type-parameters-and-associated-types" class="md-nav__link">
+    Interface type parameters and associated types
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-constraints" class="md-nav__link">
+    Type constraints
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-of-type" class="md-nav__link">
+    Type-of-type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="generics-terminology">Generics: Terminology</h1>
+<!--
+Part of the Carbon Language project, under the Apache License v2.0 with LLVM
+Exceptions. See /LICENSE for license information.
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+-->
+
+<!-- toc -->
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#parameterized-language-constructs">Parameterized language constructs</a></li>
+<li><a href="#generic-versus-template-parameters">Generic versus template parameters</a><ul>
+<li><a href="#polymorphism">Polymorphism</a><ul>
+<li><a href="#parametric-polymorphism">Parametric polymorphism</a></li>
+<li><a href="#compile-time-duck-typing">Compile-time duck typing</a></li>
+<li><a href="#ad-hoc-polymorphism">Ad-hoc polymorphism</a></li>
+</ul>
+</li>
+<li><a href="#constrained-genericity">Constrained genericity</a></li>
+<li><a href="#dependent-names">Dependent names</a></li>
+<li><a href="#definition-checking">Definition checking</a><ul>
+<li><a href="#complete-definition-checking">Complete definition checking</a></li>
+<li><a href="#early-versus-late-type-checking">Early versus late type checking</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#deduced-parameter">Deduced parameter</a></li>
+<li><a href="#interface">Interface</a><ul>
+<li><a href="#structural-interfaces">Structural interfaces</a></li>
+<li><a href="#nominal-interfaces">Nominal interfaces</a></li>
+<li><a href="#named-constraints">Named constraints</a></li>
+</ul>
+</li>
+<li><a href="#associated-entity">Associated entity</a></li>
+<li><a href="#impls-implementations-of-interfaces">Impls: Implementations of interfaces</a><ul>
+<li><a href="#internal-impl">Internal impl</a></li>
+<li><a href="#external-impl">External impl</a></li>
+</ul>
+</li>
+<li><a href="#member-access">Member access</a><ul>
+<li><a href="#simple-member-access">Simple member access</a></li>
+<li><a href="#qualified-member-access-expression">Qualified member access expression</a></li>
+</ul>
+</li>
+<li><a href="#compatible-types">Compatible types</a></li>
+<li><a href="#subtyping-and-casting">Subtyping and casting</a></li>
+<li><a href="#coherence">Coherence</a></li>
+<li><a href="#adapting-a-type">Adapting a type</a></li>
+<li><a href="#type-erasure">Type erasure</a></li>
+<li><a href="#archetype">Archetype</a></li>
+<li><a href="#extending-an-interface">Extending an interface</a></li>
+<li><a href="#witness-tables">Witness tables</a><ul>
+<li><a href="#dynamic-dispatch-witness-table">Dynamic-dispatch witness table</a></li>
+<li><a href="#static-dispatch-witness-table">Static-dispatch witness table</a></li>
+</ul>
+</li>
+<li><a href="#instantiation">Instantiation</a></li>
+<li><a href="#specialization">Specialization</a><ul>
+<li><a href="#template-specialization">Template specialization</a></li>
+<li><a href="#generic-specialization">Generic specialization</a></li>
+</ul>
+</li>
+<li><a href="#conditional-conformance">Conditional conformance</a></li>
+<li><a href="#interface-type-parameters-and-associated-types">Interface type parameters and associated types</a></li>
+<li><a href="#type-constraints">Type constraints</a></li>
+<li><a href="#type-of-type">Type-of-type</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="parameterized-language-constructs">Parameterized language constructs</h2>
+<p>Generally speaking, when we talk about either templates or a generics system, we
+are talking about generalizing some language construct by adding a parameter to
+it. Language constructs here primarily would include functions and types, but we
+may want to support parameterizing other language constructs like
+<a href="#interface-type-parameters-and-associated-types">interfaces</a>.</p>
+<p>This parameter broadens the scope of the language construct on an axis defined
+by that parameter, for example it could define a family of functions instead of
+a single one.</p>
+<h2 id="generic-versus-template-parameters">Generic versus template parameters</h2>
+<p>When we are distinguishing between generics and templates in Carbon, it is on an
+parameter by parameter basis. A single function can take a mix of regular,
+generic, and template parameters.</p>
+<ul>
+<li><strong>Regular parameters</strong>, or "dynamic parameters", are designated using the
+    "&lt;name&gt;<code>:</code> &lt;type&gt;" syntax (or "&lt;value&gt;").</li>
+<li><strong>Generic parameters</strong> are designated using <code>:!</code> between the name and the
+    type (so it is "&lt;name&gt;<code>:!</code> &lt;type&gt;").</li>
+<li><strong>Template parameters</strong> are designated using "<code>template</code> &lt;name&gt;<code>:!</code>
+    &lt;type&gt;".</li>
+</ul>
+<p>The syntax for generic and template parameters was decided in
+<a href="https://github.com/carbon-language/carbon-lang/issues/565">questions-for-leads issue #565</a>.</p>
+<p>Expected difference between generics and templates:</p>
+<table>
+  <tr>
+   <td><strong>Generics</strong>
+   </td>
+   <td><strong>Templates</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>bounded parametric polymorphism
+   </td>
+   <td>compile-time duck typing and ad-hoc polymorphism
+   </td>
+  </tr>
+  <tr>
+   <td>constrained genericity
+   </td>
+   <td>optional constraints
+   </td>
+  </tr>
+  <tr>
+   <td>name lookup resolved for definitions in isolation ("early")
+   </td>
+   <td>some name lookup may require information from calls (name lookup may be "late")
+   </td>
+  </tr>
+  <tr>
+   <td>sound to typecheck definitions in isolation ("early")
+   </td>
+   <td>complete type checking may require information from calls (may be "late")
+   </td>
+  </tr>
+  <tr>
+   <td>supports separate type checking; may also support separate compilation, for example when implemented using dynamic witness tables
+   </td>
+   <td>separate compilation only to the extent that C++ supports it
+   </td>
+  </tr>
+  <tr>
+   <td>allowed but not required to be implemented using dynamic dispatch
+   </td>
+   <td>does not support implementation by way of dynamic dispatch, just static by way of <a href="#instantiation">instantiation</a>
+   </td>
+  </tr>
+  <tr>
+   <td>monomorphization is an optional optimization that cannot render the program invalid
+   </td>
+   <td>monomorphization is mandatory and can fail, resulting in the program being invalid
+   </td>
+  </tr>
+</table>
+
+<h3 id="polymorphism">Polymorphism</h3>
+<p>Generics and templates provide different forms of
+<a href="https://en.wikipedia.org/wiki/Polymorphism_(computer_science)">polymorphism</a>
+than object-oriented programming with inheritance. That uses
+<a href="https://en.wikipedia.org/wiki/Subtyping">subtype polymorphism</a> where different
+descendants, or "subtypes", of a base class can provide different
+implementations of a method, subject to some compatibility restrictions on the
+signature.</p>
+<h4 id="parametric-polymorphism">Parametric polymorphism</h4>
+<p>Parametric polymorphism
+(<a href="https://en.wikipedia.org/wiki/Parametric_polymorphism">Wikipedia</a>) is when a
+function or a data type can be written generically so that it can handle values
+<em>identically</em> without depending on their type.
+<a href="https://en.wikipedia.org/wiki/Parametric_polymorphism#Bounded_parametric_polymorphism">Bounded parametric polymorphism</a>
+is where the allowed types are restricted to satisfy some constraints. Within
+the set of allowed types, different types are treated uniformly.</p>
+<h4 id="compile-time-duck-typing">Compile-time duck typing</h4>
+<p>Duck typing (<a href="https://en.wikipedia.org/wiki/Duck_typing">Wikipedia</a>) is when the
+legal types for arguments are determined implicitly by the usage of the values
+of those types in the body of the function. Compile-time duck typing is when the
+usages in the body of the function are checked at compile-time, along all code
+paths. Contrast this with ordinary duck typing in a dynamic language such as
+Python where type errors are only diagnosed at runtime when a usage is reached
+dynamically.</p>
+<h4 id="ad-hoc-polymorphism">Ad-hoc polymorphism</h4>
+<p>Ad-hoc polymorphism
+(<a href="https://en.wikipedia.org/wiki/Ad_hoc_polymorphism">Wikipedia</a>), also known as
+"overloading", is when a single function name has multiple implementations for
+handling different argument types. There is no enforcement of any consistency
+between the implementations. For example, the return type of each overload can
+be arbitrary, rather than being the result of some consistent rule being applied
+to the argument types.</p>
+<p>Templates work with ad-hoc polymorphism in two ways:</p>
+<ul>
+<li>A function with template parameters can be
+    <a href="#template-specialization">specialized</a> in
+    <a href="https://en.cppreference.com/w/cpp/language/template_specialization">C++</a> as
+    a form of ad-hoc polymorphism.</li>
+<li>A function with template parameters can call overloaded functions since it
+    will only resolve that call after the types are known.</li>
+</ul>
+<p>In Carbon, we expect there to be a compile error if overloading of some name
+prevents a generic function from being typechecked from its definition alone.
+For example, let's say we have some overloaded function called <code>F</code> that has two
+overloads:</p>
+<pre><code>fn F[template T:! Type](x: T*) -&gt; T;
+fn F(x: Int) -&gt; Bool;
+</code></pre>
+<p>A generic function <code>G</code> can call <code>F</code> with a type like <code>T*</code> that can not possibly
+call the <code>F(Int)</code> overload for <code>F</code>, and so it can consistently determine the
+return type of <code>F</code>. But <code>G</code> can't call <code>F</code> with an argument that could match
+either overload.</p>
+<p><strong>Note:</strong> It is undecided what to do in the situation where <code>F</code> is overloaded,
+but the signatures are consistent and so callers could still typecheck calls to
+<code>F</code>. This still poses problems for the dynamic strategy for compiling generics,
+in a similar way to impl specialization.</p>
+<h3 id="constrained-genericity">Constrained genericity</h3>
+<p>We will allow some way of specifying constraints as part of a function (or type
+or other parameterized language construct). These constraints are a limit on
+what callers are allowed to pass in. The distinction between constrained and
+unconstrained genericity is whether the body of the function is limited to just
+those operations that are guaranteed by the constraints.</p>
+<p>With templates using unconstrained genericity, you may perform any operation in
+the body of the function, and they will be checked against the specific types
+used in calls. You can still have constraints, but they are optional in that
+they could be removed and the function would still have the same capabilities.
+Constraints only affect the caller, which will use them to resolve overloaded
+calls to the template and provide clearer error messages.</p>
+<p>With generics using constrained genericity, the function body can be checked
+against the signature at the time of definition. Note that it is still perfectly
+permissible to have no constraints on a type; that just means that you can only
+perform operations that work for all types (such as manipulate pointers to
+values of that type) in the body of the function.</p>
+<h3 id="dependent-names">Dependent names</h3>
+<p>A name is said to be <em>dependent</em> if it depends on some generic or template
+parameter. Note: this matches
+<a href="https://www.google.com/search?q=c%2B%2B+dependent+name">the use of the term "dependent" in C++</a>,
+not as in <a href="https://en.wikipedia.org/wiki/Dependent_type">dependent types</a>.</p>
+<h3 id="definition-checking">Definition checking</h3>
+<p>Definition checking is the process of semantically checking the definition of
+parameterized code for correctness <em>independently</em> of any particular arguments.
+It includes type checking and other semantic checks. It is possible, even with
+templates, to check semantics of expressions that are not
+<a href="#dependent-names">dependent</a> on any template parameter in the definition.
+Adding constraints to template parameters and/or switching them to be generic
+allows the compiler to increase how much of the definition can be checked. Any
+remaining checks are delayed until <a href="#instantiation">instantiation</a>, which can
+fail.</p>
+<h4 id="complete-definition-checking">Complete definition checking</h4>
+<p>Complete definition checking is when the definition can be <em>fully</em> semantically
+checked, including type checking. It is an especially useful property because it
+enables <em>separate</em> semantic checking of the definition, a prerequisite to
+separate compilation. It also enables implementation strategies that don’t
+instantiate the implementation (for example, <a href="#type-erasure">type erasure</a> or
+<a href="#dynamic-dispatch-witness-table">dynamic-dispatch witness tables</a>).</p>
+<h4 id="early-versus-late-type-checking">Early versus late type checking</h4>
+<p>Early type checking is where expressions and statements are type checked when
+the definition of the function body is compiled, as part of definition checking.
+This occurs for regular and generic values.</p>
+<p>Late type checking is where expressions and statements may only be fully
+typechecked once calling information is known. Late type checking delays
+complete definition checking. This occurs for
+<a href="#dependent-names">template-dependent</a> values.</p>
+<h2 id="deduced-parameter">Deduced parameter</h2>
+<p>An deduced parameter is listed in the optional <code>[</code> <code>]</code> section right after the
+function name in a function signature:</p>
+<p><code>fn</code> &lt;name&gt; <code>[</code> &lt;deduced parameters&gt; <code>](</code> &lt;explicit parameters <code>) -&gt;</code>
+&lt;return type&gt;</p>
+<p>Deduced arguments are determined as a result of pattern matching the explicit
+argument values (usually the types of those values) to the explicit parameters.
+Note that function signatures can typically be rewritten to avoid using deduced
+parameters:</p>
+<pre><code>fn F[template T:! Type](value: T);
+// is equivalent to:
+fn F(value: (template T:! Type));
+</code></pre>
+<p>See more <a href="../overview/#deduced-parameters">here</a>.</p>
+<h2 id="interface">Interface</h2>
+<p>An interface is an API constraint used in a function signature to provide
+encapsulation. Encapsulation here means that callers of the function only need
+to know about the interface requirements to call the function, not anything
+about the implementation of the function body, and the compiler can check the
+function body without knowing anything more about the caller. Callers of the
+function provide a value that has an implementation of the API and the body of
+the function may then use that API (and nothing else).</p>
+<h3 id="structural-interfaces">Structural interfaces</h3>
+<p>A "structural" interface is one where we say a type satisfies the interface as
+long as it has members with a specific list of names, and for each name it must
+have some type or signature. A type can satisfy a structural interface without
+ever naming that interface, just by virtue of having members with the right
+form.</p>
+<h3 id="nominal-interfaces">Nominal interfaces</h3>
+<p>A "nominal" interface is one where we say a type can only satisfy an interface
+if there is some explicit statement saying so, for example by defining an
+<a href="#impls-implementations-of-interfaces">impl</a>. This allows "satisfies the
+interface" to have additional semantic meaning beyond what is directly checkable
+by the compiler. For example, knowing whether the <code>Draw</code> function means "render
+an image to the screen" or "take a card from the top of a deck of cards"; or
+that a <code>+</code> operator is commutative (and not, say, string concatenation).</p>
+<p>We use the "structural" versus "nominal" terminology as a generalization of the
+same terms being used in a
+<a href="https://en.wikipedia.org/wiki/Subtyping#Subtyping_schemes">subtyping context</a>.</p>
+<h3 id="named-constraints">Named constraints</h3>
+<p>Named constraints are "structural" in the sense that they match a type based on
+meeting some criteria rather than an explicit statement in the type's
+definition. The criteria for a named constraint, however, are less focused on
+the type's API and instead might include a set of nominal interfaces that the
+type must implement and constraints on the
+<a href="#associated-entity">associated entities</a> and
+<a href="#interface-type-parameters-and-associated-types">interface type parameters</a>.</p>
+<h2 id="associated-entity">Associated entity</h2>
+<p>An <em>associated entity</em> is a requirement in an interface that a type's
+implementation of the interface must satisfy by having a matching member. A
+requirement that the type define a value for a member constant is called an
+<em>associated constant</em>, and similarly an <em>associated function</em> or <em>associated
+type</em>.</p>
+<p>Different types can satisfy an interface with different definitions for a given
+member. These definitions are <em>associated</em> with what type is implementing the
+interface. An <a href="#impls-implementations-of-interfaces">impl</a> defines what is
+associated with the type for that interface.</p>
+<p>Rust uses the term
+<a href="https://doc.rust-lang.org/reference/items/associated-items.html">"associated item"</a>
+instead of associated entity.</p>
+<h2 id="impls-implementations-of-interfaces">Impls: Implementations of interfaces</h2>
+<p>An <em>impl</em> is an implementation of an interface for a specific type. It is the
+place where the function bodies are defined, values for associated types, etc.
+are given. Impls are needed for <a href="#nominal-interfaces">nominal interfaces</a>;
+<a href="#structural-interfaces">structural interfaces</a> and
+<a href="#named-constraints">named constraints</a> define conformance implicitly instead of
+by requiring an impl to be defined. In can still make sense to implement a named
+constraint as a way to implement all of the interfaces it requires.</p>
+<h3 id="internal-impl">Internal impl</h3>
+<p>A type that implements an interface <em>internally</em> has all the named members of
+the interface as named members of the type. This means that the members of the
+interface are available by way of both
+<a href="#member-access">simple member access and qualified member access expressions</a>.</p>
+<h3 id="external-impl">External impl</h3>
+<p>In contrast, a type that implements an interface <em>externally</em> does not include
+the named members of the interface in the type. The members of the interface are
+still implemented by the type, though, and so may be accessed using
+<a href="#qualified-member-access-expression">qualified member access expressions</a> for
+those members.</p>
+<h2 id="member-access">Member access</h2>
+<p>There are two different kinds of member access: <em>simple</em> and <em>compound</em>. See the
+<a href="https://github.com/carbon-language/carbon-lang/tree/trunk/docs/design/expressions/member_access.md">member access design document</a> for
+the details. The application to generics combines compound member access with
+qualified names, which we call a <em>qualified member access expression</em>.</p>
+<h3 id="simple-member-access">Simple member access</h3>
+<p>Simple member access has the from <code>object.member</code>, where <code>member</code> is a word
+naming a member of <code>object</code>. This form may be used to access members of
+interfaces <a href="#internal-impl">implemented internally</a> by the type of <code>object</code>.</p>
+<p>If <code>String</code> implements <code>Printable</code> internally, then <code>s1.Print()</code> calls the
+<code>Print</code> method of <code>Printable</code> using simple member access. In this case, the name
+<code>Print</code> is used without qualifying it with the name of the interface it is a
+member of since it is recognized as a member of the type itself as well.</p>
+<h3 id="qualified-member-access-expression">Qualified member access expression</h3>
+<p>Compound member access has the form <code>object.(expression)</code>, where <code>expression</code> is
+resolved in the containing scope. A compound member access where the member
+expression is a simple member access expression, as in <code>a.(context.b)</code>, is
+called a <em>qualified member access expression</em>. The member expression <code>context.b</code>
+may be the <em>qualified member name</em> of an interface member, that consists of the
+name of the interface, possibly qualified with a package or namespace name, a
+dot <code>.</code> and the name of the member.</p>
+<p>For example, if the <code>Comparable</code> interface has a <code>Less</code> member method, then the
+qualified name of that member is <code>Comparable.Less</code>. So if <code>String</code> implements
+<code>Comparable</code>, and <code>s1</code> and <code>s2</code> are variables of type <code>String</code>, then the <code>Less</code>
+method may be called using the qualified member name by writing the qualified
+member access expression <code>s1.(Comparable.Less)(s2)</code>.</p>
+<p>This form may be used to access any member of an interface implemented for a
+type, whether it is implemented <a href="#internal-impl">internally</a> or
+<a href="#external-impl">externally</a>.</p>
+<h2 id="compatible-types">Compatible types</h2>
+<p>Two types are compatible if they have the same notional set of values and
+represent those values in the same way, even if they expose different APIs. The
+representation of a type describes how the values of that type are represented
+as a sequence of bits in memory. The set of values of a type includes properties
+that the compiler can't directly see, such as invariants that the type
+maintains.</p>
+<p>We can't just say two types are compatible based on structural reasons. Instead,
+we have specific constructs that create compatible types from existing types in
+ways that encourage preserving the programmer's intended semantics and
+invariants, such as implementing the API of the new type by calling (public)
+methods of the original API, instead of accessing any private implementation
+details.</p>
+<h2 id="subtyping-and-casting">Subtyping and casting</h2>
+<p>Both subtyping and casting are different names for changing the type of a value
+to a compatible type.</p>
+<p><a href="https://en.wikipedia.org/wiki/Subtyping">Subtyping</a> is a relationship between
+two types where you can safely operate on a value of one type using a variable
+of another. For example, using C++'s object-oriented features, you can operate
+on a value of a derived class using a pointer to the base class. In most cases,
+you can pass a more specific type to a function that can handle a more general
+type. Return types work the opposite way, a function can return a more specific
+type to a caller prepared to handle a more general type. This determines how
+function signatures can change from base class to derived class, see
+<a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_(computer_science)">covariance and contravariance in Wikipedia</a>.</p>
+<p>In a generics context, we are specifically interested in the subtyping
+relationships between <a href="#type-of-type">type-of-types</a>. In particular, a
+type-of-type encompasses a set of <a href="#type-constraints">type constraints</a>, and you
+can convert a type from a more-restrictive type-of-type to another type-of-type
+whose constraints are implied by the first. C++ concepts terminology uses the
+term
+<a href="https://en.cppreference.com/w/cpp/language/constraints#Partial_ordering_of_constraints">"subsumes"</a>
+to talk about this partial ordering of constraints, but we avoid that term since
+it is at odds with the use of the term in
+<a href="https://en.wikipedia.org/wiki/Subtyping#Subsumption">object-oriented subtyping terminology</a>.</p>
+<p>Note that subtyping is a bit like
+<a href="https://en.wikipedia.org/wiki/Type_conversion">coercion</a>, except we want to
+make it clear that the data representation of the value is not changing, just
+its type as reflected in the API available to manipulate the value.</p>
+<p>Casting is indicated explicitly by way of some syntax in the source code. You
+might use a cast to switch between <a href="#adapting-a-type">type adaptations</a>, or to
+be explicit where an implicit conversion would otherwise occur. For now, we are
+saying "<code>x as y</code>" is the provisional syntax in Carbon for casting the value <code>x</code>
+to the type <code>y</code>. Note that outside of generics, the term "casting" includes any
+explicit type change, including those that change the data representation.</p>
+<p>In contexts where an expression of one type is provided and a different type is
+required, an <a href="../../expressions/implicit_conversions/">implicit conversion</a> is
+performed if it is considered safe to do so. Such an implicit conversion, if
+permitted, always has the same meaning as an explicit cast.</p>
+<h2 id="coherence">Coherence</h2>
+<p>A generics system has the <em>implementation coherence</em> property, or simply
+<em>coherence</em>, if there is a single answer to the question "what is the
+implementation of this interface for this type, if any?" independent of context,
+such as the libraries imported into a given file.</p>
+<p>This is typically enforced by making sure the definition of the implementation
+must be imported if you import both the interface and the type. This may be done
+by requiring the implementation to be in the same library as the interface or
+type. This is called an <em>orphan rule</em>, meaning we don't allow an implementation
+that is not with either of its parents (parent type or parent interface).</p>
+<p>Note that in addition to an orphan rule that implementations are visible when
+queried, coherence also requires a rule for resolving what happens if there are
+multiple non-orphan implementations. In Rust, this is called the
+<a href="https://rust-lang.github.io/chalk/book/clauses/coherence.html#chalk-overlap-check">overlap rule or overlap check</a>.
+This could be just producing an error in that situation, or picking one using
+some specialization rule.</p>
+<h2 id="adapting-a-type">Adapting a type</h2>
+<p>A type can be adapted by creating a new type that is
+<a href="#compatible-types">compatible</a> with an existing type, but has a different API.
+In particular, the new type might implement different interfaces or provide
+different implementations of the same interfaces.</p>
+<p>Unlike extending a type (as with C++ class inheritance), you are not allowed to
+add new data fields onto the end of the representation -- you may only change
+the API. This means that it is safe to <a href="#subtyping-and-casting">cast</a> a value
+between those two types without any dynamic checks or danger of
+<a href="https://en.wikipedia.org/wiki/Object_slicing">object slicing</a>.</p>
+<p>This is called "newtype" in Rust, and is used for capturing additional
+information in types to improve type safety by moving some checking to compile
+time (<a href="https://doc.rust-lang.org/rust-by-example/generics/new_types.html">1</a>,
+<a href="https://doc.rust-lang.org/book/ch19-04-advanced-types.html#using-the-newtype-pattern-for-type-safety-and-abstraction">2</a>,
+<a href="https://www.worthe-it.co.za/blog/2020-10-31-newtype-pattern-in-rust.html">3</a>)
+and as a workaround for
+<a href="https://github.com/Ixrec/rust-orphan-rules#why-are-the-orphan-rules-controversial">Rust's orphan rules for coherence</a>.</p>
+<h2 id="type-erasure">Type erasure</h2>
+<p>"Type erasure" is where a type's API is replaced by a subset. Everything outside
+of the preserved subset is said to have been "erased". This can happen in a
+variety of contexts including both generics and runtime polymorphism. For
+generics, type erasure restricts a type to just the API required by the
+constraints on a generic function.</p>
+<p>An example of type erasure in runtime polymorphism in C++ is casting from a
+pointer of a derived type to a pointer to an abstract base type. Only the API of
+the base type is available on the result, even though the implementation of
+those methods still come from the derived type.</p>
+<p>The term "type erasure" can also refer to
+<a href="https://en.wikipedia.org/wiki/Generics_in_Java">the specific strategy used by Java to implement generics</a>.
+which includes erasing the identity of type parameters. This is not the meaning
+of "type erasure" used in Carbon.</p>
+<h2 id="archetype">Archetype</h2>
+<p>A placeholder type is used when type checking a function in place of a generic
+type parameter. This allows type checking when the specific type to be used is
+not known at type checking time. The type satisfies just its constraint and no
+more, so it acts as the most general type satisfying the interface. In this way
+the archetype is the supertype of all types satisfying the interface.</p>
+<p>In addition to satisfying all the requirements of its constraint, the archetype
+also has the member names of its constraint. Effectively it is considered to
+<a href="#internal-impl">implement the constraint internally</a>.</p>
+<h2 id="extending-an-interface">Extending an interface</h2>
+<p>An interface can be extended by defining an interface that includes the full API
+of another interface, plus some additional API. Types implementing the extended
+interface should automatically be considered to have implemented the narrower
+interface.</p>
+<h2 id="witness-tables">Witness tables</h2>
+<p><a href="https://forums.swift.org/t/where-does-the-term-witness-table-come-from/54334/4">Witness tables</a>
+are an implementation strategy where values passed to a generic parameter are
+compiled into a table of required functionality. That table is then filled in
+for a given passed-in type with references to the implementation on the original
+type. The generic is implemented using calls into entries in the witness table,
+which turn into calls to the original type. This doesn't necessarily imply a
+runtime indirection: it may be a purely compile-time separation of concerns.
+However, it insists on a full abstraction boundary between the generic user of a
+type and the concrete implementation.</p>
+<p>A simple way to imagine a witness table is as a struct of function pointers, one
+per method in the interface. However, in practice, it's more complex because it
+must model things like associated types and interfaces.</p>
+<p>Witness tables are called "dictionary passing" in Haskell. Outside of generics,
+a <a href="https://en.wikipedia.org/wiki/Virtual_method_table">vtable</a> is a witness
+table that witnesses that a class is a descendant of an abstract base class, and
+is passed as part of the object instead of separately.</p>
+<h3 id="dynamic-dispatch-witness-table">Dynamic-dispatch witness table</h3>
+<p>For dynamic-dispatch witness tables, actual function pointers are formed and
+used as a dynamic, runtime indirection. As a result, the generic code <strong>will
+not</strong> be duplicated for different witness tables.</p>
+<h3 id="static-dispatch-witness-table">Static-dispatch witness table</h3>
+<p>For static-dispatch witness tables, the implementation is required to collapse
+the table indirections at compile time. As a result, the generic code <strong>will</strong>
+be duplicated for different witness tables.</p>
+<p>Static-dispatch may be implemented as a performance optimization for
+dynamic-dispatch that increases generated code size. The final compiled output
+may not retain the witness table.</p>
+<h2 id="instantiation">Instantiation</h2>
+<p>Instantiation is the implementation strategy for templates in both C++ and
+Carbon. Instantiation explicitly creates a copy of the template code and
+replaces the template components with the concrete type and its implementation
+operations. It allows duck typing and lazy binding. Instantiation implies
+template code <strong>will</strong> be duplicated.</p>
+<p>Unlike <a href="#static-dispatch-witness-table">static-dispatch witness tables</a> and
+<a href="https://doc.rust-lang.org/book/ch10-01-syntax.html#performance-of-code-using-generics">monomorphization (as in Rust)</a>,
+this is done <strong>before</strong> type checking completes. Only when the template is used
+with a concrete type is the template fully type checked, and it type checks
+against the actual concrete type after substituting it into the template. This
+means that different instantiations may interpret the same construct in
+different ways, and that templates can include constructs that are not valid for
+some possible instantiations. However, it also means that some errors in the
+template implementation may not produce errors until the instantiation occurs,
+and other errors may only happen for <strong>some</strong> instantiations.</p>
+<h2 id="specialization">Specialization</h2>
+<h3 id="template-specialization">Template specialization</h3>
+<p>Specialization in C++ is essentially overloading in the context of a template.
+The template is overloaded to have a different definition for some subset of the
+possible template argument values. For example, the C++ type <code>std::vector&lt;T&gt;</code>
+might have a specialization <code>std::vector&lt;T*&gt;</code> that is implemented in terms of
+<code>std::vector&lt;void*&gt;</code> to reduce code size. In C++, even the interface of a
+templated type can be changed in a specialization, as happens for
+<code>std::vector&lt;bool&gt;</code>.</p>
+<h3 id="generic-specialization">Generic specialization</h3>
+<p>Specialization of generics, or types used by generics, is restricted to changing
+the implementation <em>without</em> affecting the interface. This restriction is needed
+to preserve the ability to perform type checking of generic definitions that
+reference a type that can be specialized, without statically knowing which
+specialization will be used.</p>
+<p>While there is nothing fundamentally incompatible about specialization with
+generics, even when implemented using witness tables, the result may be
+surprising because the selection of the specialized generic happens outside of
+the witness-table-based indirection between the generic code and the concrete
+implementation. Provided all selection relies exclusively on interfaces, this
+still satisfies the fundamental constraints of generics.</p>
+<h2 id="conditional-conformance">Conditional conformance</h2>
+<p>Conditional conformance is when you have a parameterized type that has one API
+that it always supports, but satisfies additional interfaces under some
+conditions on the type argument. For example: <code>Array(T)</code> might implement
+<code>Comparable</code> if <code>T</code> itself implements <code>Comparable</code>, using lexicographical order.</p>
+<h2 id="interface-type-parameters-and-associated-types">Interface type parameters and associated types</h2>
+<p>Imagine an interface defining a container. Different containers will contain
+different types of values, and the container API will have to refer to that
+"element type" when defining the signature of methods like "insert" or "find".
+If that element type is a parameter (input) to the interface type, we say it is
+an <em>interface type parameter</em>; if it is an output, we say it is an <em>associated
+type</em>. An associated type is a kind of <a href="#associated-entity">associated entity</a>.</p>
+<p>Interface type parameter example:</p>
+<pre><code>interface StackTP(ElementType:! Type)
+  fn Push[addr me: Self*](value: ElementType);
+  fn Pop[addr me: Self*]() -&gt; ElementType;
+}
+</code></pre>
+<p>Associated type example:</p>
+<pre><code>interface StackAT {
+  let ElementType:! Type;
+  fn Push[addr me: Self*](value: ElementType);
+  fn Pop[addr me: Self*]() -&gt; ElementType;
+}
+</code></pre>
+<p>Associated types are particularly called for when the implementation controls
+the type, not the caller. For example, the iterator type for a container is
+specific to the container and not something you would expect a user of the
+interface to specify.</p>
+<pre><code>interface Iterator { ... }
+interface Container {
+  // This does not make sense as an parameter to the container interface,
+  // since this type is determined from the container type.
+  let IteratorType:! Iterator;
+  ...
+  fn Insert[addr me: Self*](position: IteratorType, value: ElementType);
+}
+class ListIterator(ElementType:! Type) {
+  ...
+  impl as Iterator;
+}
+class List(ElementType:! Type) {
+  // Iterator type is determined by the container type.
+  impl as Container where .IteratorType = ListIterator(ElementType) {
+    fn Insert[addr me: Self*](position: IteratorType, value: ElementType) {
+      ...
+    }
+  }
+}
+</code></pre>
+<p>If you have an interface with type parameters, a type can have multiple impls
+for different combinations of type parameters. As a result, type parameters may
+not be deduced in a function call. However, if the interface parameters are
+specified, a type can only have a single implementation of the given interface.
+This unique implementation choice determines the values of associated types.</p>
+<p>For example, we might have an interface that says how to perform addition with
+another type:</p>
+<pre><code>interface Addable(T:! Type) {
+  let ResultType:! Type;
+  fn Add[me: Self](rhs: T) -&gt; ResultType;
+}
+</code></pre>
+<p>An <code>i32</code> value might support addition with <code>i32</code>, <code>u16</code>, and <code>f64</code> values.</p>
+<pre><code>impl i32 as Addable(i32) where .ResultType = i32 { ... }
+impl i32 as Addable(u16) where .ResultType = i32 { ... }
+impl i32 as Addable(f64) where .ResultType = f64 { ... }
+</code></pre>
+<p>To write a generic function requiring a parameter to be <code>Addable</code>, there needs
+to be some way to determine the type to add to:</p>
+<pre><code>// ✅ This is allowed, since the value of `T` is determined by the
+// `y` parameter.
+fn DoAdd[T:! Type, U:! Addable(T)](x: U, y: T) -&gt; U.ResultType {
+  return x.Add(y);
+}
+
+// ❌ This is forbidden, can't uniquely determine `T`.
+fn CompileError[T:! Type, U:! Addable(T)](x: U) -&gt; T;
+</code></pre>
+<p>Once the interface parameter can be determined, that determines the values for
+associated types, such as <code>ResultType</code> in the example. As always, calls with
+types for which no implementation exists will be rejected at the call site:</p>
+<pre><code>// ❌ This is forbidden, no implementation of `Addable(Orange)`
+// for `Apple`.
+DoAdd(apple, orange);
+</code></pre>
+<h2 id="type-constraints">Type constraints</h2>
+<p>Type constraints restrict which types are legal for template or generic
+parameters or associated types. They help define semantics under which they
+should be called, and prevent incorrect calls.</p>
+<p>In general there are a number of different type relationships we would like to
+express, for example:</p>
+<ul>
+<li>This function accepts two containers. The container types may be different,
+    but the element types need to match.</li>
+<li>For this container interface we have associated types for iterators and
+    elements. The iterator type's element type needs to match the container's
+    element type.</li>
+<li>An interface may define an associated type that needs to be constrained to
+    implement some interfaces.</li>
+<li>This type must be <a href="#compatible-types">compatible</a> with another type. You
+    might use this to define alternate implementations of a single interfaces,
+    such as sorting order, for a single type.</li>
+</ul>
+<p>Note that type constraints can be a restriction on one type parameter or
+associated type, or can define a relationship between multiple types.</p>
+<h2 id="type-of-type">Type-of-type</h2>
+<p>A type-of-type is the type used when declaring some type parameter. It foremost
+determines which types are legal arguments for that type parameter, also known
+as <a href="#type-constraints">type constraints</a>. For template parameters, that is all a
+type-of-type does. For generic parameters, it also determines the API that is
+available in the body of the function.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://github.com/carbon-language/carbon-lang/pull/447">#447: Generics terminology</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/pull/731">#731: Generics details 2: adapters, associated types, parameterized interfaces</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/pull/950">#950: Generic details 6: remove facets</a></li>
+<li><a href="https://github.com/carbon-language/carbon-lang/pull/1013">#1013: Generics: Set associated constants using where constraints</a></li>
+</ul>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../overview/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Generics: Overview" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Generics: Overview
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../interoperability/" class="md-footer__link md-footer__link--next" aria-label="Next: Bidirectional interoperability with C/C++" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Bidirectional interoperability with C/C++
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>
