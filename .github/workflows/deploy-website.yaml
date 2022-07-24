@@ -32,7 +32,7 @@ jobs:
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_dir: ./website/build
-          external_repository: carbon-language/carbon-language.github.io
-          publish_branch: trunk
+          external_repository: emlai/emlai.github.io
+          publish_branch: main
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
